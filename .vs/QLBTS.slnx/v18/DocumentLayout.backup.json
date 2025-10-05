@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\qlbts\\qlbts_gui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|D:\\QLBTS\\qlbts_gui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -22,15 +22,15 @@
           "Children": [
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "QLBTS_GUI\\Form1.cs",
               "ToolTip": "D:\\QLBTS\\QLBTS_GUI\\Form1.cs",
               "RelativeToolTip": "QLBTS_GUI\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-15T08:25:48.376Z",
               "EditorCaption": ""
@@ -58,8 +58,7 @@
               "ToolTip": "D:\\QLBTS\\QLBTS_GUI\\Form1.cs [Design]",
               "RelativeToolTip": "QLBTS_GUI\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T08:25:44.902Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-15T08:25:44.902Z"
             }
           ]
         }
