@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14243abcd4cd9818a66f59b3076990ffcb51e994")]
 [assembly: System.Reflection.AssemblyProductAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

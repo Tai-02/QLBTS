@@ -14,7 +14,5 @@ namespace QLBTS_GUI
         {
             InitializeComponent();
         }
-        //hello
-        //daicho
     }
 }
