@@ -1,0 +1,12 @@
+D:\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.deps.json
+D:\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.dll
+D:\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.pdb
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.AssemblyInfoInputs.cache
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.AssemblyInfo.cs
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.csproj.CoreCompileInputs.cache
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.sourcelink.json
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.dll
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\refint\QLBTS_DAL.dll
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.pdb
+D:\QLBTS\QLBTS_DAL\obj\Debug\net8.0\ref\QLBTS_DAL.dll
