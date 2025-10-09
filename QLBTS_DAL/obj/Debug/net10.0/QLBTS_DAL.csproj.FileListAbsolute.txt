@@ -1,6 +1,5 @@
-D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DAL.deps.json
 D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DAL.dll
-D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DAL.pdb
+D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DAL.deps.json
 D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DTO.dll
 D:\QLBTS\QLBTS_DAL\bin\Debug\net10.0\QLBTS_DTO.pdb
 D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\QLBTS_DAL.csproj.AssemblyReference.cache
@@ -13,4 +12,3 @@ D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\QLBTS_DAL.csproj.Up2Date
 D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\QLBTS_DAL.dll
 D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\refint\QLBTS_DAL.dll
 D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\QLBTS_DAL.pdb
-D:\QLBTS\QLBTS_DAL\obj\Debug\net10.0\ref\QLBTS_DAL.dll
