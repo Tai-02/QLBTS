@@ -1,6 +1,0 @@
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.csproj.AssemblyReference.cache
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.GeneratedMSBuildEditorConfig.editorconfig
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.AssemblyInfoInputs.cache
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.AssemblyInfo.cs
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.csproj.CoreCompileInputs.cache
-D:\QLBTS\QLBTS_BLL\obj\Debug\net10.0\QLBTS_BLL.sourcelink.json

@@ -1,6 +1,5 @@
 <Solution>
   <Project Path="QLBTS_BLL/QLBTS_BLL.csproj" />
   <Project Path="QLBTS_DAL/QLBTS_DAL.csproj" />
-  <Project Path="QLBTS_DTO/QLBTS_DTO.csproj" />
   <Project Path="QLBTS_GUI/QLBTS_GUI.csproj" />
 </Solution>

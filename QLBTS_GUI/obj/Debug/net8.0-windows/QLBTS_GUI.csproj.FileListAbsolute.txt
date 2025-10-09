@@ -5,9 +5,7 @@ D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_GUI.dll
 D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_GUI.pdb
 D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_BLL.dll
 D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_DAL.dll
-D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_DTO.dll
 D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_BLL.pdb
-D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_DTO.pdb
 D:\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\QLBTS_DAL.pdb
 D:\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\QLBTS_GUI.csproj.AssemblyReference.cache
 D:\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\QLBTS_GUI.Form1.resources

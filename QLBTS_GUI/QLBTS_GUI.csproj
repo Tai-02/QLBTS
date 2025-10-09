@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QLBTS_BLL\QLBTS_BLL.csproj" />
-    <ProjectReference Include="..\QLBTS_DTO\QLBTS_DTO.csproj" />
   </ItemGroup>
 
 </Project>

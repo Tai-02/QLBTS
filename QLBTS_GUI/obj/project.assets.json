@@ -6,8 +6,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "QLBTS_DAL": "1.0.0",
-          "QLBTS_DTO": "1.0.0"
+          "QLBTS_DAL": "1.0.0"
         },
         "compile": {
           "bin/placeholder/QLBTS_BLL.dll": {}
@@ -19,24 +18,11 @@
       "QLBTS_DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "QLBTS_DTO": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/QLBTS_DAL.dll": {}
         },
         "runtime": {
           "bin/placeholder/QLBTS_DAL.dll": {}
-        }
-      },
-      "QLBTS_DTO/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/QLBTS_DTO.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/QLBTS_DTO.dll": {}
         }
       }
     }
@@ -51,17 +37,11 @@
       "type": "project",
       "path": "../QLBTS_DAL/QLBTS_DAL.csproj",
       "msbuildProject": "../QLBTS_DAL/QLBTS_DAL.csproj"
-    },
-    "QLBTS_DTO/1.0.0": {
-      "type": "project",
-      "path": "../QLBTS_DTO/QLBTS_DTO.csproj",
-      "msbuildProject": "../QLBTS_DTO/QLBTS_DTO.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "QLBTS_BLL >= 1.0.0",
-      "QLBTS_DTO >= 1.0.0"
+      "QLBTS_BLL >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -93,9 +73,6 @@
           "projectReferences": {
             "D:\\QLBTS\\QLBTS_BLL\\QLBTS_BLL.csproj": {
               "projectPath": "D:\\QLBTS\\QLBTS_BLL\\QLBTS_BLL.csproj"
-            },
-            "D:\\QLBTS\\QLBTS_DTO\\QLBTS_DTO.csproj": {
-              "projectPath": "D:\\QLBTS\\QLBTS_DTO\\QLBTS_DTO.csproj"
             }
           }
         }

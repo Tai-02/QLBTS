@@ -2,9 +2,7 @@ D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_BLL.deps.json
 D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_BLL.dll
 D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_BLL.pdb
 D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_DAL.dll
-D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_DTO.dll
 D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_DAL.pdb
-D:\QLBTS\QLBTS_BLL\bin\Debug\net8.0\QLBTS_DTO.pdb
 D:\QLBTS\QLBTS_BLL\obj\Debug\net8.0\QLBTS_BLL.csproj.AssemblyReference.cache
 D:\QLBTS\QLBTS_BLL\obj\Debug\net8.0\QLBTS_BLL.GeneratedMSBuildEditorConfig.editorconfig
 D:\QLBTS\QLBTS_BLL\obj\Debug\net8.0\QLBTS_BLL.AssemblyInfoInputs.cache

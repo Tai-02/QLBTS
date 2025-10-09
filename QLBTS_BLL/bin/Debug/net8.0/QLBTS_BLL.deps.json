@@ -8,27 +8,15 @@
     ".NETCoreApp,Version=v8.0": {
       "QLBTS_BLL/1.0.0": {
         "dependencies": {
-          "QLBTS_DAL": "1.0.0",
-          "QLBTS_DTO": "1.0.0"
+          "QLBTS_DAL": "1.0.0"
         },
         "runtime": {
           "QLBTS_BLL.dll": {}
         }
       },
       "QLBTS_DAL/1.0.0": {
-        "dependencies": {
-          "QLBTS_DTO": "1.0.0"
-        },
         "runtime": {
           "QLBTS_DAL.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "QLBTS_DTO/1.0.0": {
-        "runtime": {
-          "QLBTS_DTO.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -43,11 +31,6 @@
       "sha512": ""
     },
     "QLBTS_DAL/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "QLBTS_DTO/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
