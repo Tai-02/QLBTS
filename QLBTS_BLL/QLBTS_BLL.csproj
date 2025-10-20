@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QLBTS_DAL\QLBTS_DAL.csproj" />
+    <ProjectReference Include="..\QLBTS_DTO\QLBTS_DTO.csproj" />
   </ItemGroup>
 
 </Project>
