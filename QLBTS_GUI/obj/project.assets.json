@@ -1797,19 +1797,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tài\\.nuget\\packages\\": {}
+    "C:\\Users\\TUAN\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\QLBTS\\QLBTS_GUI\\QLBTS_GUI.csproj",
+      "projectUniqueName": "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_GUI\\QLBTS_GUI.csproj",
       "projectName": "QLBTS_GUI",
-      "projectPath": "D:\\QLBTS\\QLBTS_GUI\\QLBTS_GUI.csproj",
-      "packagesPath": "C:\\Users\\Tài\\.nuget\\packages\\",
-      "outputPath": "D:\\QLBTS\\QLBTS_GUI\\obj\\",
+      "projectPath": "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_GUI\\QLBTS_GUI.csproj",
+      "packagesPath": "C:\\Users\\TUAN\\.nuget\\packages\\",
+      "outputPath": "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_GUI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Tài\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\TUAN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1823,11 +1828,16 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\QLBTS\\QLBTS_BLL\\QLBTS_BLL.csproj": {
               "projectPath": "D:\\QLBTS\\QLBTS_BLL\\QLBTS_BLL.csproj"
             },
             "D:\\QLBTS\\QLBTS_DTO\\QLBTS_DTO.csproj": {
               "projectPath": "D:\\QLBTS\\QLBTS_DTO\\QLBTS_DTO.csproj"
+=======
+            "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_BLL\\QLBTS_BLL.csproj": {
+              "projectPath": "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_BLL\\QLBTS_BLL.csproj"
+>>>>>>> 39d8d70 (add form nhan vien quay)
             }
           }
         }
@@ -1842,7 +1852,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -1872,7 +1882,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100-rc.1.25451.107/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

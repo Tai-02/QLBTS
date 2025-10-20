@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "HvjQHx2zb2M=",
   "success": true,
   "projectFilePath": "D:\\QLBTS\\QLBTS_BLL\\QLBTS_BLL.csproj",
@@ -34,5 +35,11 @@
     "C:\\Users\\Tài\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512",
     "C:\\Users\\Tài\\.nuget\\packages\\zstdsharp.port\\0.8.5\\zstdsharp.port.0.8.5.nupkg.sha512"
   ],
+=======
+  "dgSpecHash": "jNqGMa+lND8=",
+  "success": true,
+  "projectFilePath": "E:\\Public\\CNPM\\do-an-cnpm\\QLBTS_BLL\\QLBTS_BLL.csproj",
+  "expectedPackageFiles": [],
+>>>>>>> 39d8d70 (add form nhan vien quay)
   "logs": []
 }

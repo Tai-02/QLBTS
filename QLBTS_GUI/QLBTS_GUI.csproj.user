@@ -7,5 +7,17 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FormDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormLichSuNhanDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GioHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

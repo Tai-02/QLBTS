@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+becb0c13c9d032da57a81c72c09ab557db56ab56")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+577316e59fe3600de5049b12592e969e0fd28023")]
+>>>>>>> 39d8d70 (add form nhan vien quay)
 [assembly: System.Reflection.AssemblyProductAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QLBTS_GUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
