@@ -1,5 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="C:/Users/Tài/Downloads/qlbts_mysql.sql" />
+  </Folder>
   <Project Path="QLBTS_BLL/QLBTS_BLL.csproj" />
   <Project Path="QLBTS_DAL/QLBTS_DAL.csproj" />
+  <Project Path="QLBTS_DTO/QLBTS_DTO.csproj" Id="3af2bdea-9966-4d5f-a9b3-860c12b681bb" />
   <Project Path="QLBTS_GUI/QLBTS_GUI.csproj" />
 </Solution>
