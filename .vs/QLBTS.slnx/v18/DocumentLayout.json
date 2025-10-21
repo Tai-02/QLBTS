@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\QLBTS\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\qlbts\\qlbts_gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,19 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\QLBTS\\QLBTS_GUI\\Program.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\Program.cs",
-              "ToolTip": "D:\\QLBTS\\QLBTS_GUI\\Program.cs",
-              "RelativeToolTip": "QLBTS_GUI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T15:49:57.153Z",
-              "EditorCaption": ""
             }
           ]
         }
