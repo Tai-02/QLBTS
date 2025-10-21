@@ -11,6 +11,6 @@ namespace QLBTS_DTO
         public int MaGH { get; set; }
         public int? MaKH { get; set; }
         public int? MaNV { get; set; }
-        public DateTime NgayTao { get; set; }
+        public DateTime? NgayTao { get; set; }
     }
 }
