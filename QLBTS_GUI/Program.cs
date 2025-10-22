@@ -11,8 +11,8 @@ namespace QLBTS_GUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Form form = new DangNhap();
+            Form form = Donhangcanxacnhan();
             form.ShowDialog();
         }
-    }
+    }9
 }
