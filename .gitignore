@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+# Visual Studio build folders
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+QLBTS_GUI/QLBTS_GUI.csproj.user
+QLBTS_GUI/QLBTS_GUI.csproj.user

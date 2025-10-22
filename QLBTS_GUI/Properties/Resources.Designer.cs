@@ -19,7 +19,11 @@ namespace QLBTS_GUI.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
+<<<<<<< HEAD
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+=======
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
+>>>>>>> origin/master
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -63,9 +67,15 @@ namespace QLBTS_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+<<<<<<< HEAD
         internal static System.Drawing.Bitmap images {
             get {
                 object obj = ResourceManager.GetObject("images", resourceCulture);
+=======
+        internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_10_220619 {
+            get {
+                object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-10 220619", resourceCulture);
+>>>>>>> origin/master
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,6 +83,7 @@ namespace QLBTS_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+<<<<<<< HEAD
         internal static System.Drawing.Bitmap pngtree_shopping_cart_convenient_icon_image_1287807 {
             get {
                 object obj = ResourceManager.GetObject("pngtree-shopping-cart-convenient-icon-image_1287807", resourceCulture);
@@ -186,6 +197,11 @@ namespace QLBTS_GUI.Properties {
         internal static System.Drawing.Bitmap unnamed__2_ {
             get {
                 object obj = ResourceManager.GetObject("unnamed (2)", resourceCulture);
+=======
+        internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_10_223647 {
+            get {
+                object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-10 223647", resourceCulture);
+>>>>>>> origin/master
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
