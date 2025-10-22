@@ -4,5 +4,14 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ThongTinCaNhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TimSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trang chu.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

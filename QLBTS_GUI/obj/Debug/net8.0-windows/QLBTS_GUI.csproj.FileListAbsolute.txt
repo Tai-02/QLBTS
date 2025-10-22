@@ -148,3 +148,11 @@ D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\
 D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\QLBTS_GUI.csproj.Up2Date
 D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\QLBTS_GUI.genruntimeconfig.cache
 D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\ref\QLBTS_GUI.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\obj\Debug\net8.0-windows\QLBTS_GUI.ThongTinCaNhan.resources
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\Guna.UI2.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\System.Management.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\Bunifu.Licensing.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\Bunifu.UI.WinForms.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\System.CodeDom.dll
+D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS\QLBTS_GUI\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll

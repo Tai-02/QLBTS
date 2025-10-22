@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             pnLocTimKiem = new Panel();
-            chBTopping = new CheckBox();
-            chBTratraicay = new CheckBox();
-            chBMonmoi = new CheckBox();
-            chBBestseller = new CheckBox();
+            chkTopping = new CheckBox();
+            chkTratraicay = new CheckBox();
+            chkMonmoi = new CheckBox();
+            chkBestseller = new CheckBox();
             label1 = new Label();
             flpSanPham = new FlowLayoutPanel();
             panel2 = new Panel();
@@ -45,59 +45,63 @@
             // pnLocTimKiem
             // 
             pnLocTimKiem.BorderStyle = BorderStyle.FixedSingle;
-            pnLocTimKiem.Controls.Add(chBTopping);
-            pnLocTimKiem.Controls.Add(chBTratraicay);
-            pnLocTimKiem.Controls.Add(chBMonmoi);
-            pnLocTimKiem.Controls.Add(chBBestseller);
+            pnLocTimKiem.Controls.Add(chkTopping);
+            pnLocTimKiem.Controls.Add(chkTratraicay);
+            pnLocTimKiem.Controls.Add(chkMonmoi);
+            pnLocTimKiem.Controls.Add(chkBestseller);
             pnLocTimKiem.Controls.Add(label1);
             pnLocTimKiem.Location = new Point(6, 81);
             pnLocTimKiem.Name = "pnLocTimKiem";
             pnLocTimKiem.Size = new Size(214, 283);
             pnLocTimKiem.TabIndex = 5;
             // 
-            // chBTopping
+            // chkTopping
             // 
-            chBTopping.AutoSize = true;
-            chBTopping.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chBTopping.Location = new Point(20, 233);
-            chBTopping.Name = "chBTopping";
-            chBTopping.Size = new Size(100, 25);
-            chBTopping.TabIndex = 4;
-            chBTopping.Text = "Topping";
-            chBTopping.UseVisualStyleBackColor = true;
+            chkTopping.AutoSize = true;
+            chkTopping.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkTopping.Location = new Point(20, 233);
+            chkTopping.Name = "chkTopping";
+            chkTopping.Size = new Size(100, 25);
+            chkTopping.TabIndex = 4;
+            chkTopping.Text = "Topping";
+            chkTopping.UseVisualStyleBackColor = true;
+            chkTopping.CheckedChanged += chkTopping_CheckedChanged;
             // 
-            // chBTratraicay
+            // chkTratraicay
             // 
-            chBTratraicay.AutoSize = true;
-            chBTratraicay.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chBTratraicay.Location = new Point(20, 175);
-            chBTratraicay.Name = "chBTratraicay";
-            chBTratraicay.Size = new Size(127, 25);
-            chBTratraicay.TabIndex = 3;
-            chBTratraicay.Text = "Trà trái cây";
-            chBTratraicay.UseVisualStyleBackColor = true;
+            chkTratraicay.AutoSize = true;
+            chkTratraicay.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkTratraicay.Location = new Point(20, 175);
+            chkTratraicay.Name = "chkTratraicay";
+            chkTratraicay.Size = new Size(127, 25);
+            chkTratraicay.TabIndex = 3;
+            chkTratraicay.Text = "Trà trái cây";
+            chkTratraicay.UseVisualStyleBackColor = true;
+            chkTratraicay.CheckedChanged += chkTratraicay_CheckedChanged;
             // 
-            // chBMonmoi
+            // chkMonmoi
             // 
-            chBMonmoi.AutoSize = true;
-            chBMonmoi.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chBMonmoi.Location = new Point(20, 125);
-            chBMonmoi.Name = "chBMonmoi";
-            chBMonmoi.Size = new Size(106, 25);
-            chBMonmoi.TabIndex = 2;
-            chBMonmoi.Text = "Món mới";
-            chBMonmoi.UseVisualStyleBackColor = true;
+            chkMonmoi.AutoSize = true;
+            chkMonmoi.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkMonmoi.Location = new Point(20, 125);
+            chkMonmoi.Name = "chkMonmoi";
+            chkMonmoi.Size = new Size(106, 25);
+            chkMonmoi.TabIndex = 2;
+            chkMonmoi.Text = "Món mới";
+            chkMonmoi.UseVisualStyleBackColor = true;
+            chkMonmoi.CheckedChanged += chkMonmoi_CheckedChanged;
             // 
-            // chBBestseller
+            // chkBestseller
             // 
-            chBBestseller.AutoSize = true;
-            chBBestseller.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chBBestseller.Location = new Point(20, 70);
-            chBBestseller.Name = "chBBestseller";
-            chBBestseller.Size = new Size(121, 25);
-            chBBestseller.TabIndex = 1;
-            chBBestseller.Text = "Best seller";
-            chBBestseller.UseVisualStyleBackColor = true;
+            chkBestseller.AutoSize = true;
+            chkBestseller.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkBestseller.Location = new Point(20, 70);
+            chkBestseller.Name = "chkBestseller";
+            chkBestseller.Size = new Size(121, 25);
+            chkBestseller.TabIndex = 1;
+            chkBestseller.Text = "Best seller";
+            chkBestseller.UseVisualStyleBackColor = true;
+            chkBestseller.CheckedChanged += chkBestseller_CheckedChanged;
             // 
             // label1
             // 
@@ -113,9 +117,9 @@
             // 
             flpSanPham.AutoScroll = true;
             flpSanPham.Controls.Add(panel2);
-            flpSanPham.Location = new Point(272, 58);
+            flpSanPham.Location = new Point(251, 58);
             flpSanPham.Name = "flpSanPham";
-            flpSanPham.Size = new Size(705, 497);
+            flpSanPham.Size = new Size(726, 497);
             flpSanPham.TabIndex = 8;
             // 
             // panel2
@@ -175,10 +179,10 @@
         #endregion
 
         private Panel pnLocTimKiem;
-        private CheckBox chBTopping;
-        private CheckBox chBTratraicay;
-        private CheckBox chBMonmoi;
-        private CheckBox chBBestseller;
+        private CheckBox chkTopping;
+        private CheckBox chkTratraicay;
+        private CheckBox chkMonmoi;
+        private CheckBox chkBestseller;
         private Label label1;
         private FlowLayoutPanel flpSanPham;
         private Panel panel2;
