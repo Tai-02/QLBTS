@@ -50,16 +50,15 @@ CREATE TABLE SanPham (
         ) STORED
 );
 
--- ✅ Thêm dữ liệu mẫu vào bảng SanPham mới
 INSERT INTO SanPham (TenSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh)
 VALUES
--- 🧋 Nhóm 1: Trà sữa Best Seller
+-- Nhóm 1: Trà sữa Best Seller
 ('Trà sữa trân châu', 'M', 50, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuatranchau.png'),
 ('Trà sữa thái xanh', 'M', 40, 45000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuathaixanh.png'),
 ('Trà sữa Matcha', 'M', 30, 35000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuamatcha.png'),
 ('Trà sữa bạc hà', 'M', 25, 35000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuabacha.png'),
 ('Trà sữa xoài kem cheese', 'M', 20, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuaxoaikemcheese.png'),
--- 🧋 Nhóm 2: Trà sữa khác
+-- Nhóm 2: Trà sữa khác
 
 ('Trà sữa kem trứng nướng', 'M', 15, 35000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuakemtrungnuong.jpg'),
 ('Trà sữa khoai môn', 'M', 20, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuakhoaimon.jpg'),
@@ -67,11 +66,11 @@ VALUES
 ('Trà sữa matcha đậu đỏ', 'M', 10, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuamatchadaudo.jpg'),
 ('Trà sữa Pudding đậu đỏ', 'M', 12, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/trasuapuddingdaudo.jpg'),
 
--- 🍑 Nhóm 3: Trà trái cây
+-- Nhóm 3: Trà trái cây
 ('Trà đào cam sả', 'M', 25, 35000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/tradaocamsa.jpg'),
 ('Nước dừa', 'M', 30, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/nuocdua.jpg'),
 ('Trà trái cây nhiệt đới', 'M', 22, 40000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/tratraicaynhietdoi.jpg'),
--- 🍡 Nhóm 4: Topping
+-- Nhóm 4: Topping
 ('Kem Sữa', 'M', 100, 10000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/kemsua.jpg'),
 ('Trân Châu Đen', 'M', 120, 10000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/tranchauden.jpg'),
 ('Trân Châu Trắng', 'M', 90, 10000, 0, 'https://raw.githubusercontent.com/hoangyennewit/QLHINHANH/main/tranchautrang.jpg'),
@@ -164,10 +163,3 @@ CREATE TABLE ThongKeDoanhThu (
     Ngay DATE NOT NULL UNIQUE,
     TongDoanhThu INT
 );
-
-DROP TABLE ChiTietDonHang;
-DROP TABLE ChiTietGioHang;
-DROP TABLE SanPham;
-
-
-SELECT * FROM SanPham;
