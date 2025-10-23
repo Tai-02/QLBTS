@@ -14,7 +14,8 @@ namespace QLBTS_DTO
         public int SoLuong { get; set; }
         public int Gia { get; set; }
         public int KhuyenMai { get; set; }
-        public byte[] HinhAnh { get; set; }
+        //public byte[] HinhAnh { get; set; }
+        public string HinhAnh { get; set; }
         public string TrangThai { get; set; }
     }
 }

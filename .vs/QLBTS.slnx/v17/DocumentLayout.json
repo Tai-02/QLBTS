@@ -3,32 +3,28 @@
   "WorkspaceRootPath": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\trang chu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\trang chu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\qlbts_gui\\thongtincanhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\thongtincanhan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\qlbts_gui\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\thongtincanhan.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\thongtincanhan.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_dal\\qlbtscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|solutionrelative:qlbts_dal\\qlbtscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\qlbts_gui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\qlbts_gui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\qlbts_gui\\cartform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\cartform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\timsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_dal\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|solutionrelative:qlbts_dal\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,54 +34,68 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "QLBTS_GUI.csproj",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\QLBTS_GUI.csproj",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\QLBTS_GUI.csproj",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\QLBTS_GUI.csproj",
-              "RelativeToolTip": "QLBTS_GUI\\QLBTS_GUI.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-21T16:49:11.673Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ThongTinCaNhan.Designer.cs",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\ThongTinCaNhan.Designer.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\ThongTinCaNhan.Designer.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\ThongTinCaNhan.Designer.cs",
-              "RelativeToolTip": "QLBTS_GUI\\ThongTinCaNhan.Designer.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "DatabaseHelper.cs",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\DatabaseHelper.cs",
+              "RelativeDocumentMoniker": "QLBTS_DAL\\DatabaseHelper.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\DatabaseHelper.cs",
+              "RelativeToolTip": "QLBTS_DAL\\DatabaseHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T08:30:45.207Z"
+              "WhenOpened": "2025-10-23T04:45:19.923Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Trang chu.cs [Design]",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\Trang chu.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\Trang chu.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\Trang chu.cs [Design]",
-              "RelativeToolTip": "QLBTS_GUI\\Trang chu.cs [Design]",
+              "Title": "TimSanPham.cs",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimSanPham.cs",
+              "RelativeDocumentMoniker": "QLBTS_GUI\\TimSanPham.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimSanPham.cs",
+              "RelativeToolTip": "QLBTS_GUI\\TimSanPham.cs",
+              "ViewState": "AgIAAAUBAAAAAAAAAAAowCkBAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T08:40:05.13Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-10-23T06:01:55.567Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QlbtsContext.cs",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\QlbtsContext.cs",
+              "RelativeDocumentMoniker": "QLBTS_DAL\\QlbtsContext.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\QlbtsContext.cs",
+              "RelativeToolTip": "QLBTS_DAL\\QlbtsContext.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwBAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T05:52:52.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CartForm.cs [Design]",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\CartForm.cs",
+              "RelativeDocumentMoniker": "QLBTS_GUI\\CartForm.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\CartForm.cs [Design]",
+              "RelativeToolTip": "QLBTS_GUI\\CartForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T05:47:35.789Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ThongTinCaNhan.cs [Design]",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\ThongTinCaNhan.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\ThongTinCaNhan.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\ThongTinCaNhan.cs [Design]",
-              "RelativeToolTip": "QLBTS_GUI\\ThongTinCaNhan.cs [Design]",
+              "Title": "DangNhap.cs [Design]",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\DangNhap.cs",
+              "RelativeDocumentMoniker": "QLBTS_GUI\\DangNhap.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\DangNhap.cs [Design]",
+              "RelativeToolTip": "QLBTS_GUI\\DangNhap.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T08:40:51.461Z"
+              "WhenOpened": "2025-10-23T05:47:33.461Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -96,31 +106,8 @@
               "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimSanPham.cs [Design]",
               "RelativeToolTip": "QLBTS_GUI\\TimSanPham.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T02:41:28.851Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\Program.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\Program.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\Program.cs",
-              "RelativeToolTip": "QLBTS_GUI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T02:41:54.623Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TimSanPham.cs",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimSanPham.cs",
-              "RelativeDocumentMoniker": "QLBTS_GUI\\TimSanPham.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimSanPham.cs",
-              "RelativeToolTip": "QLBTS_GUI\\TimSanPham.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMCAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T03:39:26.984Z"
+              "WhenOpened": "2025-10-23T05:39:47.653Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }

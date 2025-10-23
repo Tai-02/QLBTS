@@ -19,11 +19,7 @@ namespace QLBTS_GUI.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-<<<<<<< HEAD
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
-=======
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
->>>>>>> origin/master
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -67,15 +63,9 @@ namespace QLBTS_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-<<<<<<< HEAD
-        internal static System.Drawing.Bitmap images {
-            get {
-                object obj = ResourceManager.GetObject("images", resourceCulture);
-=======
         internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_10_220619 {
             get {
                 object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-10 220619", resourceCulture);
->>>>>>> origin/master
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,125 +73,29 @@ namespace QLBTS_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-<<<<<<< HEAD
-        internal static System.Drawing.Bitmap pngtree_shopping_cart_convenient_icon_image_1287807 {
-            get {
-                object obj = ResourceManager.GetObject("pngtree-shopping-cart-convenient-icon-image_1287807", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap pngtree_shopping_cart_convenient_icon_image_12878071 {
-            get {
-                object obj = ResourceManager.GetObject("pngtree-shopping-cart-convenient-icon-image_12878071", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap pngtree_summer_milk_tea_cold_drink_delicious_summer_image_239718 {
-            get {
-                object obj = ResourceManager.GetObject("pngtree-summer-milk-tea-cold-drink-delicious-summer-image_239718", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760715678 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760715678", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760715847 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760715847", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760716082 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760716082", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760716458 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760716458", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760716752 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760716752", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap screenshot_1760717298 {
-            get {
-                object obj = ResourceManager.GetObject("screenshot_1760717298", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap unnamed {
-            get {
-                object obj = ResourceManager.GetObject("unnamed", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap unnamed__1_ {
-            get {
-                object obj = ResourceManager.GetObject("unnamed (1)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap unnamed__2_ {
-            get {
-                object obj = ResourceManager.GetObject("unnamed (2)", resourceCulture);
-=======
         internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_10_223647 {
             get {
                 object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-10 223647", resourceCulture);
->>>>>>> origin/master
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap z7136937637719_6cff850f2bdf54ef43e237c3110059461 {
+            get {
+                object obj = ResourceManager.GetObject("z7136937637719_6cff850f2bdf54ef43e237c3110059461", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap z7136941101299_cad41cc31586760f1d316daa0f7e665b {
+            get {
+                object obj = ResourceManager.GetObject("z7136941101299_cad41cc31586760f1d316daa0f7e665b", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

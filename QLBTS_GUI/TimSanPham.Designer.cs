@@ -65,7 +65,6 @@
             chkTopping.TabIndex = 4;
             chkTopping.Text = "Topping";
             chkTopping.UseVisualStyleBackColor = true;
-            chkTopping.CheckedChanged += chkTopping_CheckedChanged;
             // 
             // chkTratraicay
             // 
@@ -77,7 +76,6 @@
             chkTratraicay.TabIndex = 3;
             chkTratraicay.Text = "Trà trái cây";
             chkTratraicay.UseVisualStyleBackColor = true;
-            chkTratraicay.CheckedChanged += chkTratraicay_CheckedChanged;
             // 
             // chkMonmoi
             // 
@@ -89,7 +87,6 @@
             chkMonmoi.TabIndex = 2;
             chkMonmoi.Text = "Món mới";
             chkMonmoi.UseVisualStyleBackColor = true;
-            chkMonmoi.CheckedChanged += chkMonmoi_CheckedChanged;
             // 
             // chkBestseller
             // 
@@ -101,7 +98,6 @@
             chkBestseller.TabIndex = 1;
             chkBestseller.Text = "Best seller";
             chkBestseller.UseVisualStyleBackColor = true;
-            chkBestseller.CheckedChanged += chkBestseller_CheckedChanged;
             // 
             // label1
             // 
@@ -145,7 +141,7 @@
             // 
             // btnTimkiem
             // 
-            btnTimkiem.BackgroundImage = Properties.Resources.images;
+            btnTimkiem.BackgroundImage = Properties.Resources.z7136941101299_cad41cc31586760f1d316daa0f7e665b;
             btnTimkiem.BackgroundImageLayout = ImageLayout.Zoom;
             btnTimkiem.FlatAppearance.BorderSize = 0;
             btnTimkiem.FlatStyle = FlatStyle.Flat;

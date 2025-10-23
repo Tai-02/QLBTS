@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
+using QLBTS_DAL;
+using QLBTS_DTO;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -16,7 +19,6 @@ namespace QLBTS_GUI
     public partial class TimSanPham : Form
     {
         private QlbtsContext db = new QlbtsContext();
-
         private CancellationTokenSource _ctsTimKiem; // để hủy tìm kiếm cũ
 
 
@@ -76,32 +78,6 @@ namespace QLBTS_GUI
             });
         }
 
-        // 🧩 Đọc ảnh từ BLOB
-        //private async Task<Image> LoadImageFromBlobAsync(byte[] blob)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        try
-        //        {
-        //            if (blob != null && blob.Length > 0)
-        //            {
-        //                using (var ms = new MemoryStream(blob))
-        //                {
-        //                    return Image.FromStream(ms);
-        //                }
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            // Bỏ qua lỗi ảnh
-        //        }
-
-        //        // Ảnh mặc định
-        //        return Image.FromFile(@"D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS HinhAnh\unnamed.jpg");
-        //    });
-        //}
-
-
         private async Task TimKiemSanPhamAsync(string tuKhoa)
         {
             if (string.IsNullOrWhiteSpace(tuKhoa) || tuKhoa == "tìm kiếm...")
@@ -111,20 +87,6 @@ namespace QLBTS_GUI
             }
 
             flpSanPham.Controls.Clear();
-
-            // 🔹 Dùng task nền để không chặn UI
-            //var dsSp = await Task.Run(() =>
-            //{
-            //    using (var db = new QlbtsContext())
-            //    {
-            //        return db.SanPhams
-            //            .AsNoTracking() // tối ưu đọc dữ liệu
-            //            .Where(sp =>
-            //                (sp.TenSP != null && sp.TenSP.ToLower().Contains(tuKhoa)) ||
-            //                (sp.LoaiSP != null && sp.LoaiSP.ToLower().Contains(tuKhoa)))
-            //            .ToList();
-            //    }
-            //});
 
             // 🔹 Dùng task nền để không chặn UI
             var dsSp = await Task.Run(() =>
@@ -226,315 +188,130 @@ namespace QLBTS_GUI
             flpSanPham.ResumeLayout();
         }
 
-        //LỌC SẢN PHẨM BẰNG BỘ LỌC CHECKBOX
-        //private async void LocSanPham()
-        //{
-        //    flpSanPham.Controls.Clear();
+        private async void LocSanPham()
+        {
+            flpSanPham.Controls.Clear();
 
-        //    using (var db = new QlbtsContext())
-        //    {
-        //        var query = db.SanPhams.AsNoTracking().AsQueryable();
+            using (var db = new QlbtsContext())
+            {
+                var query = db.SanPhams.AsNoTracking().AsQueryable();
 
-        //        // ✅ Lọc theo từng checkbox
-        //        if (chkBestseller.Checked)
-        //        {
-        //            var maBestSeller = new List<string> { "SP001", "SP002", "SP003", "SP004", "SP005" };
-        //            query = query.Where(sp => maBestSeller.Contains(sp.MaSP));
-        //        }
+                // 🟢 Lọc theo từng checkbox
+                if (chkBestseller.Checked)
+                {
+                    // Lọc sản phẩm có mã từ 1 đến 5
+                    query = query.Where(sp => sp.MaSP >= 1 && sp.MaSP <= 5);
+                }
+                else if (chkMonmoi.Checked)
+                {
+                    // Lọc sản phẩm có tên chứa “trà sữa” và không nằm trong nhóm bestseller
+                    query = query.Where(sp =>
+                        sp.TenSP.ToLower().Contains("Trà sữa") &&
+                        sp.MaSP > 5
+                    );
+                }
+                else if (chkTratraicay.Checked)
+                {
+                    // Lọc sản phẩm có tên chứa “trà trái cây”
+                    query = query.Where(sp => sp.MaSP >= 11 && sp.MaSP <= 13);
+                }
+                else if (chkTopping.Checked)
+                {
+                    //// Lọc sản phẩm có tên hoặc loại chứa “topping”
+                    query = query.Where(sp => sp.MaSP >= 14 && sp.MaSP <= 18);
+                }
 
-        //        if (chkMonmoi.Checked)
-        //        {
-        //            //query = query.Where(sp =>
-        //            //    string.Compare(sp.MaSP, "SP006") >= 0 &&
-        //            //    (sp.LoaiSP == null || !sp.LoaiSP.ToLower().Contains("Topping"))
-        //            //);
+                // 🔎 Nếu có nhập từ khóa tìm kiếm
+                var tuKhoa = txtTimkiem.Text?.Trim().ToLower();
+                if (!string.IsNullOrEmpty(tuKhoa) && tuKhoa != "tìm kiếm...")
+                {
+                    //query = query.Where(sp =>
+                    //    (sp.TenSP != null && sp.TenSP.ToLower().Contains(tuKhoa)) ||
+                    //    (sp.LoaiSP != null && sp.LoaiSP.ToLower().Contains(tuKhoa)) ||
+                    //    sp.MaSP.ToString().Contains(tuKhoa)
+                    //);
+                }
 
-        //            // Danh sách mã Best Seller cần loại bỏ
-        //            var maBestSeller = new List<string> { "SP001", "SP002", "SP003", "SP004", "SP005" };
+                var dsSp = await query.ToListAsync();
 
-        //            query = query.Where(sp =>
-        //                // Không phải sản phẩm Best Seller
-        //                !maBestSeller.Contains(sp.MaSP) &&
+                // 🟠 Nếu không có sản phẩm phù hợp
+                if (!dsSp.Any())
+                {
+                    flpSanPham.Controls.Add(new Label
+                    {
+                        Text = "Không tìm thấy sản phẩm phù hợp.",
+                        AutoSize = true,
+                        ForeColor = Color.Gray,
+                        Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                        Margin = new Padding(10)
+                    });
+                    return;
+                }
 
-        //                // Không phải loại Topping
-        //                (sp.LoaiSP == null || !sp.LoaiSP.ToLower().Contains("topping")) &&
+                // 🟢 Hiển thị danh sách sản phẩm
+                foreach (var sp in dsSp)
+                {
+                    Panel pnl = new Panel
+                    {
+                        Width = 180,
+                        Height = 220,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Margin = new Padding(10),
+                        BackColor = Color.White
+                    };
 
-        //                // Là mã sản phẩm mới (SP006 trở đi hoặc TP004 trở đi)
-        //                (
-        //                    (sp.MaSP.StartsWith("SP") && string.Compare(sp.MaSP, "SP006") >= 0) ||
-        //                    (sp.MaSP.StartsWith("TP") && string.Compare(sp.MaSP, "TP004") >= 0)
-        //                )
-        //            );
-        //        }
+                    PictureBox pic = new PictureBox
+                    {
+                        Width = 160,
+                        Height = 120,
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Top = 10,
+                        Left = 10,
+                        Image = Image.FromFile(@"D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS HinhAnh\unnamed.jpg")
+                    };
 
-        //        if (chkTratraicay.Checked)
-        //        {
-        //            query = query.Where(sp => sp.LoaiSP != null && sp.LoaiSP.ToLower().Contains("trà trái cây"));
-        //        }
+                    Label lblTen = new Label
+                    {
+                        Text = sp.TenSP,
+                        AutoSize = false,
+                        Width = 160,
+                        Top = 140,
+                        Left = 10,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold)
+                    };
 
-        //        if (chkTopping.Checked)
-        //        {
-        //            query = query.Where(sp => sp.LoaiSP != null && sp.LoaiSP.ToLower().Contains("topping"));
-        //        }
+                    Label lblGia = new Label
+                    {
+                        Text = $"{sp.Gia:N0} VNĐ",
+                        AutoSize = false,
+                        Width = 160,
+                        Top = 170,
+                        Left = 10,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        ForeColor = Color.Red
+                    };
 
-        //        // Nếu bạn muốn kết hợp với txtTimkiem (từ khóa), áp dụng phần có thể trên server:
-        //        var tuKhoa = txtTimkiem.Text?.Trim().ToLower();
-        //        if (!string.IsNullOrEmpty(tuKhoa) && tuKhoa != "tìm kiếm...")
-        //        {
-        //            query = query.Where(sp =>
-        //                (sp.TenSP != null && sp.TenSP.ToLower().Contains(tuKhoa)) ||
-        //                (sp.LoaiSP != null && sp.LoaiSP.ToLower().Contains(tuKhoa)) ||
-        //                (sp.MaSP != null && sp.MaSP.ToLower().Contains(tuKhoa))
-        //            );
-        //        }
+                    pnl.Controls.Add(pic);
+                    pnl.Controls.Add(lblTen);
+                    pnl.Controls.Add(lblGia);
+                    flpSanPham.Controls.Add(pnl);
 
-        //        var dsSp = await query.ToListAsync();
-
-        //        if (!dsSp.Any())
-        //        {
-        //            flpSanPham.Controls.Add(new Label
-        //            {
-        //                Text = "Không tìm thấy sản phẩm phù hợp.",
-        //                AutoSize = true,
-        //                ForeColor = Color.Gray,
-        //                Font = new Font("Segoe UI", 12, FontStyle.Italic),
-        //                Margin = new Padding(10)
-        //            });
-        //            return;
-        //        }
-
-
-
-
-        //        // ✅ Hiển thị danh sách sản phẩm
-        //        foreach (var sp in dsSp)
-        //        {
-        //            Panel pnl = new Panel
-        //            {
-        //                Width = 180,
-        //                Height = 220,
-        //                BorderStyle = BorderStyle.FixedSingle,
-        //                Margin = new Padding(10),
-        //                BackColor = Color.White
-        //            };
-
-        //            PictureBox pic = new PictureBox
-        //            {
-        //                Width = 160,
-        //                Height = 120,
-        //                SizeMode = PictureBoxSizeMode.Zoom,
-        //                Top = 10,
-        //                Left = 10,
-        //                Image = Image.FromFile(@"D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS HinhAnh\unnamed.jpg")
-        //            };
-
-        //            Label lblTen = new Label
-        //            {
-        //                Text = sp.TenSP,
-        //                AutoSize = false,
-        //                Width = 160,
-        //                Top = 140,
-        //                Left = 10,
-        //                TextAlign = ContentAlignment.MiddleCenter,
-        //                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-        //            };
-
-        //            Label lblGia = new Label
-        //            {
-        //                Text = $"{sp.Gia:N0} VNĐ",
-        //                AutoSize = false,
-        //                Width = 160,
-        //                Top = 170,
-        //                Left = 10,
-        //                TextAlign = ContentAlignment.MiddleCenter,
-        //                ForeColor = Color.Red
-        //            };
-
-        //            pnl.Controls.Add(pic);
-        //            pnl.Controls.Add(lblTen);
-        //            pnl.Controls.Add(lblGia);
-        //            flpSanPham.Controls.Add(pnl);
-
-        //            // 🔹 Load ảnh song song
-        //            _ = Task.Run(async () =>
-        //            {
-        //                var img = await LoadImageAsync(sp.HinhAnh?.Trim() ?? "");
-        //                if (img != null)
-        //                {
-        //                    try { pic.Invoke(new Action(() => pic.Image = img)); }
-        //                    catch { }
-        //                }
-        //            });
-        //        }
-        //    }
-        //}
-
-
-
-
-
-
-
-
-
-
-        // 🔍 Tìm kiếm sản phẩm
-        //private async Task TimKiemSanPhamAsync(string tuKhoa)
-        //{
-        //    if (string.IsNullOrWhiteSpace(tuKhoa) || tuKhoa == "tìm kiếm...")
-        //    {
-        //        flpSanPham.Controls.Clear();
-        //        return;
-        //    }
-
-        //    tuKhoa = tuKhoa.ToLower();
-
-        //    var dsSp = await Task.Run(() =>
-        //    {
-        //        using (var db = new QlbtsContext())
-        //        {
-        //            return db.SanPhams
-        //                .AsNoTracking()
-        //                .Where(sp => sp.TenSP.ToLower().Contains(tuKhoa))
-        //                .ToList();
-        //        }
-        //    });
-
-        //    flpSanPham.Controls.Clear();
-        //    flpSanPham.SuspendLayout();
-
-        //    if (dsSp.Any())
-        //    {
-        //        foreach (var sp in dsSp)
-        //        {
-        //            Panel pnl = TaoPanelSanPham(sp);
-        //            flpSanPham.Controls.Add(pnl);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        flpSanPham.Controls.Add(new Label
-        //        {
-        //            Text = "Không tìm thấy sản phẩm!",
-        //            AutoSize = true,
-        //            ForeColor = Color.Gray,
-        //            Font = new Font("Segoe UI", 12, FontStyle.Italic),
-        //            Margin = new Padding(10)
-        //        });
-        //    }
-
-        //    flpSanPham.ResumeLayout();
-        //}
-
-        //// 🧩 Hàm tạo panel hiển thị sản phẩm
-        //private Panel TaoPanelSanPham(SanPham sp)
-        //{
-        //    Panel pnl = new Panel
-        //    {
-        //        Width = 180,
-        //        Height = 220,
-        //        BorderStyle = BorderStyle.FixedSingle,
-        //        Margin = new Padding(10),
-        //        BackColor = Color.White
-        //    };
-
-        //    PictureBox pic = new PictureBox
-        //    {
-        //        Width = 160,
-        //        Height = 120,
-        //        SizeMode = PictureBoxSizeMode.Zoom,
-        //        Top = 10,
-        //        Left = 10,
-        //        Image = Image.FromFile(@"D:\HK5\HK5-NHAP MON CONG NGHE PHAN MEM\QLBTS HinhAnh\unnamed.jpg") // ảnh mặc định
-        //    };
-
-        //    Label lblTen = new Label
-        //    {
-        //        Text = sp.TenSP,
-        //        AutoSize = false,
-        //        Width = 160,
-        //        Top = 140,
-        //        Left = 10,
-        //        TextAlign = ContentAlignment.MiddleCenter,
-        //        Font = new Font("Segoe UI", 10, FontStyle.Bold)
-        //    };
-
-        //    Label lblGia = new Label
-        //    {
-        //        Text = $"{sp.Gia:N0} VNĐ",
-        //        AutoSize = false,
-        //        Width = 160,
-        //        Top = 170,
-        //        Left = 10,
-        //        TextAlign = ContentAlignment.MiddleCenter,
-        //        ForeColor = Color.Red
-        //    };
-
-        //    pnl.Controls.Add(pic);
-        //    pnl.Controls.Add(lblTen);
-        //    pnl.Controls.Add(lblGia);
-
-        //    // Load ảnh từ BLOB song song
-        //    _ = Task.Run(async () =>
-        //    {
-        //        var img = await LoadImageFromBlobAsync(sp.HinhAnh);
-        //        if (img != null)
-        //        {
-        //            try
-        //            {
-        //                pic.Invoke(new Action(() => pic.Image = img));
-        //            }
-        //            catch { }
-        //        }
-        //    });
-
-        //    return pnl;
-        //}
-
-        //// ✅ Lọc sản phẩm đơn giản (ví dụ theo Bestseller, Size, ...)
-        //private async void LocSanPham()
-        //{
-        //    flpSanPham.Controls.Clear();
-
-        //    using (var db = new QlbtsContext())
-        //    {
-        //        var query = db.SanPhams.AsNoTracking().AsQueryable();
-
-        //        // Ví dụ lọc: Bestseller = 5 sản phẩm đầu tiên
-        //        if (chkBestseller.Checked)
-        //        {
-        //            query = query.OrderBy(sp => sp.MaSP).Take(5);
-        //        }
-
-        //        // Lọc theo kích cỡ (nếu cần)
-        //        if (chkMonmoi.Checked)
-        //        {
-        //            query = query.OrderByDescending(sp => sp.MaSP).Take(5);
-        //        }
-
-        //        var dsSp = await query.ToListAsync();
-
-        //        if (!dsSp.Any())
-        //        {
-        //            flpSanPham.Controls.Add(new Label
-        //            {
-        //                Text = "Không tìm thấy sản phẩm phù hợp.",
-        //                AutoSize = true,
-        //                ForeColor = Color.Gray,
-        //                Font = new Font("Segoe UI", 12, FontStyle.Italic),
-        //                Margin = new Padding(10)
-        //            });
-        //            return;
-        //        }
-
-        //        foreach (var sp in dsSp)
-        //        {
-        //            flpSanPham.Controls.Add(TaoPanelSanPham(sp));
-        //        }
-        //    }
-        //}
-
-
+                    // 🧵 Load ảnh song song
+                    _ = Task.Run(async () =>
+                    {
+                        var img = await LoadImageAsync(sp.HinhAnh?.Trim() ?? "");
+                        if (img != null)
+                        {
+                            try { pic.Invoke(new Action(() => pic.Image = img)); }
+                            catch { }
+                        }
+                    });
+                }
+            }
+        }
+        
+        
         private void HienThiSanPhamBestSeller()
         {
             flpSanPham.Controls.Clear();
@@ -614,6 +391,41 @@ namespace QLBTS_GUI
             }
         }
 
+        private void chk_CheckedChanged(object sender, EventArgs e)
+        {
+            // ✅ Ngắt event tạm thời để tránh bị gọi lặp khi bỏ tick các checkbox khác
+            chkBestseller.CheckedChanged -= chk_CheckedChanged;
+            chkMonmoi.CheckedChanged -= chk_CheckedChanged;
+            chkTratraicay.CheckedChanged -= chk_CheckedChanged;
+            chkTopping.CheckedChanged -= chk_CheckedChanged;
+
+            try
+            {
+                CheckBox current = sender as CheckBox;
+
+                if (current.Checked)
+                {
+                    // Bỏ tick các checkbox khác
+                    foreach (CheckBox cb in new[] { chkBestseller, chkMonmoi, chkTratraicay, chkTopping })
+                    {
+                        if (cb != current)
+                            cb.Checked = false;
+                    }
+                }
+
+                LocSanPham();
+            }
+            finally
+            {
+                chkBestseller.CheckedChanged += chk_CheckedChanged;
+                chkMonmoi.CheckedChanged += chk_CheckedChanged;
+                chkTratraicay.CheckedChanged += chk_CheckedChanged;
+                chkTopping.CheckedChanged += chk_CheckedChanged;
+            }
+        }
+
+
+
         private async void TimSanPham_Load(object sender, EventArgs e)
         {
             txtTimkiem.Text = "Tìm kiếm...";
@@ -622,11 +434,10 @@ namespace QLBTS_GUI
             // Hiển thị danh sách sản phẩm Best Seller khi form mở
             HienThiSanPhamBestSeller();
 
-            // Đăng ký sự kiện khi tick checkbox
-            //chkBestseller.CheckedChanged += (s, ev) => LocSanPham();
-            //chkMonmoi.CheckedChanged += (s, ev) => LocSanPham();
-            //chkTratraicay.CheckedChanged += (s, ev) => LocSanPham();
-            //chkTopping.CheckedChanged += (s, ev) => LocSanPham();
+            chkBestseller.CheckedChanged += chk_CheckedChanged;
+            chkMonmoi.CheckedChanged += chk_CheckedChanged;
+            chkTratraicay.CheckedChanged += chk_CheckedChanged;
+            chkTopping.CheckedChanged += chk_CheckedChanged;
         }
 
         private void txtTimkiem_Leave(object sender, EventArgs e)
@@ -650,22 +461,6 @@ namespace QLBTS_GUI
         private async void btnTimkiem_Click(object sender, EventArgs e)
         {
             await TimKiemSanPhamAsync(txtTimkiem.Text.Trim().ToLower());
-        }
-
-        private void chkBestseller_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void chkMonmoi_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void chkTratraicay_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void chkTopping_CheckedChanged(object sender, EventArgs e)
-        {
         }
     }
 }

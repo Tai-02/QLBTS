@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <PackageReference Include="Bunifu.UI.WinForms" Version="9.1.0" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
@@ -17,9 +16,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-=======
-    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
->>>>>>> origin/master
   </ItemGroup>
 
   <ItemGroup>
