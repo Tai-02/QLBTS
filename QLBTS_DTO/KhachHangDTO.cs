@@ -9,12 +9,10 @@ namespace QLBTS_DTO
     public class KhachHangDTO
     {
         public int MaKH { get; set; }
-        public string HoTen { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string SDT { get; set; } = string.Empty;
-        public string DiaChi { get; set; } = string.Empty;
-        public string MatKhau { get; set; } = string.Empty;
-        public string TrangThai { get; set; } = string.Empty;
-        public DateTime NgayTao { get; set; }
+        public int MaTK { get; set; }
+        public string HoTen { get; set; }
+        public string SDT { get; set; }
+        public string DiaChi { get; set; }
+        public byte[] AnhKH { get; set; }
     }
 }

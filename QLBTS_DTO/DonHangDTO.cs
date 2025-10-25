@@ -12,8 +12,8 @@ namespace QLBTS_DTO
         public int? MaKH { get; set; }
         public int? MaNVQuay { get; set; }
         public int? MaNVGiao { get; set; }
-        public DateTime NgayDat { get; set; }
+        public DateTime? NgayDat { get; set; }
         public int TongTien { get; set; }
-        public string TrangThai { get; set; } = string.Empty;
+        public string TrangThai { get; set; }
     }
 }

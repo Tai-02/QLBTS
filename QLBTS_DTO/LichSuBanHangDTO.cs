@@ -12,6 +12,6 @@ namespace QLBTS_DTO
         public int MaNVQuay { get; set; }
         public int MaDH { get; set; }
         public int TongTien { get; set; }
-        public DateTime ThoiGian { get; set; }
+        public DateTime? ThoiGian { get; set; }
     }
 }
