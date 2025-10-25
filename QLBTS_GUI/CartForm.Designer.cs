@@ -72,7 +72,6 @@
             // productContainer
             // 
             productContainer.AutoScroll = true;
-            productContainer.FlowDirection = FlowDirection.TopDown;
             productContainer.Location = new Point(20, 100);
             productContainer.Name = "productContainer";
             productContainer.Size = new Size(580, 450);
