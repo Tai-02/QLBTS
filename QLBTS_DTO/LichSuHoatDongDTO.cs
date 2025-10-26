@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace QLBTS_DTO
 {
-    public class LichSuGiaoHangDTO
+    public class LichSuHoatDongDTO
     {
-        public int MaLSGH { get; set; }
-        public int MaNVGiao { get; set; }
+        public int MaLS { get; set; }
+        public int MaTK { get; set; }
         public int MaDH { get; set; }
         public int TongTien { get; set; }
         public string TrangThai { get; set; }
-        public DateTime? ThoiGian { get; set; }
+        public DateTime ThoiGian { get; set; }
+        public string LoaiLichSu { get; set; } // "MuaHang", "BanHang", "GiaoHang"
 
     }
 }
