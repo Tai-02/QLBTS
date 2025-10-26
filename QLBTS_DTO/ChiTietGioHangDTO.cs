@@ -12,5 +12,6 @@ namespace QLBTS_DTO
         public int MaGH { get; set; }
         public int MaSP { get; set; }
         public int SoLuong { get; set; }
+        public decimal ThanhTien { get; set; }
     }
 }

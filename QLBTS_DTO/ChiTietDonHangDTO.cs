@@ -13,5 +13,8 @@ namespace QLBTS_DTO
         public int MaSP { get; set; }
         public int SoLuong { get; set; }
         public int DonGia { get; set; }
+        public string TenSP { get; set; }
+        public string Size { get; set; }
+        public decimal ThanhTien { get; set; }
     }
 }

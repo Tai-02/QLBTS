@@ -15,5 +15,10 @@ namespace QLBTS_DTO
         public DateTime NgayDat { get; set; }
         public int TongTien { get; set; }
         public string TrangThai { get; set; } = string.Empty;
+        public string DiaChiKhachHang { get; set; }
+        public string SDTKhachHang { get; set; }
+        public string TenKhachHang { get; set; }
+        // Thêm dòng này vào file DonHangDTO.cs
+        public DateTime ThoiGianGiao { get; set; }
     }
 }

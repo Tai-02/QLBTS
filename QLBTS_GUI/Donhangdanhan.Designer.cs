@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class Donhangcanxacnhan
+    partial class Donhangdanhan
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -17,17 +17,17 @@
         {
             SuspendLayout();
             // 
-            // Donhangcanxacnhan
+            // Donhangdanhan
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(875, 562);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Name = "Donhangcanxacnhan";
+            Name = "Donhangdanhan";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Đơn hàng cần xác nhận";
-            Load += Donhangcanxacnhan_Load;
+            Load += Donhangdanhan_Load;
             ResumeLayout(false);
         }
     }
