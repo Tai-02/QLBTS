@@ -11,17 +11,17 @@ namespace QLBTS_DTO
 {
     public class KhachHangDTO
     {
-        [Key]
-        public int MaKH { get; set; }
-
-        [ForeignKey("TaiKhoan")]
+        //[Key]
         //public int MaKH { get; set; }
-        public int MaTK { get; set; }
-        public string HoTen { get; set; }
-        public string SDT { get; set; }
-        public string DiaChi { get; set; }
-        public byte[]? AnhKH { get; set; }
-        public TaiKhoanDTO TaiKhoan { get; set; }
+
+        //[ForeignKey("TaiKhoan")]
+        ////public int MaKH { get; set; }
+        //public int MaTK { get; set; }
+        //public string HoTen { get; set; }
+        //public string SDT { get; set; }
+        //public string DiaChi { get; set; }
+        //public byte[]? AnhKH { get; set; }
+        //public TaiKhoanDTO TaiKhoan { get; set; }
 
     }
 }

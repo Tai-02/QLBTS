@@ -12,8 +12,8 @@ namespace QLBTS_DAL
     public class QlbtsContext : DbContext
     {
         public DbSet<SanPhamDTO> SanPhams { get; set; }
-        public DbSet<TaiKhoanDTO> TaiKhoan { get; set; }
-        public DbSet<KhachHangDTO> KhachHang { get; set; }
+        //public DbSet<TaiKhoanDTO> TaiKhoan { get; set; }
+        //public DbSet<KhachHangDTO> KhachHang { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,12 +43,12 @@ namespace QLBTS_DAL
 
 
 
-            modelBuilder.Entity<KhachHangDTO>()
-             .HasOne(kh => kh.TaiKhoan)
-             .WithOne(tk => tk.KhachHang)
-             .HasForeignKey<KhachHangDTO>(kh => kh.MaTK);
+            //modelBuilder.Entity<KhachHangDTO>()
+            // .HasOne(kh => kh.TaiKhoan)
+            // .WithOne(tk => tk.KhachHang)
+            // .HasForeignKey<KhachHangDTO>(kh => kh.MaTK);
 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
         }
 
     }

@@ -1,3 +1,6 @@
+using Microsoft.VisualBasic.ApplicationServices;
+using QLBTS_DTO;
+
 namespace QLBTS_GUI
 {
     internal static class Program
@@ -12,19 +15,11 @@ namespace QLBTS_GUI
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            //Form form = new Form1();
-            //form.ShowDialog();
-
-            /*CHECK CODE*/
-            //Form form = new TimSanPham();
-            //form.ShowDialog();
-
-            //Form form = new DangNhap();
-
-            //form.ShowDialog();
-
-            Form form = new ThongTinCaNhan();
+            Form form = new DangNhap();
             form.ShowDialog();
+
+            //Form form = new frmThongTinCaNhan(TaiKhoanDTO user);
+            //form.ShowDialog();
         }
     }
 }
