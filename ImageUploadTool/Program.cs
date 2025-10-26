@@ -7,14 +7,10 @@ class Program
 {
     static void Main()
     {
-        // ❌ XÓA DÒNG NÀY
-        // Console.OutputEncoding = System.Text.Encoding.UTF8;
-
         Console.WriteLine("==========================================");
         Console.WriteLine("  QLBTS - Image Uploader Tool");
         Console.WriteLine("==========================================\n");
 
-        // ===== CẤU HÌNH =====
         string imageFolder = @"D:\data_image";  // ← ĐỔI ĐƯỜNG DẪN
         string connectionString = "Server=localhost;Database=QLBTS;Uid=root;Pwd=12345gray;CharSet=utf8mb4;";
 
@@ -59,8 +55,8 @@ public class ImageUploader
             { 18, "tranTrauTrang.jpg" },
             { 19, "traSuaDauDo.jpg" },
             { 20, "traSuaDauDo.jpg" },
-            { 21, "traSuaKhoaiMon.jpg" },
-            { 22, "traSuaKhoaiMon.jpg" },
+            { 21, "traSuaKhoaiMon.png" },
+            { 22, "traSuaKhoaiMon.png" },
             { 23, "traSuaOreo.jpg" },
             { 24, "traSuaOreo.jpg" }
         };

@@ -19,8 +19,7 @@ namespace QLBTS_GUI
         private ProductBLL _productBLL;
         private CartBLL _cartBLL;
         private int _currentQuantity = 1;
-        private int? _maKH;
-        private int? _maNV;
+        private int _maTK;
 
         public ProductDetailForm()
         {
@@ -38,20 +37,9 @@ namespace QLBTS_GUI
         /// <summary>
         /// Load sản phẩm theo MaSP (cho Khách hàng)
         /// </summary>
-        public void LoadProduct(int maSP, int maKH)
+        public void LoadProduct(int maSP, int maTK)
         {
-            _maKH = maKH;
-            _maNV = null;
-            LoadProductData(maSP);
-        }
-
-        /// <summary>
-        /// Load sản phẩm theo MaSP (cho Nhân viên)
-        /// </summary>
-        public void LoadProductForEmployee(int maSP, int maNV)
-        {
-            _maKH = null;
-            _maNV = maNV;
+            _maTK = maTK;
             LoadProductData(maSP);
         }
 
@@ -274,20 +262,7 @@ namespace QLBTS_GUI
                 }
 
                 // Thêm vào giỏ
-                bool success;
-                if (_maKH.HasValue)
-                {
-                    success = _cartBLL.AddToCartCustomer(_maKH.Value, _product.MaSP, quantity);
-                }
-                else if (_maNV.HasValue)
-                {
-                    success = _cartBLL.AddToCartEmployee(_maNV.Value, _product.MaSP, quantity);
-                }
-                else
-                {
-                    ShowError("Chưa đăng nhập!");
-                    return;
-                }
+                bool success = _cartBLL.AddToCart(_maTK, _product.MaSP, quantity);
 
                 if (success)
                 {

@@ -17,33 +17,21 @@ namespace QLBTS_BLL
             cartDAL = new CartDAL();
         }
 
-        public List<CartItemViewModel> GetCartByCustomer(int maKH)
+        /// <summary>
+        /// Lấy giỏ hàng theo MaTK (gộp chung Customer + Employee)
+        /// </summary>
+        public List<CartItemViewModel> GetCart(int maTK)
         {
-            if (maKH <= 0)
-                throw new ArgumentException("Mã khách hàng không hợp lệ");
+            if (maTK <= 0)
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
 
             try
             {
-                return cartDAL.GetCartByCustomer(maKH);
+                return cartDAL.GetCart(maTK);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi BLL - GetCartByCustomer: {ex.Message}", ex);
-            }
-        }
-
-        public List<CartItemViewModel> GetCartByEmployee(int maNV)
-        {
-            if (maNV <= 0)
-                throw new ArgumentException("Mã nhân viên không hợp lệ");
-
-            try
-            {
-                return cartDAL.GetCartByEmployee(maNV);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi BLL - GetCartByEmployee: {ex.Message}", ex);
+                throw new Exception($"Lỗi BLL - GetCart: {ex.Message}", ex);
             }
         }
 
@@ -62,10 +50,6 @@ namespace QLBTS_BLL
             return items?.Sum(x => x.TienGiam) ?? 0;
         }
 
-
-        /// <summary>
-        /// Cập nhật số lượng
-        /// </summary>
         public bool UpdateQuantity(int maCTGH, int soLuong)
         {
             if (maCTGH <= 0)
@@ -88,9 +72,6 @@ namespace QLBTS_BLL
             }
         }
 
-        /// <summary>
-        /// Xóa sản phẩm khỏi giỏ
-        /// </summary>
         public bool RemoveItem(int maCTGH)
         {
             if (maCTGH <= 0)
@@ -109,13 +90,13 @@ namespace QLBTS_BLL
         }
 
         /// <summary>
-        /// Thêm sản phẩm vào giỏ (Khách hàng)
+        /// Thêm sản phẩm vào giỏ (gộp chung)
         /// </summary>
-        public bool AddToCartCustomer(int maKH, int maSP, int soLuong)
+        public bool AddToCart(int maTK, int maSP, int soLuong)
         {
-            if (maKH <= 0 || maSP <= 0)
+            if (maTK <= 0 || maSP <= 0)
             {
-                throw new ArgumentException("Mã khách hàng hoặc mã sản phẩm không hợp lệ");
+                throw new ArgumentException("Mã tài khoản hoặc mã sản phẩm không hợp lệ");
             }
 
             if (soLuong < 1)
@@ -125,90 +106,39 @@ namespace QLBTS_BLL
 
             try
             {
-                return cartDAL.AddToCart(maKH, null, maSP, soLuong);
+                return cartDAL.AddToCart(maTK, maSP, soLuong);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi BLL - AddToCartCustomer: {ex.Message}", ex);
+                throw new Exception($"Lỗi BLL - AddToCart: {ex.Message}", ex);
             }
         }
 
         /// <summary>
-        /// Thêm sản phẩm vào giỏ (Nhân viên)
+        /// Xóa toàn bộ giỏ hàng
         /// </summary>
-        public bool AddToCartEmployee(int maNV, int maSP, int soLuong)
+        public bool ClearCart(int maTK)
         {
-            if (maNV <= 0 || maSP <= 0)
+            if (maTK <= 0)
             {
-                throw new ArgumentException("Mã nhân viên hoặc mã sản phẩm không hợp lệ");
-            }
-
-            if (soLuong < 1)
-            {
-                throw new ArgumentException("Số lượng phải >= 1");
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
             }
 
             try
             {
-                return cartDAL.AddToCart(null, maNV, maSP, soLuong);
+                return cartDAL.ClearCart(maTK);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi BLL - AddToCartEmployee: {ex.Message}", ex);
+                throw new Exception($"Lỗi BLL - ClearCart: {ex.Message}", ex);
             }
         }
 
-        /// <summary>
-        /// Xóa toàn bộ giỏ hàng (Khách hàng)
-        /// </summary>
-        public bool ClearCartCustomer(int maKH)
-        {
-            if (maKH <= 0)
-            {
-                throw new ArgumentException("Mã khách hàng không hợp lệ");
-            }
-
-            try
-            {
-                return cartDAL.ClearCart(maKH, null);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi BLL - ClearCartCustomer: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// Xóa toàn bộ giỏ hàng (Nhân viên)
-        /// </summary>
-        public bool ClearCartEmployee(int maNV)
-        {
-            if (maNV <= 0)
-            {
-                throw new ArgumentException("Mã nhân viên không hợp lệ");
-            }
-
-            try
-            {
-                return cartDAL.ClearCart(null, maNV);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi BLL - ClearCartEmployee: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// Kiểm tra giỏ hàng có trống không
-        /// </summary>
         public bool IsCartEmpty(List<CartItemViewModel> items)
         {
             return items == null || !items.Any();
         }
 
-        /// <summary>
-        /// Kiểm tra tất cả sản phẩm còn hàng không
-        /// </summary>
         public bool CheckAllItemsAvailable(List<CartItemViewModel> items)
         {
             if (items == null || !items.Any())
@@ -217,9 +147,6 @@ namespace QLBTS_BLL
             return items.All(x => x.ConHang);
         }
 
-        /// <summary>
-        /// Lấy danh sách sản phẩm hết hàng
-        /// </summary>
         public List<CartItemViewModel> GetOutOfStockItems(List<CartItemViewModel> items)
         {
             if (items == null || !items.Any())

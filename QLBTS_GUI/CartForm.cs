@@ -48,27 +48,11 @@ namespace QLBTS_GUI
         /// <summary>
         /// Load giỏ hàng của Khách hàng từ database
         /// </summary>
-        public void LoadCartFromDatabaseCustomer(int maKH)
+        public void LoadCartFromDatabase(int maTK)
         {
             try
             {
-                _cartItems = _cartBLL.GetCartByCustomer(maKH);
-                RefreshCartDisplay();
-            }
-            catch (Exception ex)
-            {
-                ShowError($"Lỗi khi tải giỏ hàng: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Load giỏ hàng của Nhân viên từ database
-        /// </summary>
-        public void LoadCartFromDatabaseEmployee(int maNV)
-        {
-            try
-            {
-                _cartItems = _cartBLL.GetCartByEmployee(maNV);
+                _cartItems = _cartBLL.GetCart(maTK);
                 RefreshCartDisplay();
             }
             catch (Exception ex)
@@ -139,14 +123,7 @@ namespace QLBTS_GUI
                 // Lấy MaKH hoặc MaNV từ item đầu tiên
                 var firstItem = _cartItems.First();
 
-                if (firstItem.MaKH.HasValue)
-                {
-                    LoadCartFromDatabaseCustomer(firstItem.MaKH.Value);
-                }
-                else if (firstItem.MaNV.HasValue)
-                {
-                    LoadCartFromDatabaseEmployee(firstItem.MaNV.Value);
-                }
+                LoadCartFromDatabase(firstItem.MaTK);
             }
         }
 

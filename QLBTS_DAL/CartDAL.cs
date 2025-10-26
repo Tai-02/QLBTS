@@ -13,25 +13,9 @@ namespace QLBTS_DAL
         private string connectionString = "Server=localhost;Database=QLBTS;Uid=root;Pwd=12345gray;CharSet=utf8mb4;";
 
         /// <summary>
-        /// Lấy giỏ hàng của Khách hàng
+        /// Lấy giỏ hàng theo MaTK (gộp chung Customer + Employee)
         /// </summary>
-        public List<CartItemViewModel> GetCartByCustomer(int maKH)
-        {
-            return GetCart(maKH, null);
-        }
-
-        /// <summary>
-        /// Lấy giỏ hàng của Nhân viên
-        /// </summary>
-        public List<CartItemViewModel> GetCartByEmployee(int maNV)
-        {
-            return GetCart(null, maNV);
-        }
-
-        /// <summary>
-        /// Lấy giỏ hàng (JOIN 3 bảng)
-        /// </summary>
-        private List<CartItemViewModel> GetCart(int? maKH, int? maNV)
+        public List<CartItemViewModel> GetCart(int maTK)
         {
             List<CartItemViewModel> items = new List<CartItemViewModel>();
 
@@ -51,29 +35,16 @@ namespace QLBTS_DAL
                             sp.KhuyenMai,
                             sp.HinhAnh,
                             sp.TrangThai,
-                            gh.MaKH,
-                            gh.MaNV,
+                            gh.MaTK,
                             gh.NgayTao
                         FROM ChiTietGioHang ctgh
                         INNER JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
                         INNER JOIN SanPham sp ON ctgh.MaSP = sp.MaSP
-                        WHERE ";
-
-                    if (maKH.HasValue)
-                        query += "gh.MaKH = @MaKH";
-                    else if (maNV.HasValue)
-                        query += "gh.MaNV = @MaNV";
-                    else
-                        throw new ArgumentException("Phải cung cấp MaKH hoặc MaNV");
-
-                    query += " ORDER BY gh.NgayTao DESC";
+                        WHERE gh.MaTK = @MaTK
+                        ORDER BY gh.NgayTao DESC";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                    if (maKH.HasValue)
-                        cmd.Parameters.AddWithValue("@MaKH", maKH.Value);
-                    if (maNV.HasValue)
-                        cmd.Parameters.AddWithValue("@MaNV", maNV.Value);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
 
                     conn.Open();
                     MySqlDataReader reader = cmd.ExecuteReader();
@@ -91,8 +62,7 @@ namespace QLBTS_DAL
                             Gia = reader.GetInt32("Gia"),
                             KhuyenMai = reader.GetInt32("KhuyenMai"),
                             TrangThai = reader.GetString("TrangThai"),
-                            MaKH = reader.IsDBNull(reader.GetOrdinal("MaKH")) ? null : (int?)reader.GetInt32("MaKH"),
-                            MaNV = reader.IsDBNull(reader.GetOrdinal("MaNV")) ? null : (int?)reader.GetInt32("MaNV"),
+                            MaTK = reader.GetInt32("MaTK"),
                             NgayTao = reader.IsDBNull(reader.GetOrdinal("NgayTao")) ? null : (DateTime?)reader.GetDateTime("NgayTao")
                         };
 
@@ -170,22 +140,12 @@ namespace QLBTS_DAL
         /// <summary>
         /// Lấy hoặc tạo giỏ hàng cho user
         /// </summary>
-        private int GetOrCreateCart(int? maKH, int? maNV, MySqlConnection conn)
+        private int GetOrCreateCart(int maTK, MySqlConnection conn)
         {
             // Kiểm tra giỏ hàng đã tồn tại chưa
-            string checkQuery = "SELECT MaGH FROM GioHang WHERE ";
-
-            if (maKH.HasValue)
-                checkQuery += "MaKH = @MaKH";
-            else if (maNV.HasValue)
-                checkQuery += "MaNV = @MaNV";
-
+            string checkQuery = "SELECT MaGH FROM GioHang WHERE MaTK = @MaTK";
             MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn);
-
-            if (maKH.HasValue)
-                checkCmd.Parameters.AddWithValue("@MaKH", maKH.Value);
-            if (maNV.HasValue)
-                checkCmd.Parameters.AddWithValue("@MaNV", maNV.Value);
+            checkCmd.Parameters.AddWithValue("@MaTK", maTK);
 
             object result = checkCmd.ExecuteScalar();
 
@@ -195,10 +155,9 @@ namespace QLBTS_DAL
             }
 
             // Tạo mới giỏ hàng
-            string insertQuery = "INSERT INTO GioHang (MaKH, MaNV) VALUES (@MaKH, @MaNV); SELECT LAST_INSERT_ID();";
+            string insertQuery = "INSERT INTO GioHang (MaTK) VALUES (@MaTK); SELECT LAST_INSERT_ID();";
             MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn);
-            insertCmd.Parameters.AddWithValue("@MaKH", maKH.HasValue ? (object)maKH.Value : DBNull.Value);
-            insertCmd.Parameters.AddWithValue("@MaNV", maNV.HasValue ? (object)maNV.Value : DBNull.Value);
+            insertCmd.Parameters.AddWithValue("@MaTK", maTK);
 
             return Convert.ToInt32(insertCmd.ExecuteScalar());
         }
@@ -206,7 +165,7 @@ namespace QLBTS_DAL
         /// <summary>
         /// Thêm sản phẩm vào giỏ hàng
         /// </summary>
-        public bool AddToCart(int? maKH, int? maNV, int maSP, int soLuong)
+        public bool AddToCart(int maTK, int maSP, int soLuong)
         {
             try
             {
@@ -215,7 +174,7 @@ namespace QLBTS_DAL
                     conn.Open();
 
                     // Lấy hoặc tạo giỏ hàng
-                    int maGH = GetOrCreateCart(maKH, maNV, conn);
+                    int maGH = GetOrCreateCart(maTK, conn);
 
                     // Kiểm tra sản phẩm đã có trong giỏ chưa
                     string checkQuery = @"
@@ -270,7 +229,7 @@ namespace QLBTS_DAL
         /// <summary>
         /// Xóa toàn bộ giỏ hàng (sau khi thanh toán)
         /// </summary>
-        public bool ClearCart(int? maKH, int? maNV)
+        public bool ClearCart(int maTK)
         {
             try
             {
@@ -279,19 +238,9 @@ namespace QLBTS_DAL
                     conn.Open();
 
                     // Lấy MaGH
-                    string getMaGHQuery = "SELECT MaGH FROM GioHang WHERE ";
-
-                    if (maKH.HasValue)
-                        getMaGHQuery += "MaKH = @MaKH";
-                    else if (maNV.HasValue)
-                        getMaGHQuery += "MaNV = @MaNV";
-
+                    string getMaGHQuery = "SELECT MaGH FROM GioHang WHERE MaTK = @MaTK";
                     MySqlCommand getMaGHCmd = new MySqlCommand(getMaGHQuery, conn);
-
-                    if (maKH.HasValue)
-                        getMaGHCmd.Parameters.AddWithValue("@MaKH", maKH.Value);
-                    if (maNV.HasValue)
-                        getMaGHCmd.Parameters.AddWithValue("@MaNV", maNV.Value);
+                    getMaGHCmd.Parameters.AddWithValue("@MaTK", maTK);
 
                     object result = getMaGHCmd.ExecuteScalar();
 
