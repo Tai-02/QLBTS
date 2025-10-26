@@ -1,155 +1,187 @@
-﻿using System;
+﻿using QLBTS_BLL;
+using QLBTS_DTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
     public partial class GioHang : Form
     {
+        private int maKH = 1;
+        private List<SanPhamDTO> danhSachSP = new();
+        private GioHangBLL gioHangBLL = new GioHangBLL();
+
         public GioHang()
         {
             InitializeComponent();
+            button1.Click += BtnXacNhan_Click;
         }
 
         private void GioHang_Load(object sender, EventArgs e)
         {
-
-            // Giả lập dữ liệu mẫu (sau này có thể lấy từ DB)
-            List<SanPham> dsSanPham = new List<SanPham>
-            {
-                new SanPham { Ten = "Trà sữa truyền thống", Size = "M", Gia = 35000, HinhAnh = "images/trasua1.jpg" },
-                new SanPham { Ten = "Trà sữa matcha", Size = "L", Gia = 45000, HinhAnh = "images/trasua2.jpg" },
-                new SanPham { Ten = "Hồng trà sữa trân châu", Size = "M", Gia = 40000, HinhAnh = "images/trasua3.jpg" },
-                new SanPham { Ten = "Hồng trà sữa hihi châu", Size = "M", Gia = 40000, HinhAnh = "images/trasua3.jpg" }
-
-            };
-
-            HienThiSanPham(dsSanPham);
-
+            LoadGioHang();
         }
 
-        private void HienThiSanPham(List<SanPham> danhSach)
+        private void LoadGioHang()
         {
             flowCart.Controls.Clear();
+            danhSachSP = gioHangBLL.LayGioHangTheoMaKH(maKH);
 
-            foreach (var sp in danhSach)
+            foreach (var sp in danhSachSP)
             {
-                // Panel chứa toàn bộ thông tin sản phẩm
-                Panel item = new Panel();
-                item.Size = new Size(580, 130);
-                item.BackColor = Color.White;
-                item.BorderStyle = BorderStyle.FixedSingle;
-                item.Margin = new Padding(5);
-
-                // Ảnh sản phẩm
-                PictureBox pic = new PictureBox();
-                pic.Size = new Size(100, 100);
-                pic.Location = new Point(20, 15);
-                pic.SizeMode = PictureBoxSizeMode.Zoom;
-                if (System.IO.File.Exists(sp.HinhAnh))
-                    pic.Image = Image.FromFile(sp.HinhAnh);
-                pic.Region = System.Drawing.Region.FromHrgn(
-                    CreateRoundRectRgn(0, 0, pic.Width, pic.Height, 100, 100)); // bo tròn ảnh
-
-                // Tên sản phẩm
-                Label lblTen = new Label();
-                lblTen.Text = sp.Ten;
-                lblTen.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-                lblTen.Location = new Point(140, 20);
-                lblTen.AutoSize = true;
-
-                // Size
-                Label lblSize = new Label();
-                lblSize.Text = $"Size: {sp.Size}";
-                lblSize.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-                lblSize.Location = new Point(200, 60);
-                lblSize.AutoSize = true;
-
-                // Giá
-                Label lblGia = new Label();
-                lblGia.Text = $"Giá: {sp.Gia.ToString("N0")}đ";
-                lblGia.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-                lblGia.Location = new Point(260, 90);
-                lblGia.AutoSize = true;
-
-                // Nhãn “Số lượng”
-                Label lblSL = new Label();
-                lblSL.Text = "Số lượng:";
-                lblSL.Font = new Font("Segoe UI", 12);
-                lblSL.Location = new Point(350, 60);
-                lblSL.AutoSize = true;
-
-                // TextBox số lượng
-                TextBox txtSL = new TextBox();
-                txtSL.Text = "1";
-                txtSL.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-                txtSL.TextAlign = HorizontalAlignment.Center;
-                txtSL.Size = new Size(40, 35);
-                txtSL.Location = new Point(490, 55);
-
-                // Nút trừ
-                Button btnMinus = new Button();
-                btnMinus.Text = "–";
-                btnMinus.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-                btnMinus.Size = new Size(35, 35);
-                btnMinus.Location = new Point(450, 55);
-                btnMinus.Click += (s, e) =>
+                Panel pnl = new Panel()
                 {
-                    int sl = int.Parse(txtSL.Text);
-                    if (sl > 1) txtSL.Text = (sl - 1).ToString();
+                    Width = 580,
+                    Height = 110,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Margin = new Padding(5)
                 };
 
-                // Nút cộng
-                Button btnPlus = new Button();
-                btnPlus.Text = "+";
-                btnPlus.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-                btnPlus.Size = new Size(35, 35);
-                btnPlus.Location = new Point(535, 55);
-                btnPlus.Click += (s, e) =>
+                // ======= ẢNH SẢN PHẨM =======
+                PictureBox pic = new PictureBox()
                 {
-                    int sl = int.Parse(txtSL.Text);
-                    txtSL.Text = (sl + 1).ToString();
+                    Width = 90,
+                    Height = 90,
+                    Location = new Point(10, 10),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    BorderStyle = BorderStyle.None
                 };
 
-                // Nút xóa (icon thùng rác)
-                Button btnXoa = new Button();
-                btnXoa.Text = "🗑";
-                btnXoa.Font = new Font("Segoe UI Emoji", 16);
-                btnXoa.ForeColor = Color.Red;
-                btnXoa.FlatStyle = FlatStyle.Flat;
-                btnXoa.FlatAppearance.BorderSize = 0;
-                btnXoa.Size = new Size(50, 50);
-                btnXoa.Location = new Point(535, 85);
-                btnXoa.Click += (s, e) => flowCart.Controls.Remove(item);
+                if (sp.HinhAnh != null && sp.HinhAnh.Length > 0)
+                {
+                    using (var ms = new MemoryStream(sp.HinhAnh))
+                    {
+                        pic.Image = Image.FromStream(ms);
+                    }
+                }
 
-                // Thêm các control vào panel
-                item.Controls.Add(pic);
-                item.Controls.Add(lblTen);
-                item.Controls.Add(lblSize);
-                item.Controls.Add(lblGia);
-                item.Controls.Add(lblSL);
-                item.Controls.Add(txtSL);
-                item.Controls.Add(btnMinus);
-                item.Controls.Add(btnPlus);
-                item.Controls.Add(btnXoa);
+                pic.Paint += (s, e) =>
+                {
+                    using (GraphicsPath gp = new GraphicsPath())
+                    {
+                        gp.AddEllipse(0, 0, pic.Width - 1, pic.Height - 1);
+                        pic.Region = new Region(gp);
+                        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                        if (pic.Image == null)
+                        {
+                            e.Graphics.FillEllipse(Brushes.LightGray, 0, 0, pic.Width - 1, pic.Height - 1);
+                            StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+                            e.Graphics.DrawString("No Img", new Font("Segoe UI", 8), Brushes.Gray, new RectangleF(0, 0, pic.Width, pic.Height), sf);
+                        }
+                    }
+                };
 
-                // Thêm vào flowCart
-                flowCart.Controls.Add(item);
+                // ======= THÔNG TIN =======
+                Label lblTen = new Label()
+                {
+                    Text = sp.TenSP,
+                    Font = new Font("Times New Roman", 14, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(110, 10)
+                };
+
+                Label lblSize = new Label()
+                {
+                    Text = $"Size: {sp.Size}",
+                    Location = new Point(110, 45),
+                    AutoSize = true
+                };
+
+                Label lblGia = new Label()
+                {
+                    Text = $"Giá: {sp.Gia:N0}đ",
+                    Location = new Point(110, 70),
+                    AutoSize = true
+                };
+
+                // ======= NÚT SỐ LƯỢNG =======
+                Button btnTru = new Button() { Text = "-", Width = 30, Height = 30, Location = new Point(300, 40) };
+                Label lblSoLuong = new Label()
+                {
+                    Text = sp.SoLuong.ToString(),
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    Width = 30,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(335, 45)
+                };
+                Button btnCong = new Button() { Text = "+", Width = 30, Height = 30, Location = new Point(370, 40) };
+                Button btnXoa = new Button()
+                {
+                    Text = "🗑",
+                    Width = 40,
+                    Height = 35,
+                    Location = new Point(420, 40),
+                    BackColor = Color.LightCoral
+                };
+
+                // ======= SỰ KIỆN =======
+                btnCong.Click += (s, e) =>
+                {
+                    gioHangBLL.ThayDoiSoLuong(maKH, sp, 1);
+                    lblSoLuong.Text = sp.SoLuong.ToString();
+                    TinhTongTien();
+                };
+
+                btnTru.Click += (s, e) =>
+                {
+                    gioHangBLL.ThayDoiSoLuong(maKH, sp, -1);
+                    lblSoLuong.Text = sp.SoLuong.ToString();
+                    TinhTongTien();
+                };
+
+                btnXoa.Click += (s, e) =>
+                {
+                    if (MessageBox.Show("Xóa sản phẩm khỏi giỏ hàng?", "Xác nhận",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        gioHangBLL.XoaSanPhamKhoiGio(maKH, sp.MaSP);
+                        LoadGioHang();
+                    }
+                };
+
+                pnl.Controls.Add(pic);
+                pnl.Controls.Add(lblTen);
+                pnl.Controls.Add(lblSize);
+                pnl.Controls.Add(lblGia);
+                pnl.Controls.Add(btnTru);
+                pnl.Controls.Add(lblSoLuong);
+                pnl.Controls.Add(btnCong);
+                pnl.Controls.Add(btnXoa);
+
+                flowCart.Controls.Add(pnl);
             }
+
+            label2.Text = danhSachSP.Count.ToString();
+            TinhTongTien();
         }
 
-        // Import hàm WinAPI để bo tròn ảnh
-        [System.Runtime.InteropServices.DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
-            int nWidthEllipse, int nHeightEllipse);
+        private void TinhTongTien()
+        {
+            decimal tong = gioHangBLL.TinhTongTien(danhSachSP);
+            label7.Text = $"{tong:N0}đ"; // Tạm tính
 
+            string giam = label8.Text.Replace("%", "").Trim();
+            label12.Text = $"{gioHangBLL.TinhThanhTien(tong, giam):N0}đ";
+        }
 
+        private void BtnXacNhan_Click(object sender, EventArgs e)
+        {
+            if (danhSachSP.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng trống!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string bill = gioHangBLL.TaoHoaDonText(danhSachSP, label8.Text);
+            MessageBox.Show(bill, "In Bill", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            gioHangBLL.XoaToanBoGio(maKH);
+            LoadGioHang();
+        }
     }
 }

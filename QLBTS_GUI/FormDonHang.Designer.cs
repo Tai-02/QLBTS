@@ -1,81 +1,83 @@
-﻿namespace QLBTS_GUI
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace QLBTS_GUI
 {
     partial class QLDonHangForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private Label lblTitle;
+        private DataGridView dgvOrders;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
 
         private void InitializeComponent()
         {
             dgvOrders = new DataGridView();
             lblTitle = new Label();
+
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
             SuspendLayout();
-            // 
-            // dgvOrders
-            // 
-            dgvOrders.AllowUserToAddRows = false;
-            dgvOrders.AllowUserToDeleteRows = false;
-            dgvOrders.BackgroundColor = Color.White;
-            dgvOrders.BorderStyle = BorderStyle.None;
-            dgvOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOrders.Location = new Point(71, 100);
-            dgvOrders.Name = "dgvOrders";
-            dgvOrders.RowHeadersVisible = false;
-            dgvOrders.RowHeadersWidth = 51;
-            dgvOrders.RowTemplate.Height = 40;
-            dgvOrders.Size = new Size(756, 411);
-            dgvOrders.TabIndex = 0;
-            dgvOrders.CellFormatting += dgvOrders_CellFormatting;
-            // 
-            // lblTitle
-            // 
-            lblTitle.Font = new Font("Cambria", 20F, FontStyle.Bold);
+
+            // ====== lblTitle ======
+            lblTitle.Font = new Font("Cambria", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(0, 30);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(889, 40);
-            lblTitle.TabIndex = 1;
+            lblTitle.Size = new Size(900, 50);
+            lblTitle.TabIndex = 0;
             lblTitle.Text = "Quản lý đơn hàng";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // QLDonHangForm
-            // 
+
+            // ====== dgvOrders ======
+            dgvOrders.AllowUserToAddRows = false;
+            dgvOrders.AllowUserToDeleteRows = false;
+            dgvOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvOrders.BackgroundColor = Color.White;
+            dgvOrders.BorderStyle = BorderStyle.None;
+            dgvOrders.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            dgvOrders.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dgvOrders.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvOrders.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
+            dgvOrders.ColumnHeadersHeight = 40;
+            dgvOrders.EnableHeadersVisualStyles = false;
+
+            dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dgvOrders.DefaultCellStyle.SelectionBackColor = Color.White;
+            dgvOrders.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            dgvOrders.GridColor = Color.Gray;
+            dgvOrders.Location = new Point(60, 100);
+            dgvOrders.Name = "dgvOrders";
+            dgvOrders.RowHeadersVisible = false;
+            dgvOrders.RowTemplate.Height = 45;
+            dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvOrders.Size = new Size(780, 400);
+            dgvOrders.TabIndex = 1;
+            dgvOrders.CellContentClick += dgvOrders_CellContentClick;
+
+            // ====== QLDonHangForm ======
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(882, 553);
-            Controls.Add(lblTitle);
+            ClientSize = new Size(900, 550);
             Controls.Add(dgvOrders);
+            Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Name = "QLDonHangForm";
+            MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
+            Name = "QLDonHangForm";
             Text = "Quản lý đơn hàng";
             Load += QLDonHangForm_Load;
+
             ((System.ComponentModel.ISupportInitialize)dgvOrders).EndInit();
             ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataGridView dgvOrders;
-        private System.Windows.Forms.Label lblTitle;
     }
 }

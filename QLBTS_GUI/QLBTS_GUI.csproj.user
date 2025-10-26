@@ -19,5 +19,8 @@
     <Compile Update="GioHang.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="GioHangCuaBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

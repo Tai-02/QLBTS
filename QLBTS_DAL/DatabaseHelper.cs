@@ -10,7 +10,8 @@ namespace QLBTS_DAL
     public static class DatabaseHelper
     {
         private static string connectionString =
-            "Server=localhost;Database=QLBTS;Uid=root;Pwd=0866582512;";
+            "Server=127.0.0.1;Port=3307;Database=QLBTS;Uid=root;Pwd=admin123;";
+
 
         public static MySqlConnection GetConnection()
         {
