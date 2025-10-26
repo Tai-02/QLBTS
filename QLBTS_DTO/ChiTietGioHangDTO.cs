@@ -14,3 +14,4 @@ namespace QLBTS_DTO
         public int SoLuong { get; set; }
     }
 }
+

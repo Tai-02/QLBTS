@@ -79,5 +79,45 @@ namespace QLBTS_GUI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_26_145341 {
+            get {
+                object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-26 145341", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ảnh_chụp_màn_hình_2025_10_26_154453 {
+            get {
+                object obj = ResourceManager.GetObject("Ảnh chụp màn hình 2025-10-26 154453", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tt {
+            get {
+                object obj = ResourceManager.GetObject("tt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap z7157432228770_264ab32be7f7f2d530963497c10922ec_removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("z7157432228770_264ab32be7f7f2d530963497c10922ec-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
