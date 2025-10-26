@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace QLBTS_DTO
 {
     public class ChiTietDonHangDTO
@@ -13,5 +14,6 @@ namespace QLBTS_DTO
         public int MaSP { get; set; }
         public int SoLuong { get; set; }
         public int DonGia { get; set; }
+
     }
 }
