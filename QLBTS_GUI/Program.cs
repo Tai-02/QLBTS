@@ -16,15 +16,15 @@ namespace QLBTS_GUI
             //form.ShowDialog();
 
             /*CHECK CODE*/
-            Form form = new TimSanPham();
-            form.ShowDialog();
+            //Form form = new TimSanPham();
+            //form.ShowDialog();
 
             //Form form = new DangNhap();
 
             //form.ShowDialog();
 
-            //Form form = new ThongTinCaNhan();
-            //form.ShowDialog();
+            Form form = new ThongTinCaNhan();
+            form.ShowDialog();
         }
     }
 }

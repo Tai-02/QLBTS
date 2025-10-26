@@ -15,6 +15,19 @@ CREATE TABLE TaiKhoan (
     LevelID INT DEFAULT 0  -- (0: khách hàng, 1: admin, 2: nhân viên quầy, 3: giao hàng)
 );
 
+INSERT INTO TaiKhoan 
+(TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, NgayKichHoat, LanDangNhapCuoi, LevelID)
+VALUES
+('khach01', 'Kh@123', 'kh01@qlbts.com', NULL, 'KhachHang', b'1',
+ NOW(), NOW(), NOW(), 0),
+('khach02', 'Kh@456', 'kh02@qlbts.com', NULL, 'KhachHang', b'1',
+ NOW(), NOW(), NOW(), 0),
+('khach03', 'Kh@789', 'kh03@qlbts.com', NULL, 'KhachHang', b'1',
+ NOW(), NOW(), NOW(), 0),
+('khach04', 'Kh@999', 'kh04@qlbts.com', NULL, 'KhachHang', b'1',
+ NOW(), NOW(), NOW(), 0);
+
+
 CREATE TABLE NhanVien (
     MaNV INT AUTO_INCREMENT PRIMARY KEY,
     MaTK INT NOT NULL,
@@ -34,6 +47,14 @@ CREATE TABLE KhachHang (
     AnhKH LONGBLOB,
     FOREIGN KEY (MaTK) REFERENCES TaiKhoan(MaTK)
 );
+
+INSERT INTO KhachHang (MaTK, HoTen, SDT, DiaChi, AnhKH)
+VALUES
+(1, 'Nguyễn Văn A', '0912345678', '123 Lê Lợi, Q.1, TP.HCM', NULL),
+(2, 'Trần Thị B', '0987654321', '45 Nguyễn Huệ, Q.1, TP.HCM', NULL),
+(3, 'Lê Văn C', '0905123456', '78 Hai Bà Trưng, Q.3, TP.HCM', NULL),
+(4, 'Phạm Thị D', '0938123123', '12 Trần Hưng Đạo, Q.5, TP.HCM', NULL);
+
 
 CREATE TABLE SanPham (
     MaSP INT AUTO_INCREMENT PRIMARY KEY,
@@ -165,9 +186,12 @@ CREATE TABLE ThongKeDoanhThu (
     TongDoanhThu INT
 );
 
-DROP TABLE ChiTietDonHang;
-DROP TABLE ChiTietGioHang;
-DROP TABLE SanPham;
+-- DROP TABLE ChiTietDonHang;
+-- DROP TABLE ChiTietGioHang;
+-- DROP TABLE SanPham;
 
+-- DROP DATABASE QLBTS;
 
-SELECT * FROM SanPham;
+-- select * from TaiKhoan;
+-- select * from KhachHang;
+
