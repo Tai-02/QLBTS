@@ -71,5 +71,83 @@ namespace QLBTS_BLL
         {
             return items?.Sum(x => x.SoLuong) ?? 0;
         }
+        /// <summary>
+        /// Lấy tất cả đơn hàng
+        /// </summary>
+        public List<OrderListViewModel> GetAllOrders()
+        {
+            try
+            {
+                return orderDAL.GetAllOrders();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - GetAllOrders: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng theo trạng thái
+        /// </summary>
+        public List<OrderListViewModel> GetOrdersByStatus(string trangThai)
+        {
+            if (string.IsNullOrWhiteSpace(trangThai))
+            {
+                throw new ArgumentException("Trạng thái không hợp lệ");
+            }
+
+            try
+            {
+                return orderDAL.GetOrdersByStatus(trangThai);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - GetOrdersByStatus: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng của khách
+        /// </summary>
+        public List<OrderListViewModel> GetOrdersByCustomer(int maTK)
+        {
+            if (maTK <= 0)
+            {
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
+            }
+
+            try
+            {
+                return orderDAL.GetOrdersByCustomer(maTK);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - GetOrdersByCustomer: {ex.Message}", ex);
+            }
+        }
+        /// <summary>
+        /// Cập nhật trạng thái đơn hàng
+        /// </summary>
+        public bool UpdateOrderStatus(int maDH, string trangThaiMoi)
+        {
+            if (maDH <= 0)
+            {
+                throw new ArgumentException("Mã đơn hàng không hợp lệ");
+            }
+
+            if (string.IsNullOrWhiteSpace(trangThaiMoi))
+            {
+                throw new ArgumentException("Trạng thái không hợp lệ");
+            }
+
+            try
+            {
+                return orderDAL.UpdateOrderStatus(maDH, trangThaiMoi);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - UpdateOrderStatus: {ex.Message}", ex);
+            }
+        }
     }
 }

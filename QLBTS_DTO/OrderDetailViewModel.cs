@@ -39,54 +39,6 @@ namespace QLBTS_DTO
         /// Thành tiền của item này
         /// </summary>
         public decimal ThanhTien => DonGia * SoLuong;
-
-        /// <summary>
-        /// Text hiển thị trạng thái
-        /// </summary>
-        public string TextTrangThai
-        {
-            get
-            {
-                return TrangThai switch
-                {
-                    "Chờ xác nhận" => "⏳ Chờ xác nhận",
-                    "Đã xác nhận" => "✓ Đã xác nhận",
-                    "Đang pha chế" => "☕ Đang pha chế",
-                    "Chờ giao hàng" => "📦 Chờ giao hàng",
-                    "Đang giao" => "🚚 Đang giao",
-                    "Đã giao" => "✅ Đã giao",
-                    "Đã hủy" => "❌ Đã hủy",
-                    _ => TrangThai
-                };
-            }
-        }
-
-        /// <summary>
-        /// Màu trạng thái
-        /// </summary>
-        public System.Drawing.Color ColorTrangThai
-        {
-            get
-            {
-                return TrangThai switch
-                {
-                    "Chờ xác nhận" => System.Drawing.Color.Orange,
-                    "Đã xác nhận" => System.Drawing.Color.Blue,
-                    "Đang pha chế" => System.Drawing.Color.Purple,
-                    "Chờ giao hàng" => System.Drawing.Color.DarkOrange,
-                    "Đang giao" => System.Drawing.Color.DodgerBlue,
-                    "Đã giao" => System.Drawing.Color.Green,
-                    "Đã hủy" => System.Drawing.Color.Red,
-                    _ => System.Drawing.Color.Black
-                };
-            }
-        }
-
-        public OrderDetailViewModel()
-        {
-            TenSP = string.Empty;
-            Size = "M";
-            TrangThai = "Chờ xác nhận";
-        }
+    
     }
 }
