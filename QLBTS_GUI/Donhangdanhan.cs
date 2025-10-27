@@ -15,51 +15,63 @@ namespace QLBTS_GUI
         private DonHangDAL donHangDAL;
         private int maNhanVienDangNhap; // Dùng để gán cho nhân viên giao hàng
 
-        // Constructor để nhận mã nhân viên giao hàng
         public Donhangdanhan(int maNVGiaoHang)
         {
             InitializeComponent();
             donHangDAL = new DonHangDAL();
-            maNhanVienDangNhap = maNVGiaoHang; // Giả sử người đăng nhập là nhân viên giao hàng
+            maNhanVienDangNhap = maNVGiaoHang;
+            this.Size = new Size(1000, 600); // Tăng kích thước form cho cân đối
             SetupFormControls();
             LoadDonHangDaNhan();
         }
 
-        // Constructor mặc định để test (dùng mã NV giao hàng = 2 từ data mẫu)
         public Donhangdanhan() : this(2)
         {
         }
-        // Dán đoạn code này vào cuối file Donhangdanhan.cs
 
         private void Donhangdanhan_Load(object sender, EventArgs e)
         {
-            // Phương thức này có thể để trống, miễn là nó tồn tại
-            // vì form designer đang tìm nó.
+            // Có thể để trống
         }
+
+        // ==========================================================
+        // ===        PHƯƠNG THỨC ĐÃ ĐƯỢC VIẾT LẠI HOÀN TOÀN       ===
+        // ==========================================================
         private void SetupFormControls()
         {
-            // Title Label
+            // 1. Tính toán vị trí và kích thước mới
+            int topSpaceHeight = this.ClientSize.Height / 4; // Chiều cao của 1/4 khoảng trắng ở trên
+            int contentY_Start = topSpaceHeight; // Vị trí bắt đầu của nội dung
+
+            int horizontalMargin = 50; // Lề trái và phải
+            int titleHeight = 60;
+            int spaceBetweenControls = 20;
+
+            // 2. Title Label
             lblTitle = new Label();
             lblTitle.Text = "Đơn hàng đã nhận";
             lblTitle.Font = new Font("Segoe UI", 22, FontStyle.Bold);
             lblTitle.AutoSize = false;
-            lblTitle.Size = new Size(this.ClientSize.Width, 50);
-            lblTitle.Location = new Point(0, 80);
+            lblTitle.Size = new Size(this.ClientSize.Width, titleHeight);
+            lblTitle.Location = new Point(0, contentY_Start); // Đặt tiêu đề ở đầu khu vực 3/4
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right; // Cho phép co giãn theo chiều ngang
             this.Controls.Add(lblTitle);
 
-            // DataGridView - căn giữa form
-            int tableWidth = 850;
-            int tableHeight = 400; // Tăng chiều cao để chứa nhiều đơn hơn
-            int tableX = (this.ClientSize.Width - tableWidth) / 2;
-            int tableY = 180;
+            // 3. DataGridView
+            int gridX = horizontalMargin;
+            int gridY = contentY_Start + titleHeight + spaceBetweenControls;
+            int gridWidth = this.ClientSize.Width - (horizontalMargin * 2);
+            int gridHeight = this.ClientSize.Height - gridY - 20; // Chiều cao còn lại trừ đi lề dưới
 
             dgvOrders = new DataGridView();
-            dgvOrders.Location = new Point(tableX, tableY);
-            dgvOrders.Size = new Size(tableWidth, tableHeight);
+            dgvOrders.Location = new Point(gridX, gridY);
+            dgvOrders.Size = new Size(gridWidth, gridHeight);
+            dgvOrders.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Co giãn theo cả 4 chiều
+
+            // Các thuộc tính khác giữ nguyên
             dgvOrders.AllowUserToAddRows = false;
             dgvOrders.AllowUserToDeleteRows = false;
-            dgvOrders.AllowUserToResizeRows = false;
             dgvOrders.RowHeadersVisible = false;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvOrders.BackgroundColor = Color.White;
@@ -68,29 +80,24 @@ namespace QLBTS_GUI
             dgvOrders.RowTemplate.Height = 55;
             dgvOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvOrders.EnableHeadersVisualStyles = false;
-            dgvOrders.ReadOnly = true; // Dữ liệu chỉ để xem
-            dgvOrders.GridColor = Color.Black;
+            dgvOrders.ReadOnly = true;
+            dgvOrders.GridColor = Color.Gainsboro;
 
-            // Column header style
+            // Styling
             dgvOrders.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
             dgvOrders.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvOrders.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             dgvOrders.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            // Row style
-            dgvOrders.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 230, 230);
-            dgvOrders.DefaultCellStyle.SelectionForeColor = Color.Black;
             dgvOrders.DefaultCellStyle.Font = new Font("Segoe UI", 11);
             dgvOrders.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
 
-            // Add columns
+            // Thêm cột
             dgvOrders.Columns.Add(new DataGridViewTextBoxColumn { Name = "MaDonHang", HeaderText = "Mã đơn hàng", FillWeight = 25 });
             dgvOrders.Columns.Add(new DataGridViewTextBoxColumn { Name = "Gia", HeaderText = "Giá", FillWeight = 25 });
-            dgvOrders.Columns.Add(new DataGridViewButtonColumn { Name = "GiaoHang", HeaderText = "Giao hàng", Text = "Giao hàng", UseColumnTextForButtonValue = true, FillWeight = 25 });
-            dgvOrders.Columns.Add(new DataGridViewButtonColumn { Name = "ChiTiet", HeaderText = "Chi tiết", Text = "Xem chi tiết", UseColumnTextForButtonValue = true, FillWeight = 25 });
+            dgvOrders.Columns.Add(new DataGridViewButtonColumn { Name = "GiaoHang", HeaderText = "Giao hàng", UseColumnTextForButtonValue = true, FillWeight = 25 });
+            dgvOrders.Columns.Add(new DataGridViewButtonColumn { Name = "ChiTiet", HeaderText = "Chi tiết", UseColumnTextForButtonValue = true, FillWeight = 25 });
 
-            // Event handlers
+            // Gán sự kiện
             dgvOrders.CellContentClick += DgvOrders_CellContentClick;
             dgvOrders.CellPainting += DgvOrders_CellPainting;
 
@@ -105,7 +112,7 @@ namespace QLBTS_GUI
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
                 Rectangle rect = new Rectangle(e.CellBounds.X + 15, e.CellBounds.Y + 12, e.CellBounds.Width - 30, e.CellBounds.Height - 24);
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(33, 150, 243))) // Blue color
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(33, 150, 243))) // Blue
                 {
                     e.Graphics.FillRectangle(brush, rect);
                 }
@@ -141,7 +148,7 @@ namespace QLBTS_GUI
                         if (success)
                         {
                             MessageBox.Show("Đã cập nhật trạng thái giao hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadDonHangDaNhan(); // Tải lại danh sách, đơn hàng vừa giao sẽ biến mất
+                            LoadDonHangDaNhan();
                         }
                         else
                         {
@@ -158,27 +165,12 @@ namespace QLBTS_GUI
             {
                 try
                 {
-                    DonHangDTO donHang = donHangDAL.GetDonHangById(maDonHang);
-                    List<ChiTietDonHangDTO> chiTiet = donHangDAL.GetChiTietDonHang(maDonHang);
-
-                    string thongTin = $"Đơn hàng #{maDonHang}\n" +
-                                      $"Khách hàng: {donHang.TenKhachHang}\n" +
-                                      $"SĐT: {donHang.SDTKhachHang}\n" +
-                                      $"Địa chỉ: {donHang.DiaChiKhachHang}\n" +
-                                      $"Tổng tiền: {string.Format("{0:N0}đ", donHang.TongTien)}\n\n" +
-                                      "Chi tiết sản phẩm:\n";
-
-                    foreach (var ct in chiTiet)
-                    {
-                        int thanhTienSanPham = ct.SoLuong * ct.DonGia;
-                        thongTin += $"- {ct.TenSP} (Size {ct.Size}): {ct.SoLuong} x {string.Format("{0:N0}đ", ct.DonGia)} = {string.Format("{0:N0}đ", thanhTienSanPham)}\n";
-                    }
-
-                    MessageBox.Show(thongTin, "Chi tiết đơn hàng", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ChiTietDonHangForm formChiTiet = new ChiTietDonHangForm(maDonHang);
+                    formChiTiet.ShowDialog();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi xem chi tiết: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi mở form chi tiết: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -188,9 +180,7 @@ namespace QLBTS_GUI
             try
             {
                 dgvOrders.Rows.Clear();
-                // Lấy các đơn hàng đã được nhân viên tại quầy xác nhận
                 List<DonHangDTO> danhSachDonHang = donHangDAL.GetDonHangDaNhan();
-
                 foreach (DonHangDTO dh in danhSachDonHang)
                 {
                     dgvOrders.Rows.Add(dh.MaDH, string.Format("{0:N0}đ", dh.TongTien));

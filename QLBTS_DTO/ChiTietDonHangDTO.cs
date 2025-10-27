@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable disable
 namespace QLBTS_DTO
 {
     public class ChiTietDonHangDTO
@@ -13,8 +14,8 @@ namespace QLBTS_DTO
         public int MaSP { get; set; }
         public int SoLuong { get; set; }
         public int DonGia { get; set; }
-        public string TenSP { get; set; }
-        public string Size { get; set; }
-        public decimal ThanhTien { get; set; }
+        public string TenSP { get; set; } = string.Empty; // Gán giá trị mặc định
+        public string Size { get; set; } = string.Empty; // Gán giá trị mặc định
+        // Thuộc tính HinhAnh đã được xóa
     }
 }

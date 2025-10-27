@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class quanly
+    partial class ChiTietDonHangForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             SuspendLayout();
             // 
-            // quanly
+            // chitietsanpham
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Name = "quanly";
-            Text = "quanly";
-            Load += quanly_Load;
+            Name = "chitietsanpham";
+            Text = "chitietsanpham";
+            Load += chitietsanpham_Load;
             ResumeLayout(false);
         }
 

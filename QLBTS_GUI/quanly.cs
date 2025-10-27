@@ -25,7 +25,8 @@ namespace QLBTS_GUI
             nhanVienDAL = new NhanVienDAL();
             this.Text = "Quản Lý Nhân Viên";
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(1200, 700);
+            // ✅ Kích thước form theo yêu cầu
+            this.Size = new Size(1000, 600);
             this.BackColor = Color.WhiteSmoke;
             SetupControls();
         }
@@ -35,25 +36,37 @@ namespace QLBTS_GUI
             LoadNhanVien();
         }
 
+        // ==========================================================
+        // ===        PHƯƠNG THỨC ĐÃ ĐƯỢC VIẾT LẠI HOÀN TOÀN       ===
+        // ==========================================================
         private void SetupControls()
         {
-            // Tính toán bố cục
-            int marginX = 50;
-            int totalWidth = this.ClientSize.Width - (marginX * 2);
-            int startX = marginX;
-            int gap = 20;
-            int panelWidth = (totalWidth - gap) / 2;
+            // 1. Tính toán bố cục chính
+            int marginX = 20; // Giảm lề ngang
             float heightRatio = 0.75f;
-            int totalHeight = (int)(this.ClientSize.Height * heightRatio);
-            int bottomMargin = 20;
-            int startY = this.ClientSize.Height - totalHeight - bottomMargin;
+            int contentHeight = (int)(this.ClientSize.Height * heightRatio);
+            int topSpace = this.ClientSize.Height - contentHeight;
+            int startY = topSpace;
 
-            // DataGridView bên trái
+            // 2. Tạo TableLayoutPanel làm container chính
+            TableLayoutPanel mainLayout = new TableLayoutPanel
+            {
+                Location = new Point(marginX, startY),
+                Size = new Size(this.ClientSize.Width - (marginX * 2), contentHeight),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                ColumnCount = 2,
+                RowCount = 1,
+                BackColor = this.BackColor
+            };
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Cột 1 chiếm 50%
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Cột 2 chiếm 50%
+            mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.Controls.Add(mainLayout);
+
+            // 3. DataGridView bên trái
             dgvNhanVien = new DataGridView
             {
-                Location = new Point(startX, startY),
-                Size = new Size(panelWidth, totalHeight),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                Dock = DockStyle.Fill, // ✅ Tự động lấp đầy ô của TableLayoutPanel
                 AllowUserToAddRows = false,
                 AllowUserToDeleteRows = false,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
@@ -61,21 +74,11 @@ namespace QLBTS_GUI
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 MultiSelect = false,
                 BackgroundColor = Color.White,
-                // ✅ Tăng chiều cao dòng và font chữ
                 RowTemplate = { Height = 40 },
                 ColumnHeadersHeight = 50,
-                ColumnHeadersDefaultCellStyle =
-                {
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                    Alignment = DataGridViewContentAlignment.MiddleCenter
-                },
-                DefaultCellStyle =
-                {
-                    Font = new Font("Segoe UI", 13),
-                    Alignment = DataGridViewContentAlignment.MiddleLeft
-                }
+                ColumnHeadersDefaultCellStyle = { Font = new Font("Segoe UI", 14, FontStyle.Bold), Alignment = DataGridViewContentAlignment.MiddleCenter },
+                DefaultCellStyle = { Font = new Font("Segoe UI", 13), Alignment = DataGridViewContentAlignment.MiddleLeft }
             };
-
             dgvNhanVien.Columns.Add("MaNV", "Mã NV");
             dgvNhanVien.Columns.Add("MaTK", "Mã TK");
             dgvNhanVien.Columns.Add("HoTen", "Tên Nhân Viên");
@@ -83,28 +86,26 @@ namespace QLBTS_GUI
             dgvNhanVien.Columns["MaNV"].Visible = false;
             dgvNhanVien.Columns["MaTK"].Visible = false;
             dgvNhanVien.CellClick += DgvNhanVien_CellClick;
-            this.Controls.Add(dgvNhanVien);
+            mainLayout.Controls.Add(dgvNhanVien, 0, 0); // Thêm vào cột 0, dòng 0
 
-            // Panel thông tin bên phải
+            // 4. Panel thông tin bên phải
             Panel infoPanel = new Panel
             {
-                Location = new Point(startX + panelWidth + gap, startY),
-                Size = new Size(panelWidth, totalHeight),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                Dock = DockStyle.Fill, // ✅ Tự động lấp đầy ô của TableLayoutPanel
                 BorderStyle = BorderStyle.FixedSingle,
-                BackColor = Color.Gainsboro
+                BackColor = Color.Gainsboro,
+                Padding = new Padding(15)
             };
-            this.Controls.Add(infoPanel);
+            mainLayout.Controls.Add(infoPanel, 1, 0); // Thêm vào cột 1, dòng 0
 
             // Các controls bên trong infoPanel
-            // ✅ Tăng cỡ chữ tiêu đề
-            Label lblTitle = new Label { Text = "Thông Tin Nhân Viên", Font = new Font("Segoe UI", 24, FontStyle.Bold), ForeColor = Color.DarkRed, Location = new Point(0, 30), Size = new Size(infoPanel.Width, 45), TextAlign = ContentAlignment.MiddleCenter };
+            Label lblTitle = new Label { Text = "Thông Tin Nhân Viên", Font = new Font("Segoe UI", 22, FontStyle.Bold), ForeColor = Color.DarkRed, Dock = DockStyle.Top, TextAlign = ContentAlignment.MiddleCenter, Height = 60 };
             infoPanel.Controls.Add(lblTitle);
 
-            int leftMargin = 40;
-            int textBoxWidth = infoPanel.Width - 210;
-            int startY_inside = 120;
-            int spacing = (infoPanel.Height - 320) / 5;
+            int leftMargin = 20;
+            int textBoxWidth = infoPanel.ClientSize.Width - 190;
+            int startY_inside = 90;
+            int spacing = (infoPanel.ClientSize.Height - 250) / 6;
 
             txtTenNhanVien = AddLabelAndTextBox("Tên nhân viên:", new Point(leftMargin, startY_inside), textBoxWidth, infoPanel);
             txtTenDangNhap = AddLabelAndTextBox("Tên đăng nhập:", new Point(leftMargin, startY_inside + spacing), textBoxWidth, infoPanel);
@@ -112,20 +113,22 @@ namespace QLBTS_GUI
             txtSoDienThoai = AddLabelAndTextBox("Số điện thoại:", new Point(leftMargin, startY_inside + spacing * 3), textBoxWidth, infoPanel);
             txtGmail = AddLabelAndTextBox("Gmail:", new Point(leftMargin, startY_inside + spacing * 4), textBoxWidth, infoPanel);
 
-            // ✅ Tăng cỡ chữ Label và ComboBox
             Label lblChucVu = new Label { Text = "Chức vụ:", Font = new Font("Segoe UI", 14), Location = new Point(leftMargin, startY_inside + spacing * 5), AutoSize = true };
-            cboChucVu = new ComboBox { Location = new Point(leftMargin + 160, startY_inside + spacing * 5 - 5), Size = new Size(textBoxWidth, 36), Font = new Font("Segoe UI", 14), DropDownStyle = ComboBoxStyle.DropDownList };
+            cboChucVu = new ComboBox { Location = new Point(leftMargin + 160, startY_inside + spacing * 5 - 5), Size = new Size(textBoxWidth, 36), Font = new Font("Segoe UI", 14), DropDownStyle = ComboBoxStyle.DropDownList, Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right };
             cboChucVu.Items.AddRange(new string[] { "NhanVien", "GiaoHang", "Admin" });
             infoPanel.Controls.Add(lblChucVu);
             infoPanel.Controls.Add(cboChucVu);
 
-            int btnY = infoPanel.Height - 90;
-            int btnWidth = 160;
-            int btnGap = (infoPanel.Width - (btnWidth * 3)) / 4;
+            int btnWidth = 130;
+            int btnGap = (infoPanel.ClientSize.Width - (btnWidth * 3)) / 4;
 
-            btnThem = CreateStandardButton("Thêm", new Point(btnGap, btnY), btnWidth, Color.FromArgb(76, 175, 80), btnThem_Click);
-            btnXoa = CreateStandardButton("Xóa", new Point(btnGap * 2 + btnWidth, btnY), btnWidth, Color.FromArgb(244, 67, 54), btnXoa_Click);
-            btnCapNhat = CreateStandardButton("Cập nhật", new Point(btnGap * 3 + btnWidth * 2, btnY), btnWidth, Color.FromArgb(33, 150, 243), btnCapNhat_Click);
+            btnThem = CreateStandardButton("Thêm", new Point(btnGap, 0), btnWidth, Color.FromArgb(76, 175, 80), btnThem_Click);
+            btnXoa = CreateStandardButton("Xóa", new Point(btnGap * 2 + btnWidth, 0), btnWidth, Color.FromArgb(244, 67, 54), btnXoa_Click);
+            btnCapNhat = CreateStandardButton("Cập nhật", new Point(btnGap * 3 + btnWidth * 2, 0), btnWidth, Color.FromArgb(33, 150, 243), btnCapNhat_Click);
+
+            // Neo các nút vào cạnh dưới của panel
+            btnThem.Anchor = btnXoa.Anchor = btnCapNhat.Anchor = AnchorStyles.Bottom;
+            btnThem.Top = btnXoa.Top = btnCapNhat.Top = infoPanel.ClientSize.Height - 70;
 
             infoPanel.Controls.Add(btnThem);
             infoPanel.Controls.Add(btnXoa);
@@ -135,9 +138,8 @@ namespace QLBTS_GUI
         // --- Hàm hỗ trợ ---
         private TextBox AddLabelAndTextBox(string labelText, Point location, int width, Control parent)
         {
-            // ✅ Tăng cỡ chữ Label và TextBox, điều chỉnh lại kích thước
             Label lbl = new Label { Text = labelText, Font = new Font("Segoe UI", 14), Location = location, AutoSize = true };
-            TextBox txt = new TextBox { Location = new Point(location.X + 160, location.Y - 5), Size = new Size(width, 36), Font = new Font("Segoe UI", 14) };
+            TextBox txt = new TextBox { Location = new Point(location.X + 160, location.Y - 5), Size = new Size(width, 36), Font = new Font("Segoe UI", 14), Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right };
             parent.Controls.Add(lbl);
             parent.Controls.Add(txt);
             return txt;
@@ -149,8 +151,7 @@ namespace QLBTS_GUI
             {
                 Text = text,
                 Location = location,
-                Size = new Size(width, 60), // ✅ Tăng chiều cao nút
-                // ✅ Tăng cỡ chữ nút
+                Size = new Size(width, 60),
                 Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 BackColor = color,
                 ForeColor = Color.White,
@@ -219,17 +220,7 @@ namespace QLBTS_GUI
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                NhanVienDTO nv = new NhanVienDTO
-                {
-                    HoTen = txtTenNhanVien.Text,
-                    TenDangNhap = txtTenDangNhap.Text,
-                    MatKhau = txtMatKhau.Text,
-                    SDT = txtSoDienThoai.Text,
-                    Email = txtGmail.Text,
-                    VaiTro = cboChucVu.SelectedItem.ToString()
-                };
-
+                NhanVienDTO nv = new NhanVienDTO { HoTen = txtTenNhanVien.Text, TenDangNhap = txtTenDangNhap.Text, MatKhau = txtMatKhau.Text, SDT = txtSoDienThoai.Text, Email = txtGmail.Text, VaiTro = cboChucVu.SelectedItem.ToString() };
                 if (nhanVienDAL.ThemNhanVien(nv))
                 {
                     MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -245,17 +236,10 @@ namespace QLBTS_GUI
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (dgvNhanVien.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Vui lòng chọn một nhân viên để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
+            if (dgvNhanVien.SelectedRows.Count == 0) { MessageBox.Show("Vui lòng chọn một nhân viên để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             int maTK = Convert.ToInt32(dgvNhanVien.SelectedRows[0].Cells["MaTK"].Value);
             string tenNV = dgvNhanVien.SelectedRows[0].Cells["HoTen"].Value.ToString();
-
             DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa nhân viên '{tenNV}'?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
             if (result == DialogResult.Yes)
             {
                 try
@@ -267,41 +251,17 @@ namespace QLBTS_GUI
                         ClearFields();
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Xóa nhân viên thất bại: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                catch (Exception ex) { MessageBox.Show("Xóa nhân viên thất bại: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 
         private void btnCapNhat_Click(object sender, EventArgs e)
         {
-            if (dgvNhanVien.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Vui lòng chọn một nhân viên để cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
+            if (dgvNhanVien.SelectedRows.Count == 0) { MessageBox.Show("Vui lòng chọn một nhân viên để cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             try
             {
-                if (string.IsNullOrWhiteSpace(txtTenNhanVien.Text) || cboChucVu.SelectedItem == null)
-                {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                NhanVienDTO nv = new NhanVienDTO
-                {
-                    MaNV = Convert.ToInt32(dgvNhanVien.SelectedRows[0].Cells["MaNV"].Value),
-                    MaTK = Convert.ToInt32(dgvNhanVien.SelectedRows[0].Cells["MaTK"].Value),
-                    HoTen = txtTenNhanVien.Text,
-                    TenDangNhap = txtTenDangNhap.Text,
-                    MatKhau = txtMatKhau.Text,
-                    SDT = txtSoDienThoai.Text,
-                    Email = txtGmail.Text,
-                    VaiTro = cboChucVu.SelectedItem.ToString()
-                };
-
+                if (string.IsNullOrWhiteSpace(txtTenNhanVien.Text) || cboChucVu.SelectedItem == null) { MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                NhanVienDTO nv = new NhanVienDTO { MaNV = Convert.ToInt32(dgvNhanVien.SelectedRows[0].Cells["MaNV"].Value), MaTK = Convert.ToInt32(dgvNhanVien.SelectedRows[0].Cells["MaTK"].Value), HoTen = txtTenNhanVien.Text, TenDangNhap = txtTenDangNhap.Text, MatKhau = txtMatKhau.Text, SDT = txtSoDienThoai.Text, Email = txtGmail.Text, VaiTro = cboChucVu.SelectedItem.ToString() };
                 if (nhanVienDAL.CapNhatNhanVien(nv))
                 {
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -309,10 +269,7 @@ namespace QLBTS_GUI
                     ClearFields();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Cập nhật thất bại: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show("Cập nhật thất bại: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
     }
 }
