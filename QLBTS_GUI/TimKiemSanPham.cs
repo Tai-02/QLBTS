@@ -76,6 +76,7 @@ namespace QLBTS_GUI
             }
             */
             loadSanPham();
+            SetPlaceholder();
         }
 
         // HÀM HỖ TRỢ CHUYỂN byte[] SANG Image
@@ -100,9 +101,10 @@ namespace QLBTS_GUI
             }
         }
 
-        private void loadSanPham()
+        private void loadSanPham(string searchTerm = null)
         {
             flpSanPham.Controls.Clear();
+            flpSanPham.SuspendLayout();
 
             string query;
             bool showBestSellerTag = false;
@@ -110,6 +112,13 @@ namespace QLBTS_GUI
 
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
+
+            // Chuẩn hóa từ khóa tìm kiếm bên ngoài vòng lặp
+            string normalizedSearchTerm = null;
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                normalizedSearchTerm = RemoveAccents(searchTerm).ToLower();
+            }
 
             try
             {
@@ -121,6 +130,20 @@ namespace QLBTS_GUI
                 while (reader.Read())
                 {
                     string tenSP = reader["TenSP"].ToString();
+
+                    // Nếu có từ khóa tìm kiếm (normalizedSearchTerm != null)
+                    if (!string.IsNullOrWhiteSpace(normalizedSearchTerm))
+                    {
+                        // Chuẩn hóa tên sản phẩm từ CSDL
+                        string normalizedTenSP = RemoveAccents(tenSP).ToLower();
+
+                        // Nếu tên đã chuẩn hóa KHÔNG chứa từ khóa đã chuẩn hóa
+                        if (!normalizedTenSP.Contains(normalizedSearchTerm))
+                        {
+                            continue; // Bỏ qua sản phẩm này, chuyển sang vòng lặp tiếp theo
+                        }
+                    }
+
                     int gia = Convert.ToInt32(reader["Gia"]);
                     Image hinhAnh = Properties.Resources.icons8_camera_100; // Mặc định
 
@@ -196,6 +219,19 @@ namespace QLBTS_GUI
                 if (reader != null) reader.Close();
                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
             }
+
+            if (flpSanPham.Controls.Count == 0)
+            {
+                Label lblNotFound = new Label();
+                lblNotFound.Text = "Không tìm thấy sản phẩm";
+                lblNotFound.Font = new Font("Arial", 16, FontStyle.Italic);
+                lblNotFound.ForeColor = Color.Gray;
+                lblNotFound.Size = new Size(flpSanPham.ClientSize.Width - 20, 50); // Cho label rộng bằng panel
+                lblNotFound.TextAlign = ContentAlignment.MiddleCenter;
+                lblNotFound.Margin = new Padding(50);
+                flpSanPham.Controls.Add(lblNotFound);
+            }
+            flpSanPham.ResumeLayout(true);
         }
 
         // 3. Hàm xử lý sự kiện Click (để highlight)
@@ -230,6 +266,84 @@ namespace QLBTS_GUI
             selectedPanel.Padding = new Padding(3);      // Tạo hiệu ứng viền xanh
         }
 
+        /*****TIM KIEM SAN PHAM THEO TEXTBOX*****/
+        public static string RemoveAccents(string text) // Hàm loại bỏ dấu tiếng Việt
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return text;
+
+            text = text.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in text)
+            {
+                if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(c);
+                }
+            }
+            // Thay thế chữ 'Đ'/'đ'
+            sb.Replace('Đ', 'D');
+            sb.Replace('đ', 'd');
+            return sb.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        private void SetPlaceholder()
+        {
+            txtTimkiem.Text = "Tìm Kiếm";
+            txtTimkiem.ForeColor = Color.Gray; // Đặt màu mờ
+        }
+
+
+        private void txtTimkiem_TextChanged(object sender, EventArgs e)
+        {
+            //loadSanPham(txtTimkiem.Text); // COMMMENT: Tìm kiếm theo từng ký tự không cần nhấn nút nhưng LAG QUÁ
+        }
+        private void txtTimkiem_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Nếu người dùng nhấn Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                string searchTerm = GetSearchTerm(); // Lấy từ khóa đã xử lý
+                loadSanPham(searchTerm); // Gọi hàm load
+
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void txtTimkiem_Enter(object sender, EventArgs e)
+        {
+            // Nếu đang là chữ mờ "Tìm Kiếm"
+            if (txtTimkiem.Text == "Tìm Kiếm" && txtTimkiem.ForeColor == Color.Gray)
+            {
+                txtTimkiem.Text = ""; // Xóa nó đi
+                txtTimkiem.ForeColor = Color.Black; // Đổi về màu chữ đen
+            }
+        }
+        private void btnTimkiem_Click(object sender, EventArgs e)
+        {
+            string searchTerm = GetSearchTerm();
+            loadSanPham(searchTerm);
+        }
+        private void txtTimkiem_Leave(object sender, EventArgs e)
+        {
+            // Nếu textbox bị bỏ trống
+            if (string.IsNullOrWhiteSpace(txtTimkiem.Text))
+            {
+                // Đặt lại chữ mờ "Tìm Kiếm"
+                SetPlaceholder();
+            }
+        }
+        private string GetSearchTerm()
+        {
+            // Nếu text đang là placeholder
+            if (txtTimkiem.Text == "Tìm Kiếm" && txtTimkiem.ForeColor == Color.Gray)
+            {
+                return null; // Trả về null (tương đương không tìm gì)
+            }
+            // Ngược lại, trả về nội dung người dùng gõ
+            return txtTimkiem.Text;
+        }
+
+        /*********Su dung bo loc san pham******/
         private void chkBestseller_CheckedChanged(object sender, EventArgs e)
         {
         }
@@ -237,6 +351,6 @@ namespace QLBTS_GUI
         private void chkMonmoi_CheckedChanged(object sender, EventArgs e)
         {
 
-        }
+        }        
     }
 }

@@ -136,6 +136,10 @@
             txtTimkiem.Name = "txtTimkiem";
             txtTimkiem.Size = new Size(210, 30);
             txtTimkiem.TabIndex = 11;
+            txtTimkiem.TextChanged += txtTimkiem_TextChanged;
+            txtTimkiem.Enter += txtTimkiem_Enter;
+            txtTimkiem.KeyDown += txtTimkiem_KeyDown;
+            txtTimkiem.Leave += txtTimkiem_Leave;
             // 
             // btnTimkiem
             // 
@@ -148,6 +152,7 @@
             btnTimkiem.Size = new Size(65, 29);
             btnTimkiem.TabIndex = 10;
             btnTimkiem.UseVisualStyleBackColor = true;
+            btnTimkiem.Click += btnTimkiem_Click;
             // 
             // TimKiemSanPham
             // 

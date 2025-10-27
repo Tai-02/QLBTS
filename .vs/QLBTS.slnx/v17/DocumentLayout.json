@@ -7,8 +7,8 @@
       "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\timkiemsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_dal\\sanphamdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{581E6C5D-0925-7844-D137-ADA06DBBB8FF}|QLBTS_DAL\\QLBTS_DAL.csproj|solutionrelative:qlbts_dal\\sanphamdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|d:\\hk5\\hk5-nhap mon cong nghe phan mem\\qlbts\\qlbts_gui\\timkiemsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{65151016-53C0-E018-403A-57121C9D7CA2}|QLBTS_GUI\\QLBTS_GUI.csproj|solutionrelative:qlbts_gui\\timkiemsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "QLBTS_GUI\\TimKiemSanPham.cs",
               "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimKiemSanPham.cs",
               "RelativeToolTip": "QLBTS_GUI\\TimKiemSanPham.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwF4AAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAGIBAAAAAAAAAAAAABAAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-27T03:30:39.422Z",
               "IsPinned": true,
@@ -37,15 +37,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SanPhamDAL.cs",
-              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\SanPhamDAL.cs",
-              "RelativeDocumentMoniker": "QLBTS_DAL\\SanPhamDAL.cs",
-              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_DAL\\SanPhamDAL.cs",
-              "RelativeToolTip": "QLBTS_DAL\\SanPhamDAL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAqAAAAAAAAAA==",
+              "Title": "TimKiemSanPham.cs [Design]",
+              "DocumentMoniker": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimKiemSanPham.cs",
+              "RelativeDocumentMoniker": "QLBTS_GUI\\TimKiemSanPham.cs",
+              "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimKiemSanPham.cs [Design]",
+              "RelativeToolTip": "QLBTS_GUI\\TimKiemSanPham.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T11:05:54.428Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-27T11:31:00.652Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }
