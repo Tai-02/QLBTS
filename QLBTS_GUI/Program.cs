@@ -15,11 +15,13 @@ namespace QLBTS_GUI
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Form form = new DangNhap();
-            form.ShowDialog();
+            //Form form = new DangNhap();
+            //form.ShowDialog();
 
             //Form form = new frmThongTinCaNhan(TaiKhoanDTO user);
             //form.ShowDialog();
+            Form form = new TimKiemSanPham();
+            form.ShowDialog();
         }
     }
 }

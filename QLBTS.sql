@@ -240,6 +240,29 @@ CREATE TABLE SanPham (
         ) STORED
 );
 
+-- Tạo một vài sản phẩm mẫu (chưa có hình ảnh)
+INSERT INTO SanPham (TenSP, Size, SoLuong, Gia, KhuyenMai) VALUES
+('Trà sữa trân châu', 'L', 100, 40000, 0),
+('Trà sữa thái xanh', 'L', 100, 45000, 0),
+('Trà sữa Matcha', 'L', 100, 35000, 0),
+('Trà sữa bạc hà', 'L', 100, 35000, 0),
+('Trà sữa xoài kem cheese', 'L', 100, 40000, 0),
+
+('Trà sữa kem trứng nướng', 'M', 50, 35000, 0),
+('Trà sữa khoai môn', 'L', 30, 40000, 0),
+('Trà sữa Oreo Cake Cream', 'M', 45, 35000, 0),
+('Trà sữa matcha đậu đỏ', 'L', 20, 40000, 0),
+('Trà sữa Pudding đậu đỏ', 'M', 55, 40000, 0),
+
+('Trà đào cam sả', 'L', 100, 35000, 0),
+('Nước dừa', 'L', 100, 40000, 0),
+('Trà trái cây nhiệt đới', 'L', 100, 40000, 0),
+
+('Kem sữa', 'M', 100, 10000, 0),
+('Trân châu đen', 'M', 100, 10000, 0),
+('Trân châu trắng', 'M', 100, 10000, 0),
+('Sương sáo', 'M', 100, 10000, 0);
+
 
 CREATE TABLE DonHang (
     MaDH INT AUTO_INCREMENT PRIMARY KEY,
@@ -310,4 +333,6 @@ CREATE TABLE ThongKeDoanhThu (
 );
 
 -- DROP DATABASE QLBTS;
+DROP TABLE SanPham;
+select * from SanPham;
 select * from TaiKhoan;

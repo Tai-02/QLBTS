@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class TimSanPham
+    partial class TimKiemSanPham
     {
         /// <summary>
         /// Required designer variable.
@@ -50,10 +50,10 @@
             pnLocTimKiem.Controls.Add(chkMonmoi);
             pnLocTimKiem.Controls.Add(chkBestseller);
             pnLocTimKiem.Controls.Add(label1);
-            pnLocTimKiem.Location = new Point(6, 81);
+            pnLocTimKiem.Location = new Point(6, 74);
             pnLocTimKiem.Name = "pnLocTimKiem";
             pnLocTimKiem.Size = new Size(214, 283);
-            pnLocTimKiem.TabIndex = 5;
+            pnLocTimKiem.TabIndex = 9;
             // 
             // chkTopping
             // 
@@ -87,6 +87,7 @@
             chkMonmoi.TabIndex = 2;
             chkMonmoi.Text = "Món mới";
             chkMonmoi.UseVisualStyleBackColor = true;
+            chkMonmoi.CheckedChanged += chkMonmoi_CheckedChanged;
             // 
             // chkBestseller
             // 
@@ -98,6 +99,7 @@
             chkBestseller.TabIndex = 1;
             chkBestseller.Text = "Best seller";
             chkBestseller.UseVisualStyleBackColor = true;
+            chkBestseller.CheckedChanged += chkBestseller_CheckedChanged;
             // 
             // label1
             // 
@@ -113,10 +115,10 @@
             // 
             flpSanPham.AutoScroll = true;
             flpSanPham.Controls.Add(panel2);
-            flpSanPham.Location = new Point(251, 58);
+            flpSanPham.Location = new Point(251, 51);
             flpSanPham.Name = "flpSanPham";
             flpSanPham.Size = new Size(726, 497);
-            flpSanPham.TabIndex = 8;
+            flpSanPham.TabIndex = 12;
             // 
             // panel2
             // 
@@ -130,14 +132,10 @@
             txtTimkiem.BackColor = Color.LightGray;
             txtTimkiem.BorderStyle = BorderStyle.FixedSingle;
             txtTimkiem.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtTimkiem.Location = new Point(648, 12);
+            txtTimkiem.Location = new Point(648, 5);
             txtTimkiem.Name = "txtTimkiem";
             txtTimkiem.Size = new Size(210, 30);
-            txtTimkiem.TabIndex = 7;
-            txtTimkiem.TextChanged += txtTimkiem_TextChanged;
-            txtTimkiem.Enter += txtTimkiem_Enter;
-            txtTimkiem.KeyDown += txtTimkiem_KeyDown;
-            txtTimkiem.Leave += txtTimkiem_Leave;
+            txtTimkiem.TabIndex = 11;
             // 
             // btnTimkiem
             // 
@@ -145,14 +143,13 @@
             btnTimkiem.BackgroundImageLayout = ImageLayout.Zoom;
             btnTimkiem.FlatAppearance.BorderSize = 0;
             btnTimkiem.FlatStyle = FlatStyle.Flat;
-            btnTimkiem.Location = new Point(848, 13);
+            btnTimkiem.Location = new Point(848, 6);
             btnTimkiem.Name = "btnTimkiem";
             btnTimkiem.Size = new Size(65, 29);
-            btnTimkiem.TabIndex = 6;
+            btnTimkiem.TabIndex = 10;
             btnTimkiem.UseVisualStyleBackColor = true;
-            btnTimkiem.Click += btnTimkiem_Click;
             // 
-            // TimSanPham
+            // TimKiemSanPham
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -162,9 +159,9 @@
             Controls.Add(flpSanPham);
             Controls.Add(txtTimkiem);
             Controls.Add(btnTimkiem);
-            Name = "TimSanPham";
-            Text = "TimSanPham";
-            Load += TimSanPham_Load;
+            Name = "TimKiemSanPham";
+            Text = "TimKiemSanPham";
+            Load += TimKiemSanPham_Load;
             pnLocTimKiem.ResumeLayout(false);
             pnLocTimKiem.PerformLayout();
             flpSanPham.ResumeLayout(false);
