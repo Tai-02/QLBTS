@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "QLBTS_GUI\\TimKiemSanPham.cs",
               "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimKiemSanPham.cs",
               "RelativeToolTip": "QLBTS_GUI\\TimKiemSanPham.cs",
-              "ViewState": "AgIAAJEBAAAAAAAAAAAqwKYBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAEIBAAAAAAAAAAA2wFoBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-27T03:30:39.422Z",
               "IsPinned": true,
@@ -48,8 +48,7 @@
               "RelativeToolTip": "QLBTS_DTO\\DonHangDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T12:52:12.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-27T12:52:12.878Z"
             },
             {
               "$type": "Document",
@@ -60,8 +59,7 @@
               "ToolTip": "D:\\HK5\\HK5-NHAP MON CONG NGHE PHAN MEM\\QLBTS\\QLBTS_GUI\\TimKiemSanPham.cs [Design]",
               "RelativeToolTip": "QLBTS_GUI\\TimKiemSanPham.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-27T11:31:00.652Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-10-27T11:31:00.652Z"
             }
           ]
         }
