@@ -18,10 +18,11 @@ namespace QLBTS_GUI
             //Form form = new DangNhap();
             //form.ShowDialog();
 
-            //Form form = new frmThongTinCaNhan(TaiKhoanDTO user);
-            //form.ShowDialog();
-            Form form = new TimKiemSanPham();
-            form.ShowDialog();
+            //testcode
+            //TaiKhoanDTO dummyUser = new TaiKhoanDTO();
+            //dummyUser.MaTK = 1;
+            //Application.Run(new frmThongTinCaNhan(dummyUser));
+
         }
     }
 }

@@ -72,30 +72,22 @@ namespace QLBTS_GUI
                     {
                         if (reader.Read())
                         {
-                            // Đổ dữ liệu vào các TextBox bên phải
                             TTCN_txt_Tenuser.Text = reader["HoTen"].ToString();
                             TTCN_txt_Email.Text = reader["Email"].ToString();
                             TTCN_txt_Sodienthoai.Text = reader["SDT"].ToString();
                             TTCN_txt_DiaChi.Text = reader["DiaChi"].ToString();
 
-                            // --- LOAD DỮ LIỆU VÀO 2 LABEL ĐỘNG ---
-                            // 1. Gán text
                             lblHoTenLeft.Text = reader["HoTen"].ToString();
                             lblVaiTroLeft.Text = reader["VaiTro"].ToString(); // Lấy từ cột VaiTro
 
-                            // 2. Căn chỉnh vị trí (sau khi đã có text và AutoSize)
-                            // Căn giữa theo chiều ngang của panelLeft
                             int x_center = TTCN_pnAnhdaidien.Width / 2;
 
-                            // Đặt vị trí cho Họ Tên (dưới ảnh 15px)
                             int y_top_HoTen = TTCN_pc_Anhdaidien.Bottom + 40;
                             lblHoTenLeft.Location = new Point(x_center - (lblHoTenLeft.Width / 2), y_top_HoTen);
 
-                            // Đặt vị trí cho Vai Trò (dưới Họ Tên 5px)
                             int y_top_VaiTro = lblHoTenLeft.Bottom + 30;
                             lblVaiTroLeft.Location = new Point(x_center - (lblVaiTroLeft.Width / 2), y_top_VaiTro);
 
-                            // Xử lý ảnh (LONGBLOB)
                             if (reader["Anh"] != DBNull.Value)
                             {
                                 byte[] imgData = (byte[])reader["Anh"];
@@ -103,7 +95,6 @@ namespace QLBTS_GUI
                             }
                             else
                             {
-                                // Gán ảnh placeholder (nếu bạn có)
                                 TTCN_pc_Anhdaidien.Image = Properties.Resources.icons8_camera_100; 
                             }
                         }
@@ -136,17 +127,74 @@ namespace QLBTS_GUI
                 MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message);
             }
         }
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                string trimmedEmail = email.Trim();
+
+                var addr = new System.Net.Mail.MailAddress(trimmedEmail);
+
+                if (addr.Address != trimmedEmail)
+                {
+                    return false;
+                }
+                if (!trimmedEmail.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
 
         private void TTCN_btnCapnhat_Click(object sender, EventArgs e)
         {
+            string sdt = TTCN_txt_Sodienthoai.Text.Trim();
+            string email = TTCN_txt_Email.Text.Trim();
+
+            if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 chữ số.",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+
+                TTCN_txt_Sodienthoai.Focus();
+                TTCN_txt_Sodienthoai.SelectAll();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                MessageBox.Show("Email không được để trống.",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                TTCN_txt_Email.Focus();
+                return;
+            }
+            if (!IsValidEmail(email))
+            {
+                MessageBox.Show("Định dạng email không hợp lệ. Vui lòng nhập lại",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                TTCN_txt_Email.Focus();
+                TTCN_txt_Email.SelectAll();
+                return;
+            }
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    // Câu query cơ bản
                     string query = "UPDATE TaiKhoan SET HoTen = @HoTen, Email = @Email, SDT = @SDT, DiaChi = @DiaChi";
 
-                    // CHỈ cập nhật ảnh NẾU người dùng đã chọn ảnh mới
                     if (newImageData != null)
                     {
                         query += ", Anh = @Anh";
@@ -156,14 +204,12 @@ namespace QLBTS_GUI
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        // Thêm tham số (Parameters) - Rất quan trọng để chống SQL Injection
                         cmd.Parameters.AddWithValue("@HoTen", TTCN_txt_Tenuser.Text);
-                        cmd.Parameters.AddWithValue("@Email", TTCN_txt_Email.Text);
-                        cmd.Parameters.AddWithValue("@SDT", TTCN_txt_Sodienthoai.Text);
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        cmd.Parameters.AddWithValue("@SDT", sdt);
                         cmd.Parameters.AddWithValue("@DiaChi", TTCN_txt_DiaChi.Text);
                         cmd.Parameters.AddWithValue("@MaTK", this.TenTK.MaTK);
 
-                        // CHỈ thêm tham số ảnh NẾU có ảnh mới
                         if (newImageData != null)
                         {
                             cmd.Parameters.AddWithValue("@Anh", newImageData);
@@ -175,7 +221,6 @@ namespace QLBTS_GUI
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Cập nhật thành công!");
-                            // Tải lại thông tin để hiển thị tên/ảnh mới ở panel trái
                             LoadUserProfile(this.TenTK.MaTK);
                         }
                         else
