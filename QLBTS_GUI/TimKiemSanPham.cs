@@ -79,7 +79,6 @@ namespace QLBTS_GUI
             SetPlaceholder();
         }
 
-        // HÀM HỖ TRỢ CHUYỂN byte[] SANG Image
         private Image ByteArrayToImage(byte[] byteArray)
         {
             if (byteArray == null || byteArray.Length == 0) return null;
@@ -90,7 +89,6 @@ namespace QLBTS_GUI
             }
         }
 
-        // HÀM HỖ TRỢ CHUYỂN Image SANG byte[] (Dùng khi Thêm/Sửa sản phẩm)
         private byte[] ImageToByteArray(Image image)
         {
             if (image == null) return null;
@@ -100,15 +98,43 @@ namespace QLBTS_GUI
                 return ms.ToArray();
             }
         }
+        private string BuildFilterQuery(string filterType = null)
+        {
+            string query = "SELECT MaSP, TenSP, Gia, HinhAnh FROM SanPham";
+            List<string> whereConditions = new List<string>();
 
-        private void loadSanPham(string searchTerm = null)
+            if (filterType == "BestSeller")
+            {
+                whereConditions.Add("MaSP BETWEEN 1 AND 5");
+            }
+            else if (filterType == "Topping")
+            {
+                whereConditions.Add("MaSP BETWEEN 14 AND 17");
+            }
+            else if (filterType == "TraTraiCay")
+            {
+                whereConditions.Add("(MaSP BETWEEN 11 AND 13 AND TenSP NOT LIKE '%Trà sữa%')");
+            }
+            else if (filterType == "MonMoi")
+            {
+                whereConditions.Add("((MaSP BETWEEN 6 AND 10) OR (MaSP BETWEEN 11 AND 13 AND TenSP LIKE '%Trà sữa%'))");
+            }
+
+            if (whereConditions.Count > 0)
+            {
+                query += " WHERE " + string.Join(" AND ", whereConditions);
+            }
+
+            return query;
+        }
+
+        private void loadSanPham(string searchTerm = null, string filterType = null)
         {
             flpSanPham.Controls.Clear();
             flpSanPham.SuspendLayout();
 
-            string query;
-            bool showBestSellerTag = false;
-            query = "SELECT TenSP, Gia, HinhAnh FROM SanPham";
+            string query = BuildFilterQuery(filterType);
+
 
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
@@ -130,19 +156,16 @@ namespace QLBTS_GUI
                 while (reader.Read())
                 {
                     string tenSP = reader["TenSP"].ToString();
-
-                    // Nếu có từ khóa tìm kiếm (normalizedSearchTerm != null)
+                    
                     if (!string.IsNullOrWhiteSpace(normalizedSearchTerm))
                     {
-                        // Chuẩn hóa tên sản phẩm từ CSDL
                         string normalizedTenSP = RemoveAccents(tenSP).ToLower();
-
-                        // Nếu tên đã chuẩn hóa KHÔNG chứa từ khóa đã chuẩn hóa
                         if (!normalizedTenSP.Contains(normalizedSearchTerm))
                         {
-                            continue; // Bỏ qua sản phẩm này, chuyển sang vòng lặp tiếp theo
+                            continue;
                         }
                     }
+                    int maSP = Convert.ToInt32(reader["MaSP"]);
 
                     int gia = Convert.ToInt32(reader["Gia"]);
                     Image hinhAnh = Properties.Resources.icons8_camera_100; // Mặc định
@@ -157,7 +180,7 @@ namespace QLBTS_GUI
                                 hinhAnh = Image.FromStream(ms);
                             }
                         }
-                        catch (Exception) { /* Dùng ảnh placeholder */ }
+                        catch (Exception) {}
                     }
 
                     // --- Tạo thẻ sản phẩm động ---
@@ -173,13 +196,14 @@ namespace QLBTS_GUI
                     picImage.Location = new Point(30, 10);
                     picImage.SizeMode = PictureBoxSizeMode.Zoom;
 
+
                     PictureBox picBestSeller = new PictureBox();
-                    picBestSeller.Size = new Size(180, 120);
-                    picBestSeller.Location = new Point(135, 5);
+                    picBestSeller.Size = new Size(38, 38);
+                    picBestSeller.Location = new Point(productPanel.Width - picBestSeller.Width - 10, 10);
                     picBestSeller.SizeMode = PictureBoxSizeMode.Zoom;
                     picBestSeller.BackColor = Color.Transparent;
-                    // --- Logic quan trọng ---
-                    picBestSeller.Visible = showBestSellerTag; // Chỉ hiển thị khi cờ là true
+                    picBestSeller.Visible = (maSP >= 1 && maSP <= 5);
+
 
                     Label lblName = new Label();
                     lblName.Text = tenSP;
@@ -234,7 +258,7 @@ namespace QLBTS_GUI
             flpSanPham.ResumeLayout(true);
         }
 
-        // 3. Hàm xử lý sự kiện Click (để highlight)
+        // Hàm xử lý sự kiện Click (để highlight)
         private void ProductPanel_Click(object sender, EventArgs e)
         {
             Control clickedControl = sender as Control;
@@ -242,7 +266,6 @@ namespace QLBTS_GUI
 
             if (clickedControl is Panel)
             {
-                // Nếu click vào chính Panel
                 selectedPanel = (Panel)clickedControl;
             }
             else
@@ -252,18 +275,17 @@ namespace QLBTS_GUI
 
             if (selectedPanel == null) return;
 
-            // 1. Bỏ chọn tất cả các Panel khác
             foreach (Control ctrl in flpSanPham.Controls)
             {
                 if (ctrl is Panel p)
                 {
-                    p.BackColor = Color.White; // Trả về màu nền cũ
-                    p.Padding = new Padding(0); // Bỏ viền
+                    p.BackColor = Color.White;
+                    p.Padding = new Padding(0);
                 }
             }
 
-            selectedPanel.BackColor = Color.DeepSkyBlue; // Đặt màu nền highlight
-            selectedPanel.Padding = new Padding(3);      // Tạo hiệu ứng viền xanh
+            selectedPanel.BackColor = Color.DeepSkyBlue;
+            selectedPanel.Padding = new Padding(3);
         }
 
         /*****TIM KIEM SAN PHAM THEO TEXTBOX*****/
@@ -300,57 +322,106 @@ namespace QLBTS_GUI
         }
         private void txtTimkiem_KeyDown(object sender, KeyEventArgs e)
         {
-            // Nếu người dùng nhấn Enter
             if (e.KeyCode == Keys.Enter)
             {
-                string searchTerm = GetSearchTerm(); // Lấy từ khóa đã xử lý
-                loadSanPham(searchTerm); // Gọi hàm load
+                LocSanPhamBangBoLoc(); // MỚI
 
                 e.SuppressKeyPress = true;
             }
         }
         private void txtTimkiem_Enter(object sender, EventArgs e)
         {
-            // Nếu đang là chữ mờ "Tìm Kiếm"
             if (txtTimkiem.Text == "Tìm Kiếm" && txtTimkiem.ForeColor == Color.Gray)
             {
-                txtTimkiem.Text = ""; // Xóa nó đi
-                txtTimkiem.ForeColor = Color.Black; // Đổi về màu chữ đen
+                txtTimkiem.Text = "";
+                txtTimkiem.ForeColor = Color.Black;
             }
         }
         private void btnTimkiem_Click(object sender, EventArgs e)
         {
-            string searchTerm = GetSearchTerm();
-            loadSanPham(searchTerm);
+            LocSanPhamBangBoLoc();
         }
         private void txtTimkiem_Leave(object sender, EventArgs e)
         {
-            // Nếu textbox bị bỏ trống
             if (string.IsNullOrWhiteSpace(txtTimkiem.Text))
             {
-                // Đặt lại chữ mờ "Tìm Kiếm"
                 SetPlaceholder();
             }
         }
         private string GetSearchTerm()
         {
-            // Nếu text đang là placeholder
             if (txtTimkiem.Text == "Tìm Kiếm" && txtTimkiem.ForeColor == Color.Gray)
             {
-                return null; // Trả về null (tương đương không tìm gì)
+                return null;
             }
-            // Ngược lại, trả về nội dung người dùng gõ
             return txtTimkiem.Text;
         }
 
         /*********Su dung bo loc san pham******/
+        private void LocSanPhamBangBoLoc()
+        {
+            string searchTerm = GetSearchTerm();
+            string filterType = null;
+            if (chkBestseller.Checked)
+            {
+                filterType = "BestSeller";
+            }
+            else if (chkMonmoi.Checked)
+            {
+                filterType = "MonMoi";
+            }
+            else if (chkTratraicay.Checked)
+            {
+                filterType = "TraTraiCay";
+            }
+            else if (chkTopping.Checked)
+            {
+                filterType = "Topping";
+            }
+            loadSanPham(searchTerm, filterType);
+        }
         private void chkBestseller_CheckedChanged(object sender, EventArgs e)
         {
+            if (chkBestseller.Checked)
+            {
+                chkMonmoi.Checked = false;
+                chkTratraicay.Checked = false;
+                chkTopping.Checked = false;
+            }
+            LocSanPhamBangBoLoc();
         }
 
         private void chkMonmoi_CheckedChanged(object sender, EventArgs e)
         {
+            if (chkMonmoi.Checked)
+            {
+                chkBestseller.Checked = false;
+                chkTratraicay.Checked = false;
+                chkTopping.Checked = false;
+            }
+            LocSanPhamBangBoLoc();
+        }
 
-        }        
+        private void chkTratraicay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTratraicay.Checked)
+            {
+                chkBestseller.Checked = false;
+                chkMonmoi.Checked = false;
+                chkTopping.Checked = false;
+            }
+            LocSanPhamBangBoLoc();
+        }
+
+        private void chkTopping_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTopping.Checked)
+            {
+                chkBestseller.Checked = false;
+                chkMonmoi.Checked = false;
+                chkTratraicay.Checked = false;
+            }
+            LocSanPhamBangBoLoc();
+        }
     }
 }

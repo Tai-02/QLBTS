@@ -65,6 +65,7 @@
             chkTopping.TabIndex = 4;
             chkTopping.Text = "Topping";
             chkTopping.UseVisualStyleBackColor = true;
+            chkTopping.CheckedChanged += chkTopping_CheckedChanged;
             // 
             // chkTratraicay
             // 
@@ -76,6 +77,7 @@
             chkTratraicay.TabIndex = 3;
             chkTratraicay.Text = "Trà trái cây";
             chkTratraicay.UseVisualStyleBackColor = true;
+            chkTratraicay.CheckedChanged += chkTratraicay_CheckedChanged;
             // 
             // chkMonmoi
             // 
