@@ -20,7 +20,6 @@ namespace QLBTS_GUI
     {
         private string connectionString = "Server=127.0.0.1;Database=QLBTS;Uid=root;Pwd=48692005;";
 
-        //private int MaTK = 1; // TEST 
         private TaiKhoanDTO TenTK;
 
         private byte[] newImageData = null;
@@ -32,9 +31,7 @@ namespace QLBTS_GUI
         {
             InitializeComponent();
 
-            //Lưu user được truyền vào ---
             this.TenTK = user;
-            // 1. Khởi tạo Label HoTen
             lblHoTenLeft = new Label();
             lblHoTenLeft.Text = "Đang tải..."; // Text tạm thời
             lblHoTenLeft.Font = new Font("Arial", 14, FontStyle.Bold);
@@ -42,20 +39,16 @@ namespace QLBTS_GUI
             lblHoTenLeft.BackColor = Color.Transparent; // Nền trong suốt
             lblHoTenLeft.ForeColor = Color.Black;
 
-            // 2. Khởi tạo Label VaiTro
             lblVaiTroLeft = new Label();
             lblVaiTroLeft.Text = "Đang tải..."; // Text tạm thời
             lblVaiTroLeft.Font = new Font("Arial", 10, FontStyle.Regular);
             lblVaiTroLeft.AutoSize = true;
             lblVaiTroLeft.BackColor = Color.Transparent;
-            // (Trong hình của bạn nó màu xám hơn)
             lblVaiTroLeft.ForeColor = Color.DimGray;
 
-            // 3. Thêm 2 label vào Panel bên trái
             TTCN_pnAnhdaidien.Controls.Add(lblHoTenLeft);
             TTCN_pnAnhdaidien.Controls.Add(lblVaiTroLeft);
         }
-        // 3. HÀM TẢI DỮ LIỆU (LOAD)
         private void LoadUserProfile(int maTK)
         {
             newImageData = null;
@@ -109,7 +102,6 @@ namespace QLBTS_GUI
 
         private void frmThongTinCaNhan_Load(object sender, EventArgs e)
         {
-            // Kiểm tra xem user có được truyền vào không
             if (this.TenTK == null)
             {
                 MessageBox.Show("Lỗi: Không có thông tin người dùng để tải.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -119,7 +111,6 @@ namespace QLBTS_GUI
 
             try
             {
-                // Dùng MaTK của user đã đăng nhập
                 LoadUserProfile(this.TenTK.MaTK);
             }
             catch (Exception ex)
@@ -153,19 +144,89 @@ namespace QLBTS_GUI
                 return false;
             }
         }
+        private bool IsAllDigits(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+
+            foreach (char c in s)
+            {
+                if (!char.IsDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool IsValidName(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+
+            foreach (char c in s)
+            {
+                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         private void TTCN_btnCapnhat_Click(object sender, EventArgs e)
         {
+            string ten = TTCN_txt_Tenuser.Text.Trim();
             string sdt = TTCN_txt_Sodienthoai.Text.Trim();
             string email = TTCN_txt_Email.Text.Trim();
 
-            if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+            if (string.IsNullOrWhiteSpace(ten))
             {
-                MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 chữ số.",
+                MessageBox.Show("Họ tên không được để trống.",
                                 "Lỗi Dữ Liệu",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
+                TTCN_txt_Tenuser.Focus();
+                return;
+            }
+            if (!IsValidName(ten))
+            {
+                MessageBox.Show("Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt.",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                TTCN_txt_Tenuser.Focus();
+                TTCN_txt_Tenuser.SelectAll();
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(sdt))
+            {
+                MessageBox.Show("Số điện thoại không được để trống.",
+                               "Lỗi Dữ Liệu",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Warning);
+                TTCN_txt_Sodienthoai.Focus();
+                return;
+            }
+
+            if (!IsAllDigits(sdt))
+            {
+                MessageBox.Show("Số điện thoại chỉ được chứa các chữ số (0-9), không chứa chữ cái hoặc ký tự đặc biệt.",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                TTCN_txt_Sodienthoai.Focus();
+                TTCN_txt_Sodienthoai.SelectAll();
+                return;
+            }
+
+            if (sdt.Length != 10)
+            {
+                MessageBox.Show("Số điện thoại phải có đúng 10 chữ số.",
+                                "Lỗi Dữ Liệu",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
                 TTCN_txt_Sodienthoai.Focus();
                 TTCN_txt_Sodienthoai.SelectAll();
                 return;
@@ -204,7 +265,7 @@ namespace QLBTS_GUI
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@HoTen", TTCN_txt_Tenuser.Text);
+                        cmd.Parameters.AddWithValue("@HoTen", ten);
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@SDT", sdt);
                         cmd.Parameters.AddWithValue("@DiaChi", TTCN_txt_DiaChi.Text);
@@ -249,19 +310,16 @@ namespace QLBTS_GUI
             }
         }
 
-        // Chuyển từ Image sang byte[] để lưu vào CSDL
         private byte[] ImageToByteArray(Image image)
         {
             if (image == null) return null;
             using (MemoryStream ms = new MemoryStream())
             {
-                // Lưu ảnh vào stream với định dạng Jpeg (bạn có thể chọn Png)
                 image.Save(ms, ImageFormat.Jpeg);
                 return ms.ToArray();
             }
         }
 
-        // Chuyển từ byte[] (đọc từ CSDL) sang Image để hiển thị
         private Image ByteArrayToImage(byte[] byteArray)
         {
             if (byteArray == null || byteArray.Length == 0) return null;
@@ -279,11 +337,9 @@ namespace QLBTS_GUI
                 ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // Hiển thị ảnh mới lên PictureBox
                     Image tempImage = new Bitmap(ofd.FileName);
                     TTCN_pc_Anhdaidien.Image = tempImage;
 
-                    // Chuyển ảnh sang byte[] và lưu vào biến tạm
                     newImageData = ImageToByteArray(tempImage);
                 }
             }

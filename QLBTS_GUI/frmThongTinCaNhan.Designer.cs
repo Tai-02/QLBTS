@@ -61,18 +61,18 @@
             TTCN_btnCapnhat = new Guna.UI2.WinForms.Guna2Button();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
+            pictureBox3 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)TTCN_pc_iconUser).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TTCN_pc_Anhdaidien).BeginInit();
             TTCN_pnAnhdaidien.SuspendLayout();
             guna2Panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // guna2HtmlLabel2
@@ -311,29 +311,19 @@
             guna2Panel2.Size = new Size(519, 444);
             guna2Panel2.TabIndex = 5;
             // 
-            // pictureBox1
+            // pictureBox4
             // 
-            pictureBox1.Image = Properties.Resources.icons8_user_32;
-            pictureBox1.Location = new Point(36, 54);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(58, 57);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 13;
-            pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = Properties.Resources.email;
-            pictureBox2.Location = new Point(36, 129);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(58, 57);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.TabIndex = 14;
-            pictureBox2.TabStop = false;
+            pictureBox4.Image = Properties.Resources.location1;
+            pictureBox4.Location = new Point(36, 281);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(58, 57);
+            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox4.TabIndex = 15;
+            pictureBox4.TabStop = false;
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = Properties.Resources.z7136937637719_6cff850f2bdf54ef43e237c3110059461;
+            pictureBox3.Image = Properties.Resources.iconDienThoai;
             pictureBox3.Location = new Point(36, 206);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(58, 57);
@@ -341,15 +331,25 @@
             pictureBox3.TabIndex = 14;
             pictureBox3.TabStop = false;
             // 
-            // pictureBox4
+            // pictureBox2
             // 
-            pictureBox4.Image = Properties.Resources.location;
-            pictureBox4.Location = new Point(36, 281);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(58, 57);
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox4.TabIndex = 15;
-            pictureBox4.TabStop = false;
+            pictureBox2.Image = Properties.Resources.email1;
+            pictureBox2.Location = new Point(36, 129);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(58, 57);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 14;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.iconUser;
+            pictureBox1.Location = new Point(36, 54);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(58, 57);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 13;
+            pictureBox1.TabStop = false;
             // 
             // frmThongTinCaNhan
             // 
@@ -367,10 +367,10 @@
             TTCN_pnAnhdaidien.PerformLayout();
             guna2Panel2.ResumeLayout(false);
             guna2Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

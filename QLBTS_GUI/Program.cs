@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic.ApplicationServices;
+﻿using Microsoft.VisualBasic.ApplicationServices;
 using QLBTS_DTO;
 
 namespace QLBTS_GUI
@@ -16,10 +16,12 @@ namespace QLBTS_GUI
             ApplicationConfiguration.Initialize();
 
             //Form form = new DangNhap();
-            //form.ShowDialog();            
+            //form.ShowDialog();
 
             Form form = new TrangChu();
             form.ShowDialog();
+
+
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimKiemSanPham));
             pnLocTimKiem = new Panel();
             chkTopping = new CheckBox();
             chkTratraicay = new CheckBox();
@@ -145,11 +146,11 @@
             // 
             // btnTimkiem
             // 
-            btnTimkiem.BackgroundImage = Properties.Resources.z7136941101299_cad41cc31586760f1d316daa0f7e665b;
+            btnTimkiem.BackgroundImage = (Image)resources.GetObject("btnTimkiem.BackgroundImage");
             btnTimkiem.BackgroundImageLayout = ImageLayout.Zoom;
             btnTimkiem.FlatAppearance.BorderSize = 0;
             btnTimkiem.FlatStyle = FlatStyle.Flat;
-            btnTimkiem.Location = new Point(848, 6);
+            btnTimkiem.Location = new Point(843, 6);
             btnTimkiem.Name = "btnTimkiem";
             btnTimkiem.Size = new Size(65, 29);
             btnTimkiem.TabIndex = 10;
