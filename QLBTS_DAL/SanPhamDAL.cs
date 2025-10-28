@@ -1,123 +1,98 @@
 ﻿using MySql.Data.MySqlClient;
-using QLBTS_DTO;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace QLBTS_DAL
 {
+    public class SanPham
+    {
+        public int MaSP { get; set; }
+        public string TenSP { get; set; }
+        public string Size { get; set; }
+        public int SoLuong { get; set; }
+        public decimal Gia { get; set; }
+        public decimal KhuyenMai { get; set; }
+        public string HinhAnh { get; set; }
+        public string TrangThai { get; set; }
+
+    }
     public class SanPhamDAL
     {
-
-        public List<SanPhamDTO> GetSanPham(string filter)
+        public static List<SanPham> GetAll()
         {
-            List<SanPhamDTO> danhSach = new List<SanPhamDTO>();
-            string query;
+            List<SanPham> list = new List<SanPham>();
+            string query = "SELECT * FROM SanPham";
 
-            if (filter == "bestseller")
+            using (MySqlConnection conn = DatabaseHelper.GetConnection())
             {
-                query = "SELECT TenSP, Gia, HinhAnh FROM SanPham WHERE TenSP IN " +
-                        "('Trà sữa trân châu', 'Trà sữa thái xanh', 'Trà sữa Matcha', 'Trà sữa bạc hà', 'Trà sữa xoài kem cheese')";
-            }
-            else if (filter == "monmoi")
-            {
-                query = "SELECT TenSP, Gia, HinhAnh FROM SanPham WHERE TenSP IN " +
-                        "('Trà sữa kem trứng nướng', 'Trà sữa khoai môn', 'Trà sữa Oreo Cake Cream', 'Trà sữa matcha đậu đỏ', 'Trà sữa Pudding đậu đỏ')";
-            }
-            else if (filter == "tratraicay")
-            {
-                query = "SELECT TenSP, Gia, HinhAnh FROM SanPham WHERE TenSP IN " +
-                        "('Trà đào cam sả', 'Nước dừa', 'Trà trái cây nhiệt đới')";
-            }
-            else if (filter == "topping")
-            {
-                query = "SELECT TenSP, Gia, HinhAnh FROM SanPham WHERE TenSP IN " +
-                        "('Kem sữa', 'Trân châu đen', 'Trân châu trắng', 'Sương sáo')";
-            }
-            else
-            {
-                query = "SELECT TenSP, Gia, HinhAnh FROM SanPham WHERE Size = 'L'";
-            }
-
-            MySqlConnection conn = null;
-            MySqlDataReader reader = null;
-
-            try
-            {
-                conn = DatabaseHelper.GetConnection();
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    SanPhamDTO sp = new SanPhamDTO();
-                    sp.TenSP = reader["TenSP"].ToString();
-                    sp.Gia = Convert.ToInt32(reader["Gia"]);
-
-                    // --- Sửa lỗi của bạn ở đây ---
-                    // Lớp DAL chỉ lấy byte[], không chuyển đổi sang Image
-                    if (reader["HinhAnh"] != DBNull.Value)
+                    list.Add(new SanPham
                     {
-                        sp.HinhAnh = (byte[])reader["HinhAnh"];
-                    }
-                    else
-                    {
-                        sp.HinhAnh = null; // Gán là null nếu CSDL không có ảnh
-                    }
-
-                    danhSach.Add(sp);
+                        MaSP = reader.GetInt32("MaSP"),
+                        TenSP = reader.GetString("TenSP"),
+                        Size = reader.GetString("Size"),
+                        SoLuong = reader.GetInt32("SoLuong"),
+                        Gia = reader.GetDecimal("Gia"),
+                        KhuyenMai = reader.GetDecimal("KhuyenMai"),
+                        HinhAnh = reader["HinhAnh"] == DBNull.Value ? null : reader.GetString("HinhAnh"),
+                        TrangThai = reader.GetString("TrangThai")
+                    });
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi SanPhamDAL.GetSanPham: " + ex.Message);
-            }
-            finally
-            {
-                if (reader != null) reader.Close();
-                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
-            }
-
-            return danhSach;
+            return list;
         }
-
-
-        // 2. Hàm đọc file từ đường dẫn và CẬP NHẬT vào CSDL
-        public void UpdateProductImage(string tenSP, byte[] imageBytes)
+        public static bool Insert(SanPham sp)
         {
-            // 1. Kiểm tra dữ liệu
-            if (imageBytes == null || imageBytes.Length == 0)
+            string query = "INSERT INTO SanPham (TenSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh) " +
+                           "VALUES (@TenSP, @Size, @SoLuong, @Gia, @KhuyenMai, @HinhAnh)";
+            using (var conn = DatabaseHelper.GetConnection())
             {
-                Console.WriteLine($"Không có dữ liệu ảnh cho: {tenSP}.");
-                return;
-            }
-
-            // 2. Tạo câu lệnh UPDATE với tham số (parameter)
-            string query = "UPDATE SanPham SET HinhAnh = @HinhAnh WHERE TenSP = @TenSP";
-
-            MySqlConnection conn = null;
-            try
-            {
-                conn = DatabaseHelper.GetConnection();
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                // 3. Gán tham số (cách an toàn nhất)
-                cmd.Parameters.Add("@TenSP", MySqlDbType.VarChar).Value = tenSP;
-                cmd.Parameters.Add("@HinhAnh", MySqlDbType.LongBlob).Value = imageBytes;
-
-                // 4. Thực thi
-                cmd.ExecuteNonQuery();
-                Console.WriteLine($"Cập nhật ảnh cho: {tenSP} thành công.");
+                cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@Size", sp.Size);
+                cmd.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
+                cmd.Parameters.AddWithValue("@Gia", sp.Gia);
+                cmd.Parameters.AddWithValue("@KhuyenMai", sp.KhuyenMai);
+                cmd.Parameters.AddWithValue("@HinhAnh", DBNull.Value);
+                return cmd.ExecuteNonQuery() > 0;
             }
-            catch (Exception ex)
+        }
+
+        public static bool Update(SanPham sp)
+        {
+            string query = "UPDATE SanPham SET TenSP=@TenSP, Size=@Size, SoLuong=@SoLuong, Gia=@Gia, KhuyenMai=@KhuyenMai WHERE MaSP=@MaSP";
+            using (var conn = DatabaseHelper.GetConnection())
             {
-                Console.WriteLine($"Lỗi khi cập nhật ảnh cho {tenSP}: {ex.Message}");
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@Size", sp.Size);
+                cmd.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
+                cmd.Parameters.AddWithValue("@Gia", sp.Gia);
+                cmd.Parameters.AddWithValue("@KhuyenMai", sp.KhuyenMai);
+                return cmd.ExecuteNonQuery() > 0;
             }
-            finally
+        }
+
+        public static bool Delete(int maSP)
+        {
+            string query = "DELETE FROM SanPham WHERE MaSP=@MaSP";
+            using (var conn = DatabaseHelper.GetConnection())
             {
-                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaSP", maSP);
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
     }
