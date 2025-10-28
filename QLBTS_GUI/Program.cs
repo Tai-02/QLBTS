@@ -14,7 +14,7 @@ namespace QLBTS_GUI
 
             
 
-            Form form = new GioHangCuaBan();
+            Form form = new GioHang();
 
             form.ShowDialog();
         }

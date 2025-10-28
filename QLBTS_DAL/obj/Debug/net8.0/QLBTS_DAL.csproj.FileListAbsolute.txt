@@ -1,0 +1,16 @@
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.deps.json
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.dll
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DAL.pdb
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DTO.dll
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\bin\Debug\net8.0\QLBTS_DTO.pdb
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.csproj.AssemblyReference.cache
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.GeneratedMSBuildEditorConfig.editorconfig
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.AssemblyInfoInputs.cache
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.AssemblyInfo.cs
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.csproj.CoreCompileInputs.cache
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.sourcelink.json
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.csproj.Up2Date
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.dll
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\refint\QLBTS_DAL.dll
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\QLBTS_DAL.pdb
+E:\Public\CNPM\test\QLBTS\QLBTS_DAL\obj\Debug\net8.0\ref\QLBTS_DAL.dll
