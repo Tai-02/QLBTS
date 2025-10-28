@@ -11,10 +11,12 @@ namespace QLBTS_BLL
     public class CartBLL
     {
         private CartDAL cartDAL;
+        private ProductDAL productDAL;
 
         public CartBLL()
         {
             cartDAL = new CartDAL();
+            productDAL = new ProductDAL();
         }
 
         /// <summary>
@@ -154,6 +156,72 @@ namespace QLBTS_BLL
 
             return items.Where(x => !x.ConHang).ToList();
         }
-        
+
+        /// <summary>
+        /// Kiểm tra tồn kho trước khi checkout
+        /// </summary>
+        public string ValidateStockBeforeCheckout(List<CartItemViewModel> items)
+        {
+            if (items == null || !items.Any())
+                return "Giỏ hàng trống!";
+
+
+            foreach (var item in items)
+            {
+                try
+                {
+                    int tonKho = productDAL.GetCurrentStock(item.MaSP);
+
+                    if (tonKho < item.SoLuong)
+                    {
+                        return $"Sản phẩm '{item.TenSP}' chỉ còn {tonKho} sản phẩm trong kho!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Lỗi BLL - ValidateStockBeforeCheckout: {ex.Message}", ex);
+                }
+            }
+
+            return null; // OK
+        }
+
+        /// <summary>
+        /// Checkout: Tạo đơn hàng từ giỏ
+        /// </summary>
+        public int Checkout(int maTK, out int tongTien)
+        {
+            if (maTK <= 0)
+            {
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
+            }
+
+            try
+            {
+                // Kiểm tra giỏ hàng
+                var cartItems = GetCart(maTK);
+
+                if (cartItems == null || !cartItems.Any())
+                {
+                    throw new Exception("Giỏ hàng trống!");
+                }
+
+                // Kiểm tra tồn kho
+                string stockError = ValidateStockBeforeCheckout(cartItems);
+                if (stockError != null)
+                {
+                    throw new Exception(stockError);
+                }
+
+                // Tạo đơn hàng
+                int maDH = cartDAL.CreateOrderFromCart(maTK, out tongTien);
+
+                return maDH;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - Checkout: {ex.Message}", ex);
+            }
+        }
     }
 }

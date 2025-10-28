@@ -175,7 +175,6 @@ namespace QLBTS_DAL
 
                     // Lấy hoặc tạo giỏ hàng
                     int maGH = GetOrCreateCart(maTK, conn);
-
                     // Kiểm tra sản phẩm đã có trong giỏ chưa
                     string checkQuery = @"
                         SELECT MaCTGH, SoLuong 
@@ -261,6 +260,142 @@ namespace QLBTS_DAL
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi xóa giỏ hàng: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Tạo đơn hàng từ giỏ hàng
+        /// </summary>
+        public int CreateOrderFromCart(int maTK, out int tongTien)
+        {
+            tongTien = 0;
+            int maDH = 0;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlTransaction transaction = conn.BeginTransaction();
+
+                    try
+                    {
+                        // 1. Lấy giỏ hàng của user
+                        string getCartQuery = @"
+                    SELECT 
+                        ctgh.MaSP,
+                        ctgh.SoLuong,
+                        sp.Gia,
+                        sp.KhuyenMai
+                    FROM ChiTietGioHang ctgh
+                    INNER JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
+                    INNER JOIN SanPham sp ON ctgh.MaSP = sp.MaSP
+                    WHERE gh.MaTK = @MaTK";
+
+                        MySqlCommand getCartCmd = new MySqlCommand(getCartQuery, conn, transaction);
+                        getCartCmd.Parameters.AddWithValue("@MaTK", maTK);
+
+                        MySqlDataReader reader = getCartCmd.ExecuteReader();
+
+                        var cartItems = new System.Collections.Generic.List<(int MaSP, int SoLuong, int DonGia)>();
+
+                        while (reader.Read())
+                        {
+                            int maSP = reader.GetInt32("MaSP");
+                            int soLuong = reader.GetInt32("SoLuong");
+                            int giaGoc = reader.GetInt32("Gia");
+                            int khuyenMai = reader.GetInt32("KhuyenMai");
+
+                            // Tính giá sau khuyến mãi
+                            int donGia = giaGoc - (giaGoc * khuyenMai / 100);
+                            cartItems.Add((maSP, soLuong, donGia));
+
+                            tongTien += donGia * soLuong;
+                        }
+                        reader.Close();
+
+                        if (cartItems.Count == 0)
+                        {
+                            transaction.Rollback();
+                            throw new Exception("Giỏ hàng trống!");
+                        }
+
+                        // 2. Tạo đơn hàng
+                        string createOrderQuery = @"
+                    INSERT INTO DonHang (MaKhach, NgayDat, TongTien, TrangThai)
+                    VALUES (@MaKhach, NOW(), @TongTien, 'Chờ xác nhận');
+                    SELECT LAST_INSERT_ID();";
+
+                        MySqlCommand createOrderCmd = new MySqlCommand(createOrderQuery, conn, transaction);
+                        createOrderCmd.Parameters.AddWithValue("@MaKhach", maTK);
+                        createOrderCmd.Parameters.AddWithValue("@TongTien", tongTien);
+
+                        maDH = Convert.ToInt32(createOrderCmd.ExecuteScalar());
+
+                        // 3. Thêm chi tiết đơn hàng & Trừ số lượng sản phẩm
+                        ProductDAL productDAL = new ProductDAL();
+
+                        foreach (var item in cartItems)
+                        {
+                            // Kiểm tra tồn kho
+                            int tonKho = productDAL.GetCurrentStock(item.MaSP);
+                            if (tonKho < item.SoLuong)
+                            {
+                                transaction.Rollback();
+                                throw new Exception($"Sản phẩm MaSP={item.MaSP} không đủ số lượng!");
+                            }
+
+                            // Thêm chi tiết đơn hàng
+                            string insertDetailQuery = @"
+                        INSERT INTO ChiTietDonHang (MaDH, MaSP, SoLuong, DonGia)
+                        VALUES (@MaDH, @MaSP, @SoLuong, @DonGia)";
+
+                            MySqlCommand insertDetailCmd = new MySqlCommand(insertDetailQuery, conn, transaction);
+                            insertDetailCmd.Parameters.AddWithValue("@MaDH", maDH);
+                            insertDetailCmd.Parameters.AddWithValue("@MaSP", item.MaSP);
+                            insertDetailCmd.Parameters.AddWithValue("@SoLuong", item.SoLuong);
+                            insertDetailCmd.Parameters.AddWithValue("@DonGia", item.DonGia);
+                            insertDetailCmd.ExecuteNonQuery();
+
+                            // Trừ số lượng sản phẩm
+                            string updateStockQuery = @"
+                        UPDATE SanPham 
+                        SET SoLuong = SoLuong - @SoLuong 
+                        WHERE MaSP = @MaSP";
+
+                            MySqlCommand updateStockCmd = new MySqlCommand(updateStockQuery, conn, transaction);
+                            updateStockCmd.Parameters.AddWithValue("@SoLuong", item.SoLuong);
+                            updateStockCmd.Parameters.AddWithValue("@MaSP", item.MaSP);
+                            updateStockCmd.ExecuteNonQuery();
+                        }
+
+                        // 4. Xóa giỏ hàng
+                        string clearCartQuery = @"
+                    DELETE ctgh FROM ChiTietGioHang ctgh
+                    INNER JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
+                    WHERE gh.MaTK = @MaTK";
+
+                        MySqlCommand clearCartCmd = new MySqlCommand(clearCartQuery, conn, transaction);
+                        clearCartCmd.Parameters.AddWithValue("@MaTK", maTK);
+                        clearCartCmd.ExecuteNonQuery();
+
+                        // 5. Commit transaction
+                        transaction.Commit();
+                        OrderDAL orderDAL = new OrderDAL();
+                        orderDAL.ThemLichSu(maTK, maDH, tongTien, "Chờ xác nhận", "MuaHang");
+
+                        return maDH;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - CreateOrderFromCart: {ex.Message}", ex);
             }
         }
     }

@@ -162,35 +162,29 @@ namespace QLBTS_GUI
         {
             try
             {
-                if (_product == null)
+                if (_product?.HinhAnh == null || _product.HinhAnh.Length == 0)
                 {
                     productImage.BackColor = Color.LightGray;
                     return;
                 }
 
-                if (_product.HinhAnh != null && _product.HinhAnh.Length > 0)
+                // Dispose ảnh cũ trước
+                if (productImage.Image != null)
                 {
-                    using (var ms = new MemoryStream(_product.HinhAnh))
-                    {
-                        if (productImage.Image != null)
-                        {
-                            productImage.Image.Dispose();
-                            productImage.Image = null;
-                        }
-
-                        productImage.Image = Image.FromStream(ms);
-                    }
-                }
-                else
-                {
-                    productImage.BackColor = Color.LightGray;
+                    var oldImage = productImage.Image;
                     productImage.Image = null;
+                    oldImage.Dispose();
                 }
+
+                // Clone image ra khỏi stream
+                using (var ms = new MemoryStream(_product.HinhAnh))
+                {
+                    productImage.Image = new Bitmap(Image.FromStream(ms));
+                } // ✅ Bitmap đã copy dữ liệu, ms dispose không ảnh hưởng
             }
             catch (Exception ex)
             {
                 productImage.BackColor = Color.LightGray;
-                productImage.Image = null;
                 Console.WriteLine($"Lỗi load ảnh: {ex.Message}");
             }
         }

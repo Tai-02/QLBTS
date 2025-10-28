@@ -24,7 +24,62 @@ namespace QLBTS_GUI
         }
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chức năng thanh toán chưa được triển khai.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Kiểm tra giỏ hàng trống
+            if (_cartItems == null || !_cartItems.Any())
+            {
+                ShowWarning("Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi thanh toán.");
+                return;
+            }
+
+            // Kiểm tra tồn kho
+            try
+            {
+                string stockError = _cartBLL.ValidateStockBeforeCheckout(_cartItems);
+
+                if (stockError != null)
+                {
+                    ShowWarning(stockError);
+                    return;
+                }
+
+                // Xác nhận thanh toán
+                DialogResult result = MessageBox.Show(
+                    $"Xác nhận thanh toán đơn hàng?\n\nTổng cộng: {lblTotalValue.Text}",
+                    "Xác nhận",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    // Kiểm tra lại lần cuối
+                    if (_maTK <= 0)
+                    {
+                        ShowError("Lỗi: Không xác định được tài khoản!");
+                        return;
+                    }
+
+                    try
+                    {
+                        int tongTien;
+                        int maDH = _cartBLL.Checkout(_maTK, out tongTien);
+
+                        // Thành công
+                        ShowSuccess($"Đặt hàng thành công!\n\nMã đơn hàng: #{maDH}\nTổng tiền: {tongTien:N0}đ");
+
+                        // Refresh giỏ hàng
+                        LoadCartFromDatabase(_maTK);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowError($"Lỗi khi thanh toán:\n{ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Lỗi khi thanh toán:\n{ex.Message}");
+            }
         }
 
         private void btnContinue_Click(object sender, EventArgs e)
@@ -34,12 +89,20 @@ namespace QLBTS_GUI
         // ===== FIELDS =====
         private List<CartItemViewModel> _cartItems;
         private CartBLL _cartBLL;
+        private int _maTK;
 
         // ===== CONSTRUCTOR =====
-        public CartForm()
+        public CartForm(int maTK)
         {
             InitializeComponent();
+
+            if (maTK <= 0)
+            {
+                throw new ArgumentException("Mã tài khoản không hợp lệ!");
+            }
+
             _cartBLL = new CartBLL();
+            _maTK = maTK;
             ConfigureLayout();
         }
 

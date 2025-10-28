@@ -149,5 +149,69 @@ namespace QLBTS_BLL
                 throw new Exception($"Lỗi BLL - UpdateOrderStatus: {ex.Message}", ex);
             }
         }
+
+        /// <summary>
+        /// Hủy đơn hàng (khách hàng)
+        /// </summary>
+        public bool CancelOrder(int maDH, int maTK)
+        {
+            if (maDH <= 0)
+            {
+                throw new ArgumentException("Mã đơn hàng không hợp lệ");
+            }
+
+            if (maTK <= 0)
+            {
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
+            }
+
+            try
+            {
+                bool success = orderDAL.CancelOrder(maDH, maTK);
+
+                // Nếu KHÔNG dùng trigger, ghi lịch sử ở đây
+                // ThemLichSu(maTK, maDH, 0, "Đã hủy", "MuaHang");
+
+                return success;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - CancelOrder: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Lấy lịch sử của khách
+        /// </summary>
+        public List<LichSuViewModel> GetLichSuByCustomer(int maTK)
+        {
+            if (maTK <= 0)
+            {
+                throw new ArgumentException("Mã tài khoản không hợp lệ");
+            }
+
+            try
+            {
+                return orderDAL.GetLichSuByCustomer(maTK);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - GetLichSuByCustomer: {ex.Message}", ex);
+            }
+        }
+        /// <summary>
+        /// Thêm lịch sử hoạt động
+        /// </summary>
+        public void ThemLichSu(int maTK, int maDH, int tongTien, string trangThai, string loaiLichSu = "MuaHang")
+        {
+            try
+            {
+                orderDAL.ThemLichSu(maTK, maDH, tongTien, trangThai, loaiLichSu);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi BLL - ThemLichSu: {ex.Message}", ex);
+            }
+        }
     }
 }
