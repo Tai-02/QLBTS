@@ -16,13 +16,10 @@ namespace QLBTS_GUI
             ApplicationConfiguration.Initialize();
 
             //Form form = new DangNhap();
-            //form.ShowDialog();
+            //form.ShowDialog();            
 
-            //testcode
-            //TaiKhoanDTO dummyUser = new TaiKhoanDTO();
-            //dummyUser.MaTK = 1;
-            //Application.Run(new frmThongTinCaNhan(dummyUser));
-
+            Form form = new TrangChu();
+            form.ShowDialog();
         }
     }
 }
