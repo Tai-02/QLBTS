@@ -133,3 +133,5 @@ CREATE TABLE ThongKeDoanhThu (
     TongDoanhThu INT DEFAULT 0
 );
 
+select * from SanPham;
+
