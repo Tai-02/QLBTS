@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,5 +24,6 @@ namespace QLBTS_DTO
         public DateTime? LanDangNhapCuoi { get; set; }
         public int LevelID { get; set; }       // 0: Khách, 1: Admin, 2: NV Quầy, 3: NV Giao
         public string TrangThai { get; set; }  // "Hoạt động", "Ngưng"
+
     }
 }

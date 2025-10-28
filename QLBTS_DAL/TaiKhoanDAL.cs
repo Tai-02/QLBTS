@@ -1,11 +1,8 @@
-﻿using QLBTS_DTO;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using QLBTS_DTO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace QLBTS_DAL
 {
@@ -176,5 +173,6 @@ namespace QLBTS_DAL
                 }
             }
         }
+
     }
 }

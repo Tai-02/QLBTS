@@ -9,8 +9,8 @@ namespace QLBTS_DTO
     public class GioHangDTO
     {
         public int MaGH { get; set; }
-        public int? MaKH { get; set; }
-        public int? MaNV { get; set; }
-        public DateTime? NgayTao { get; set; }
+        public int MaTK { get; set; }   // có thể là khách hoặc nhân viên
+        public DateTime NgayTao { get; set; }
+
     }
 }
