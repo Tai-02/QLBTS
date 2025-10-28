@@ -58,7 +58,7 @@
             // Dk_pn_left
             // 
             Dk_pn_left.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            Dk_pn_left.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_10_220619;
+            Dk_pn_left.BackgroundImage = Properties.Resources.Anhpaneltrai;
             Dk_pn_left.BackgroundImageLayout = ImageLayout.Stretch;
             Dk_pn_left.Location = new Point(0, 0);
             Dk_pn_left.Name = "Dk_pn_left";
@@ -68,7 +68,7 @@
             // Dk_pn_right
             // 
             Dk_pn_right.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            Dk_pn_right.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_26_145341;
+            Dk_pn_right.BackgroundImage = Properties.Resources.AnhDangKi;
             Dk_pn_right.BackgroundImageLayout = ImageLayout.Stretch;
             Dk_pn_right.Controls.Add(Dk_btn_Thoat);
             Dk_pn_right.Controls.Add(Dk_btn_dangki);

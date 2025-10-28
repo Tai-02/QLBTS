@@ -77,8 +77,8 @@
             // 
             Dn_pn_right.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             Dn_pn_right.BackColor = SystemColors.Control;
-            Dn_pn_right.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_10_223647;
             Dn_pn_right.BackgroundImageLayout = ImageLayout.Stretch;
+            Dn_pn_right.BackgroundImage = Properties.Resources.AnhDangNhap;
             Dn_pn_right.Controls.Add(Dn_txt_tendangnhap);
             Dn_pn_right.Controls.Add(Dn_btn_Dangkingay);
             Dn_pn_right.Controls.Add(Dn_lb_neubanchua);
@@ -193,7 +193,7 @@
             // Dn_pn_left
             // 
             Dn_pn_left.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            Dn_pn_left.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_10_220619;
+            Dn_pn_left.BackgroundImage = Properties.Resources.Anhpaneltrai;
             Dn_pn_left.BackgroundImageLayout = ImageLayout.Stretch;
             Dn_pn_left.Location = new Point(0, 0);
             Dn_pn_left.Name = "Dn_pn_left";

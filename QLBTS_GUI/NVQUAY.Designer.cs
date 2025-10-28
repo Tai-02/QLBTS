@@ -1,4 +1,6 @@
-﻿namespace QLBTS_GUI
+﻿using QLBTS_GUI.Properties;
+
+namespace QLBTS_GUI
 {
     partial class NVQUAY
     {
@@ -73,8 +75,8 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImage = Properties.Resources.tt;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox1.BackgroundImage = Properties.Resources.icon_momocha;
             pictureBox1.Location = new Point(358, -58);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(200, 200);
@@ -144,7 +146,7 @@
             // pictureBox2
             // 
             pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.BackgroundImage = Properties.Resources.tt;
+            pictureBox2.BackgroundImage = Properties.Resources.icon_momocha;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox2.Location = new Point(370, -15);
             pictureBox2.Name = "pictureBox2";

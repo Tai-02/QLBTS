@@ -46,7 +46,7 @@
             // OTP_pn_left
             // 
             OTP_pn_left.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            OTP_pn_left.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_10_220619;
+            OTP_pn_left.BackgroundImage = Properties.Resources.Anhpaneltrai;
             OTP_pn_left.BackgroundImageLayout = ImageLayout.Stretch;
             OTP_pn_left.Location = new Point(1, 1);
             OTP_pn_left.Name = "OTP_pn_left";
@@ -56,7 +56,7 @@
             // OTP_pn_right
             // 
             OTP_pn_right.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            OTP_pn_right.BackgroundImage = Properties.Resources.Ảnh_chụp_màn_hình_2025_10_26_154453;
+            OTP_pn_right.BackgroundImage = Properties.Resources.AnhOTP;
             OTP_pn_right.BackgroundImageLayout = ImageLayout.Stretch;
             OTP_pn_right.Controls.Add(OTP_btn_Thoat);
             OTP_pn_right.Controls.Add(OTP_btn_xacnhan);
