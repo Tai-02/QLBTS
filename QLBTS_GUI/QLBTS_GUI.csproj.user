@@ -4,10 +4,28 @@
     <Compile Update="CartForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="DangKi.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmThongTinCaNhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="KhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Khung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NhapOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NVGIAO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NVQUAY.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="TimKiemSanPham.cs">

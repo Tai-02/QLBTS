@@ -16,10 +16,8 @@ namespace QLBTS_GUI
             ApplicationConfiguration.Initialize();
 
             //Form form = new DangNhap();
-            //form.ShowDialog();            
+            //form.ShowDialog();
 
-            Form form = new TrangChu();
-            form.ShowDialog();
         }
     }
 }
