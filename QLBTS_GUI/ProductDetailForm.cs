@@ -341,20 +341,62 @@ namespace QLBTS_GUI
         /// </summary>
         private void btnBuyNow_Click(object sender, EventArgs e)
         {
-            if (_product == null || !_product.ConHang)
+            try 
             {
-                ShowWarning("Sản phẩm đã hết hàng!");
-                return;
-            }
 
-            btnAddToCart_Click(sender, e);
-            MessageBox.Show(
-                "Chức năng 'Mua ngay' sẽ chuyển sang trang thanh toán.\n\n" +
-                "Hiện tại chưa được triển khai.",
-                "Thông báo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+                if (_product == null)
+                {
+                    ShowError("Chưa load sản phẩm!");
+                    return;
+                }
+
+                if (!_product.ConHang) // Kiểm tra sản phẩm hiện tại (theo size đã chọn)
+                {
+                    ShowWarning("Sản phẩm đã hết hàng!");
+                    return;
+                }
+
+                if (!int.TryParse(txtQuantity.Text, out int quantity) || quantity < 1)
+                {
+                    ShowWarning("Số lượng không hợp lệ!");
+                    return;
+                }
+
+                if (quantity > _product.SoLuong) // Kiểm tra tồn kho của size hiện tại
+                {
+                    ShowWarning($"Chỉ còn {_product.SoLuong} sản phẩm trong kho!");
+                    return;
+                }
+
+                // Thực hiện thêm vào giỏ
+                bool addToCartSuccess = _cartBLL.AddToCart(_maTK, _product.MaSP, quantity);
+
+                // ===  Kiểm tra kết quả và mở giỏ hàng ===
+                if (addToCartSuccess)
+                {
+                    ShowSuccess($"Đã thêm {quantity} x '{_product.TenSP}' vào giỏ hàng!");
+
+                    // Đóng form chi tiết sản phẩm hiện tại
+                    this.Hide();
+
+                    // Tạo và mở CartForm
+                    CartForm cartForm = new CartForm(_maTK);
+                    cartForm.LoadCartFromDatabase(_maTK); 
+                    cartForm.ShowDialog(); 
+
+                    //  Đóng hẳn form chi tiết sau khi xem giỏ hàng
+                    this.Close();
+                }
+                else
+                {
+                    // Nếu thêm không thành công, chỉ hiện lỗi, không mở giỏ hàng
+                    ShowError("Không thể thêm vào giỏ hàng!");
+                }
+            }
+            catch (Exception ex) 
+            {
+                ShowError($"Lỗi khi xử lý mua ngay: {ex.Message}");
+            }
         }
 
         /// <summary>

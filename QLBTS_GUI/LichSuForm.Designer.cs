@@ -15,48 +15,49 @@
 
         private void InitializeComponent()
         {
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.txtLichSu = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            lblTitle = new Label();
+            txtLichSu = new TextBox();
+            SuspendLayout();
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(280, 30);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(209, 81);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Lịch sử";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 36F, FontStyle.Bold);
+            lblTitle.Location = new Point(355, 29);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(231, 81);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Lịch sử";
+            lblTitle.Click += lblTitle_Click;
             // 
             // txtLichSu
             // 
-            this.txtLichSu.BackColor = System.Drawing.Color.White;
-            this.txtLichSu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLichSu.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtLichSu.Location = new System.Drawing.Point(55, 140);
-            this.txtLichSu.Multiline = true;
-            this.txtLichSu.Name = "txtLichSu";
-            this.txtLichSu.ReadOnly = true;
-            this.txtLichSu.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLichSu.Size = new System.Drawing.Size(670, 360);
-            this.txtLichSu.TabIndex = 1;
+            txtLichSu.BackColor = Color.White;
+            txtLichSu.BorderStyle = BorderStyle.FixedSingle;
+            txtLichSu.Font = new Font("Segoe UI", 11F);
+            txtLichSu.Location = new Point(55, 140);
+            txtLichSu.Multiline = true;
+            txtLichSu.Name = "txtLichSu";
+            txtLichSu.ReadOnly = true;
+            txtLichSu.ScrollBars = ScrollBars.Vertical;
+            txtLichSu.Size = new Size(852, 360);
+            txtLichSu.TabIndex = 1;
             // 
             // LichSuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(780, 540);
-            this.Controls.Add(this.txtLichSu);
-            this.Controls.Add(this.lblTitle);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "LichSuForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Lịch sử - MOMOCHA";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(982, 553);
+            Controls.Add(txtLichSu);
+            Controls.Add(lblTitle);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "LichSuForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Lịch sử - MOMOCHA";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private System.Windows.Forms.Label lblTitle;

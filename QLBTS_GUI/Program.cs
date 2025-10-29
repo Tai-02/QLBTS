@@ -10,32 +10,32 @@ namespace QLBTS_GUI
 
         [STAThread]
         //===== TEST LỊCH SỬ ĐƠN HÀNG =====
-        static void Main()
-        {
-            LichSuForm lichSuForm = new LichSuForm(4);
-            lichSuForm.ShowDialog();
-        }
-
-        //===== TEST XEM TRẠNG THÁI ĐƠN HÀNG =====
         //static void Main()
         //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
-
-        //    try
-        //    {
-        //        // TEST: Xem đơn hàng của khách (MaTK = 5)
-        //        OrderStatusForm orderForm = new OrderStatusForm(5);
-        //        orderForm.ShowDialog();
-
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
+        //    LichSuForm lichSuForm = new LichSuForm(4);
+        //    lichSuForm.ShowDialog();
         //}
+
+        //===== TEST XEM TRẠNG THÁI ĐƠN HÀNG =====
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            try
+            {
+                // TEST: Xem đơn hàng của khách (MaTK = 5)
+                OrderStatusForm orderForm = new OrderStatusForm(5);
+                orderForm.ShowDialog();
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         //===== TEST HIỂN THỊ CHI TIẾT ĐƠN HÀNG =====
         //static void Main()

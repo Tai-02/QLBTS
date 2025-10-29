@@ -84,7 +84,7 @@
             dgvOrders.RowHeadersWidth = 51;
             dgvOrders.RowTemplate.Height = 50;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrders.Size = new Size(920, 400);
+            dgvOrders.Size = new Size(902, 373);
             dgvOrders.TabIndex = 2;
             // 
             // colMaDH
@@ -104,7 +104,6 @@
             colGia.DataPropertyName = "DisplayTongTien";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.Padding = new Padding(0, 0, 0, 0);
             colGia.DefaultCellStyle = dataGridViewCellStyle3;
             colGia.FillWeight = 90F;
             colGia.HeaderText = "Giá";
@@ -126,14 +125,12 @@
             // colThongTin
             // 
             colThongTin.DataPropertyName = "ThongTinDon";
-            colThongTin.FillWeight = 100F;
             colThongTin.FlatStyle = FlatStyle.Flat;
             colThongTin.HeaderText = "Thông tin đơn";
             colThongTin.MinimumWidth = 6;
             colThongTin.Name = "colThongTin";
             colThongTin.ReadOnly = true;
             colThongTin.Text = "";
-            colThongTin.UseColumnTextForButtonValue = false;
             // 
             // colChiTiet
             // 
@@ -151,7 +148,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1000, 580);
+            ClientSize = new Size(982, 553);
             Controls.Add(dgvOrders);
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedDialog;

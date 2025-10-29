@@ -65,7 +65,7 @@
             leftPanel.Dock = DockStyle.Left;
             leftPanel.Location = new Point(0, 0);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(400, 453);
+            leftPanel.Size = new Size(400, 553);
             leftPanel.TabIndex = 0;
             // 
             // productImage
@@ -92,7 +92,7 @@
             rightPanel.Location = new Point(400, 0);
             rightPanel.Name = "rightPanel";
             rightPanel.Padding = new Padding(30);
-            rightPanel.Size = new Size(382, 453);
+            rightPanel.Size = new Size(582, 553);
             rightPanel.TabIndex = 1;
             // 
             // btnBuyNow
@@ -290,7 +290,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(782, 453);
+            ClientSize = new Size(982, 553);
             Controls.Add(rightPanel);
             Controls.Add(leftPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;

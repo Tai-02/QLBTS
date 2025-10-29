@@ -60,5 +60,10 @@ namespace QLBTS_GUI
                 );
             }
         }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
