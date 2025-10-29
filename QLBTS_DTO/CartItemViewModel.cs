@@ -36,7 +36,7 @@ namespace QLBTS_DTO
         {
             get
             {
-                if (KhuyenMai > 0)
+                if (KhuyenMai > 0 && KhuyenMai <= 100)
                 {
                     return Gia * (1 - KhuyenMai / 100m);
                 }

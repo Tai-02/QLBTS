@@ -233,7 +233,7 @@
             rdoSizeL.AutoSize = true;
             rdoSizeL.Cursor = Cursors.Hand;
             rdoSizeL.Font = new Font("Segoe UI", 12F);
-            rdoSizeL.Location = new Point(100, 210);
+            rdoSizeL.Location = new Point(165, 210);
             rdoSizeL.Name = "rdoSizeL";
             rdoSizeL.Size = new Size(42, 32);
             rdoSizeL.TabIndex = 4;

@@ -10,11 +10,11 @@ namespace QLBTS_GUI
 
         [STAThread]
         //===== TEST LỊCH SỬ ĐƠN HÀNG =====
-        static void Main()
-        {
-            LichSuForm lichSuForm = new LichSuForm(5);
-            lichSuForm.ShowDialog();
-        }
+        //static void Main()
+        //{
+        //    LichSuForm lichSuForm = new LichSuForm(5);
+        //    lichSuForm.ShowDialog();
+        //}
 
         //===== TEST XEM TRẠNG THÁI ĐƠN HÀNG =====
         //static void Main()
@@ -91,30 +91,30 @@ namespace QLBTS_GUI
         //}
 
         //===== TEST LOAD CHI TIẾT SẢN PHẨM =====
-        //static void Main()
-        //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-        //    try
-        //    {
-        //        // TEST: Load chi tiết sản phẩm
-        //        ProductDetailForm detailForm = new ProductDetailForm();
-        //        detailForm.LoadProduct(maSP: 21, maTK: 5);
+            try
+            {
+                // TEST: Load chi tiết sản phẩm
+                ProductDetailForm detailForm = new ProductDetailForm();
+                detailForm.LoadProduct(maSP: 24, maTK: 5);
 
-        //        Application.Run(detailForm);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(
-        //            $"Lỗi khởi động:\n{ex.Message}\n\n" +
-        //            $"Chi tiết:\n{ex.InnerException?.Message}",
-        //            "Lỗi",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Error
-        //        );
-        //    }
-        //}
+                Application.Run(detailForm);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi khởi động:\n{ex.Message}\n\n" +
+                    $"Chi tiết:\n{ex.InnerException?.Message}",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
 
     }
 }
