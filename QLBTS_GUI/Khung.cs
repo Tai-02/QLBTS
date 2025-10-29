@@ -12,11 +12,13 @@ namespace QLBTS_GUI
 {
     public partial class Khung : Form
     {
-        public static int lvID = -1;
+        public static int lvID_temp = -1;
+        public static int MaTK_temp;
         UI_Form ui = new UI_Form();
-        public Khung()
+        public Khung(int _LvID)
         {
             InitializeComponent();
+            lvID_temp = _LvID;
         }
 
         private void Khung_Load(object sender, EventArgs e)

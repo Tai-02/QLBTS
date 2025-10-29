@@ -7,18 +7,18 @@ namespace QLBTS_BBL
 {
     public class FormLichSuNhanDonBBL
     {
-        public List<LichSuGiaoHangDTO> LayLichSuTheoMaNV(int maNVGiao, string trangThai = "")
+        public List<LichSuHoatDongDTO> LayLichSuTheoMaNV(int maNVGiao)
         {
             // Xu ly nghiep vu truoc khi goi DAL
             if (maNVGiao <= 0)
                 throw new ArgumentException("Mã nhân viên giao không hợp lệ.");
 
             // Goi du lieu tu DAL
-            List<LichSuGiaoHangDTO> list = LichSuNhanDonDAL.LayLichSuTheoMaNV(maNVGiao, trangThai);
+            List<LichSuHoatDongDTO> list = LichSuNhanDonDAL.LayLichSuTheoMaNV(maNVGiao);
 
             // Xu ly sau khi lay du lieu neu can (vi du sap xep, loc, tinh toan bo sung,...)
             if (list == null)
-                list = new List<LichSuGiaoHangDTO>();
+                list = new List<LichSuHoatDongDTO>();
 
             return list;
         }

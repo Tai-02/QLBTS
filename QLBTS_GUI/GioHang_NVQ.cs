@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    public partial class GioHang : Form
+    public partial class GioHang_NVQ : Form
     {
         private int maKH = 1;
         private List<SanPhamDTO> danhSachSP = new();
         private GioHangBLL gioHangBLL = new GioHangBLL();
 
-        public GioHang()
+        public GioHang_NVQ()
         {
             InitializeComponent();
             button1.Click += BtnXacNhan_Click;
@@ -182,6 +182,11 @@ namespace QLBTS_GUI
 
             gioHangBLL.XoaToanBoGio(maKH);
             LoadGioHang();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

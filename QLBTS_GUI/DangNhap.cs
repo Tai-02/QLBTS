@@ -18,6 +18,7 @@ namespace QLBTS_GUI
     {
         private TaiKhoanBLL bll = new TaiKhoanBLL();
         Control ParentPanel;
+        UI_Form ui = new UI_Form();
 
         public DangNhap(Control pn)
         {
@@ -53,8 +54,15 @@ namespace QLBTS_GUI
             if (ok)
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                UI_Form ui = new UI_Form();
-                ui.OpenChildForm(new Khachhang(), ParentPanel);
+                Khung.lvID_temp = bll.LayLevelID(username);
+                if (Khung.lvID_temp == 0)
+                {
+                    ui.OpenChildForm(new Khachhang(), ParentPanel);
+                }
+                if (Khung.lvID_temp == 2)
+                {
+                    ui.OpenChildForm(new NVQUAY(), ParentPanel);
+                }
             }
             else
             {

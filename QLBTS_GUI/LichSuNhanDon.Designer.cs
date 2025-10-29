@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class FormLichSuNhanDon
+    partial class LichSuNhanDon
     {
         /// <summary>
         /// Required designer variable.

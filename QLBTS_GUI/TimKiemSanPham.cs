@@ -19,11 +19,11 @@ namespace QLBTS_GUI
     public partial class TimKiemSanPham : Form
     {
 
-        private SanPhamDAL sanPhamDAL;
+        private QuanliSanPhamDAL sanPhamDAL;
         public TimKiemSanPham()
         {
             InitializeComponent();
-            sanPhamDAL = new SanPhamDAL();
+            sanPhamDAL = new QuanliSanPhamDAL();
         }
 
         private void TimKiemSanPham_Load(object sender, EventArgs e)

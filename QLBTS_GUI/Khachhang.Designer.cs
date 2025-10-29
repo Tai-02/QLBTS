@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
             label6 = new Label();
@@ -56,11 +56,11 @@
             KH_pn_menu.Controls.Add(label3);
             KH_pn_menu.Controls.Add(label2);
             KH_pn_menu.Controls.Add(label1);
-            KH_pn_menu.CustomizableEdges = customizableEdges3;
+            KH_pn_menu.CustomizableEdges = customizableEdges1;
             KH_pn_menu.FillColor = Color.Black;
             KH_pn_menu.Location = new Point(12, 35);
             KH_pn_menu.Name = "KH_pn_menu";
-            KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
             KH_pn_menu.Size = new Size(942, 68);
             KH_pn_menu.TabIndex = 0;
             // 
@@ -161,9 +161,9 @@
             // KH_pn_tab
             // 
             KH_pn_tab.BackColor = SystemColors.Control;
-            KH_pn_tab.Location = new Point(1, 153);
+            KH_pn_tab.Location = new Point(1, 159);
             KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(983, 500);
+            KH_pn_tab.Size = new Size(980, 492);
             KH_pn_tab.TabIndex = 1;
             // 
             // Khachhang

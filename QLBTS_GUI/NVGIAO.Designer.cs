@@ -47,7 +47,7 @@
             KH_pn_tab.BackColor = SystemColors.Control;
             KH_pn_tab.Location = new Point(1, 159);
             KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(983, 500);
+            KH_pn_tab.Size = new Size(980, 492);
             KH_pn_tab.TabIndex = 3;
             // 
             // pictureBox2

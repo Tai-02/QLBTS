@@ -7,48 +7,57 @@ namespace QLBTS_DAL
 {
     public class LichSuNhanDonDAL
     {
-        public static List<LichSuGiaoHangDTO> LayLichSuTheoMaNV(int maNVGiao, string trangThai = "")
+        public static List<LichSuHoatDongDTO> LayLichSuTheoMaNV(int maNVQuay)
         {
-            List<LichSuGiaoHangDTO> list = new List<LichSuGiaoHangDTO>();
+            List<LichSuHoatDongDTO> list = new List<LichSuHoatDongDTO>();
 
             using (MySqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
 
                 string query = @"
-                    SELECT MaLSGH, MaNVGiao, MaDH, TongTien, TrangThai, ThoiGian
-                    FROM LichSuGiaoHang
-                    WHERE MaNVGiao = @MaNVGiao";
-
-                if (!string.IsNullOrEmpty(trangThai))
-                {
-                    query += " AND TrangThai = @TrangThai";
-                }
-
-                query += " ORDER BY ThoiGian DESC";
+                    SELECT ls.MaLS, ls.MaTK, ls.MaDH, ls.TongTien, ls.TrangThai, ls.ThoiGian, ls.LoaiLichSu
+                    FROM LichSuHoatDong ls
+                    INNER JOIN TaiKhoan tk ON ls.MaTK = tk.MaTK
+                    WHERE ls.MaTK = @MaNVQuay
+                      AND tk.LevelID = 2
+                    ORDER BY ls.ThoiGian DESC";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaNVGiao", maNVGiao);
-                    if (!string.IsNullOrEmpty(trangThai))
-                        cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+                    cmd.Parameters.AddWithValue("@MaNVQuay", maNVQuay);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            list.Add(new LichSuGiaoHangDTO
+                            list.Add(new LichSuHoatDongDTO
                             {
-                                MaLSGH = reader.GetInt32("MaLSGH"),
-                                MaNVGiao = reader.GetInt32("MaNVGiao"),
-                                MaDH = reader.GetInt32("MaDH"),
-                                TongTien = reader.GetInt32("TongTien"),
-                                TrangThai = reader.GetString("TrangThai"),
-                                ThoiGian = reader.GetDateTime("ThoiGian")
+                                MaLS = reader.GetInt32("MaLS"),
+                                MaTK = reader.GetInt32("MaTK"),
+                                MaDH = reader.IsDBNull(reader.GetOrdinal("MaDH")) ? 0 : reader.GetInt32("MaDH"),
+                                TongTien = reader.IsDBNull(reader.GetOrdinal("TongTien")) ? 0 : reader.GetInt32("TongTien"),
+                                TrangThai = reader.IsDBNull(reader.GetOrdinal("TrangThai")) ? "" : reader.GetString("TrangThai"),
+                                ThoiGian = reader.IsDBNull(reader.GetOrdinal("ThoiGian")) ? DateTime.MinValue : reader.GetDateTime("ThoiGian"),
+                                LoaiLichSu = reader.IsDBNull(reader.GetOrdinal("LoaiLichSu")) ? "BanHang" : reader.GetString("LoaiLichSu")
                             });
                         }
                     }
                 }
+            }
+
+            if (list.Count == 0)
+            {
+                list.Add(new LichSuHoatDongDTO
+                {
+                    MaLS = 0,
+                    MaTK = maNVQuay,
+                    MaDH = 0,
+                    TongTien = 0,
+                    TrangThai = "Không có dữ liệu",
+                    ThoiGian = DateTime.MinValue,
+                    LoaiLichSu = "BanHang"
+                });
             }
 
             return list;

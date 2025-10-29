@@ -32,38 +32,38 @@ namespace QLBTS_GUI
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            KH_pn_tab = new Panel();
+            NVQ_pn_tab = new Panel();
             KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
+            NVQ_lb_ls = new Label();
+            NVQ_lb_qldh = new Label();
+            NVQ_lb_qlsp = new Label();
+            NVQ_lb_gh = new Label();
+            NVQ_lb_sp = new Label();
             pictureBox2 = new PictureBox();
             KH_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
-            // KH_pn_tab
+            // NVQ_pn_tab
             // 
-            KH_pn_tab.BackColor = SystemColors.Control;
-            KH_pn_tab.Location = new Point(1, 159);
-            KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(983, 500);
-            KH_pn_tab.TabIndex = 2;
+            NVQ_pn_tab.BackColor = SystemColors.Control;
+            NVQ_pn_tab.Location = new Point(1, 159);
+            NVQ_pn_tab.Name = "NVQ_pn_tab";
+            NVQ_pn_tab.Size = new Size(980, 492);
+            NVQ_pn_tab.TabIndex = 2;
             // 
             // KH_pn_menu
             // 
             KH_pn_menu.BackColor = Color.Transparent;
             KH_pn_menu.BorderRadius = 30;
             KH_pn_menu.Controls.Add(pictureBox1);
-            KH_pn_menu.Controls.Add(label6);
-            KH_pn_menu.Controls.Add(label5);
-            KH_pn_menu.Controls.Add(label4);
-            KH_pn_menu.Controls.Add(label3);
-            KH_pn_menu.Controls.Add(label2);
+            KH_pn_menu.Controls.Add(NVQ_lb_ls);
+            KH_pn_menu.Controls.Add(NVQ_lb_qldh);
+            KH_pn_menu.Controls.Add(NVQ_lb_qlsp);
+            KH_pn_menu.Controls.Add(NVQ_lb_gh);
+            KH_pn_menu.Controls.Add(NVQ_lb_sp);
             KH_pn_menu.CustomizableEdges = customizableEdges1;
             KH_pn_menu.FillColor = Color.Black;
             KH_pn_menu.Location = new Point(12, 43);
@@ -75,78 +75,83 @@ namespace QLBTS_GUI
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.BackgroundImage = Resources.icon_momocha;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.BackgroundImage = Properties.Resources.icon_momocha;
             pictureBox1.Location = new Point(358, -58);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(200, 200);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // label6
+            // NVQ_lb_ls
             // 
-            label6.AutoSize = true;
-            label6.BackColor = Color.Black;
-            label6.Font = new Font("Segoe UI", 9F);
-            label6.ForeColor = Color.White;
-            label6.Location = new Point(851, 22);
-            label6.Name = "label6";
-            label6.Size = new Size(54, 20);
-            label6.TabIndex = 6;
-            label6.Text = "Lịch sử";
+            NVQ_lb_ls.AutoSize = true;
+            NVQ_lb_ls.BackColor = Color.Black;
+            NVQ_lb_ls.Font = new Font("Segoe UI", 9F);
+            NVQ_lb_ls.ForeColor = Color.White;
+            NVQ_lb_ls.Location = new Point(851, 22);
+            NVQ_lb_ls.Name = "NVQ_lb_ls";
+            NVQ_lb_ls.Size = new Size(54, 20);
+            NVQ_lb_ls.TabIndex = 6;
+            NVQ_lb_ls.Text = "Lịch sử";
+            NVQ_lb_ls.Click += NVQ_lb_ls_Click;
             // 
-            // label5
+            // NVQ_lb_qldh
             // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Black;
-            label5.Font = new Font("Segoe UI", 9F);
-            label5.ForeColor = Color.White;
-            label5.Location = new Point(703, 22);
-            label5.Name = "label5";
-            label5.Size = new Size(123, 20);
-            label5.TabIndex = 5;
-            label5.Text = "Quản lí đơn hàng";
+            NVQ_lb_qldh.AutoSize = true;
+            NVQ_lb_qldh.BackColor = Color.Black;
+            NVQ_lb_qldh.Font = new Font("Segoe UI", 9F);
+            NVQ_lb_qldh.ForeColor = Color.White;
+            NVQ_lb_qldh.Location = new Point(703, 22);
+            NVQ_lb_qldh.Name = "NVQ_lb_qldh";
+            NVQ_lb_qldh.Size = new Size(123, 20);
+            NVQ_lb_qldh.TabIndex = 5;
+            NVQ_lb_qldh.Text = "Quản lí đơn hàng";
+            NVQ_lb_qldh.Click += NVQ_lb_qldh_Click;
             // 
-            // label4
+            // NVQ_lb_qlsp
             // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Black;
-            label4.Font = new Font("Segoe UI", 9F);
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(557, 22);
-            label4.Name = "label4";
-            label4.Size = new Size(124, 20);
-            label4.TabIndex = 4;
-            label4.Text = "Quản lí sản phẩm";
+            NVQ_lb_qlsp.AutoSize = true;
+            NVQ_lb_qlsp.BackColor = Color.Black;
+            NVQ_lb_qlsp.Font = new Font("Segoe UI", 9F);
+            NVQ_lb_qlsp.ForeColor = Color.White;
+            NVQ_lb_qlsp.Location = new Point(557, 22);
+            NVQ_lb_qlsp.Name = "NVQ_lb_qlsp";
+            NVQ_lb_qlsp.Size = new Size(124, 20);
+            NVQ_lb_qlsp.TabIndex = 4;
+            NVQ_lb_qlsp.Text = "Quản lí sản phẩm";
+            NVQ_lb_qlsp.Click += NVQ_lb_qlsp_Click;
             // 
-            // label3
+            // NVQ_lb_gh
             // 
-            label3.AutoSize = true;
-            label3.BackColor = Color.Black;
-            label3.Font = new Font("Segoe UI", 9F);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(223, 22);
-            label3.Name = "label3";
-            label3.Size = new Size(94, 20);
-            label3.TabIndex = 3;
-            label3.Text = "Giỏ hàng \U0001f6d2";
+            NVQ_lb_gh.AutoSize = true;
+            NVQ_lb_gh.BackColor = Color.Black;
+            NVQ_lb_gh.Font = new Font("Segoe UI", 9F);
+            NVQ_lb_gh.ForeColor = Color.White;
+            NVQ_lb_gh.Location = new Point(223, 22);
+            NVQ_lb_gh.Name = "NVQ_lb_gh";
+            NVQ_lb_gh.Size = new Size(94, 20);
+            NVQ_lb_gh.TabIndex = 3;
+            NVQ_lb_gh.Text = "Giỏ hàng \U0001f6d2";
+            NVQ_lb_gh.Click += NVQ_lb_gh_Click;
             // 
-            // label2
+            // NVQ_lb_sp
             // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.Black;
-            label2.Font = new Font("Segoe UI", 9F);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(71, 22);
-            label2.Name = "label2";
-            label2.Size = new Size(75, 20);
-            label2.TabIndex = 2;
-            label2.Text = "Sản phẩm";
+            NVQ_lb_sp.AutoSize = true;
+            NVQ_lb_sp.BackColor = Color.Black;
+            NVQ_lb_sp.Font = new Font("Segoe UI", 9F);
+            NVQ_lb_sp.ForeColor = Color.White;
+            NVQ_lb_sp.Location = new Point(71, 22);
+            NVQ_lb_sp.Name = "NVQ_lb_sp";
+            NVQ_lb_sp.Size = new Size(75, 20);
+            NVQ_lb_sp.TabIndex = 2;
+            NVQ_lb_sp.Text = "Sản phẩm";
+            NVQ_lb_sp.Click += NVQ_lb_sp_Click;
             // 
             // pictureBox2
             // 
             pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.BackgroundImage = Properties.Resources.icon_momocha;
+            pictureBox2.BackgroundImage = Resources.icon_momocha;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox2.Location = new Point(370, -15);
             pictureBox2.Name = "pictureBox2";
@@ -159,10 +164,11 @@ namespace QLBTS_GUI
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
-            Controls.Add(KH_pn_tab);
+            Controls.Add(NVQ_pn_tab);
             Controls.Add(KH_pn_menu);
             Controls.Add(pictureBox2);
             Name = "NVQUAY";
+            Load += NVQUAY_Load;
             KH_pn_menu.ResumeLayout(false);
             KH_pn_menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -172,14 +178,14 @@ namespace QLBTS_GUI
 
         #endregion
 
-        private Panel KH_pn_tab;
+        private Panel NVQ_pn_tab;
         private PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2Panel KH_pn_menu;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
+        private Label NVQ_lb_ls;
+        private Label NVQ_lb_qldh;
+        private Label NVQ_lb_qlsp;
+        private Label NVQ_lb_gh;
+        private Label NVQ_lb_sp;
         private PictureBox pictureBox2;
     }
 }

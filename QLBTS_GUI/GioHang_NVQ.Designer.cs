@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class GioHang
+    partial class GioHang_NVQ
     {
         /// <summary>
         /// Required designer variable.
@@ -76,6 +76,7 @@
             button1.TabIndex = 9;
             button1.Text = "Xác nhận và in bill";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label12
             // 

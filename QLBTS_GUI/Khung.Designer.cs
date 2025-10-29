@@ -33,16 +33,16 @@
             // 
             // Khung_pn
             // 
-            Khung_pn.Location = new Point(0, -2);
+            Khung_pn.Location = new Point(3, 2);
             Khung_pn.Name = "Khung_pn";
-            Khung_pn.Size = new Size(982, 655);
+            Khung_pn.Size = new Size(958, 659);
             Khung_pn.TabIndex = 0;
             // 
             // Khung
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(982, 653);
+            ClientSize = new Size(964, 664);
             Controls.Add(Khung_pn);
             MaximizeBox = false;
             MinimizeBox = false;

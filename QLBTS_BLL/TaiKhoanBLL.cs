@@ -72,6 +72,11 @@ namespace QLBTS_BLL
             return dal.KiemTraOTP(email, otp);
         }
 
+        public int LayLevelID(string tenDangNhap)
+        {
+            return dal.LayLevelID(tenDangNhap);
+        }
+
     }
 }
 

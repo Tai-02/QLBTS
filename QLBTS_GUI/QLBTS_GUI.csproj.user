@@ -19,13 +19,13 @@
     <Compile Update="Khung.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="NhapOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="NVGIAO.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="NVQUAY.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="QuanLiSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="TimKiemSanPham.cs">
@@ -34,13 +34,13 @@
     <Compile Update="FormDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormLichSuNhanDon.cs">
+    <Compile Update="LichSuNhanDon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormSanPham.cs">
+    <Compile Update="QuanLiSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="GioHang.cs">
+    <Compile Update="GioHang_NVQ.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="GioHangCuaBan.cs">

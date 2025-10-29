@@ -174,5 +174,28 @@ namespace QLBTS_DAL
             }
         }
 
+        public int LayLevelID(string tenDangNhap)
+        {
+            int levelID = -1;
+
+            using (MySqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT LevelID FROM TaiKhoan WHERE TenDangNhap = @TenDangNhap";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhap);
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                        levelID = Convert.ToInt32(result);
+                }
+            }
+
+            return levelID;
+        }
+
+
     }
 }
