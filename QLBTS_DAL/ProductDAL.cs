@@ -112,51 +112,7 @@ namespace QLBTS_DAL
 
             return products;
         }
-        /// <summary>
-        /// Kiểm tra số lượng tồn kho
-        /// </summary>
-        public bool CheckStock(int maSP, int soLuongCanMua)
-        {
-            try
-            {
-                int soLuongTonKho = GetCurrentStock(maSP);
-                return soLuongTonKho >= soLuongCanMua;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi DAL - CheckStock: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// Cập nhật số lượng sản phẩm (trừ khi đặt hàng, cộng khi hủy)
-        /// </summary>
-        public bool UpdateStock(int maSP, int soLuongThayDoi)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    // soLuongThayDoi: âm = trừ (đặt hàng), dương = cộng (hủy đơn)
-                    string query = @"
-                        UPDATE SanPham 
-                        SET SoLuong = SoLuong + @SoLuongThayDoi 
-                        WHERE MaSP = @MaSP";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@MaSP", maSP);
-                    cmd.Parameters.AddWithValue("@SoLuongThayDoi", soLuongThayDoi);
-
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi DAL - UpdateStock: {ex.Message}", ex);
-            }
-        }
+        
 
         /// <summary>
         /// Lấy số lượng tồn kho hiện tại

@@ -86,25 +86,7 @@ namespace QLBTS_BLL
             }
         }
 
-        /// <summary>
-        /// Lấy đơn hàng theo trạng thái
-        /// </summary>
-        public List<OrderListViewModel> GetOrdersByStatus(string trangThai)
-        {
-            if (string.IsNullOrWhiteSpace(trangThai))
-            {
-                throw new ArgumentException("Trạng thái không hợp lệ");
-            }
-
-            try
-            {
-                return orderDAL.GetOrdersByStatus(trangThai);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi BLL - GetOrdersByStatus: {ex.Message}", ex);
-            }
-        }
+        
 
         /// <summary>
         /// Lấy đơn hàng của khách

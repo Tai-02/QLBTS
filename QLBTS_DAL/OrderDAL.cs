@@ -138,57 +138,7 @@ namespace QLBTS_DAL
             return orders;
         }
 
-        /// <summary>
-        /// Lấy đơn hàng theo trạng thái
-        /// </summary>
-        public List<OrderListViewModel> GetOrdersByStatus(string trangThai)
-        {
-            List<OrderListViewModel> orders = new List<OrderListViewModel>();
-
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    string query = @"
-                SELECT 
-                    dh.MaDH,
-                    dh.MaKhach,
-                    dh.NgayDat,
-                    dh.TongTien,
-                    dh.TrangThai,
-                    tk.HoTen as TenKhach
-                FROM DonHang dh
-                LEFT JOIN TaiKhoan tk ON dh.MaKhach = tk.MaTK
-                WHERE dh.TrangThai = @TrangThai
-                ORDER BY dh.NgayDat DESC";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@TrangThai", trangThai);
-
-                    conn.Open();
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        orders.Add(new OrderListViewModel
-                        {
-                            MaDH = reader.GetInt32("MaDH"),
-                            MaKhach = reader.IsDBNull(reader.GetOrdinal("MaKhach")) ? null : (int?)reader.GetInt32("MaKhach"),
-                            NgayDat = reader.GetDateTime("NgayDat"),
-                            TongTien = reader.GetInt32("TongTien"),
-                            TrangThai = reader.GetString("TrangThai"),
-                            TenKhach = reader.IsDBNull(reader.GetOrdinal("TenKhach")) ? "Khách vãng lai" : reader.GetString("TenKhach")
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi DAL - GetOrdersByStatus: {ex.Message}", ex);
-            }
-
-            return orders;
-        }
+        
 
         /// <summary>
         /// Lấy đơn hàng của khách hàng

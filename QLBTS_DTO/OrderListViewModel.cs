@@ -22,9 +22,7 @@ namespace QLBTS_DTO
         // Properties hiển thị
         public string DisplayMaDH => $"#{MaDH}";
         public string DisplayTongTien => $"{TongTien:N0}đ";
-        public string DisplayNgayDat => NgayDat.ToString("dd/MM/yyyy HH:mm");
 
-        // ✅ THAY ĐỔI: Hiển thị text cho button thay vì thông tin khách
         public string ThongTinDon
         {
             get
@@ -36,8 +34,7 @@ namespace QLBTS_DTO
             }
         }
 
-        // ✅ THÊM: Kiểm tra xem có hiển thị nút không
-        public bool ShowConfirmButton => TrangThai == "Đang giao";
+        
 
         public string TextTrangThai
         {

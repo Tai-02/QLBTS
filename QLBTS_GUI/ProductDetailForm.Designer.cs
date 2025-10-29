@@ -196,6 +196,7 @@
             txtQuantity.ShadowDecoration.CustomizableEdges = customizableEdges8;
             txtQuantity.Size = new Size(60, 40);
             txtQuantity.TabIndex = 0;
+            txtQuantity.TabStop = false;
             txtQuantity.TextAlign = HorizontalAlignment.Center;
             // 
             // btnMinus

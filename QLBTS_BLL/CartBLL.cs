@@ -136,26 +136,7 @@ namespace QLBTS_BLL
             }
         }
 
-        public bool IsCartEmpty(List<CartItemViewModel> items)
-        {
-            return items == null || !items.Any();
-        }
 
-        public bool CheckAllItemsAvailable(List<CartItemViewModel> items)
-        {
-            if (items == null || !items.Any())
-                return false;
-
-            return items.All(x => x.ConHang);
-        }
-
-        public List<CartItemViewModel> GetOutOfStockItems(List<CartItemViewModel> items)
-        {
-            if (items == null || !items.Any())
-                return new List<CartItemViewModel>();
-
-            return items.Where(x => !x.ConHang).ToList();
-        }
 
         /// <summary>
         /// Kiểm tra tồn kho trước khi checkout

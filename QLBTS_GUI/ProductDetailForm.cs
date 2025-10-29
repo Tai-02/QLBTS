@@ -63,7 +63,7 @@ namespace QLBTS_GUI
         /// </summary>
         private void SetupTextBoxValidation()
         {
-            //  Vẫn validate khi text thay đổi (do nút +/-)
+            //   validate khi text thay đổi (do nút +/-)
             txtQuantity.TextChanged += (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtQuantity.Text))
@@ -162,7 +162,7 @@ namespace QLBTS_GUI
                         rdoSizeL.Text = "L (Không có)";
                     }
 
-                    // Chọn radio button theo size hiện tại
+                    //  Chọn radio button theo size hiện tại
                     if (_product.Size == "M")
                     {
                         rdoSizeM.Checked = true;
@@ -196,12 +196,7 @@ namespace QLBTS_GUI
             // Cập nhật trạng thái nút
             if (!_product.ConHang)
             {
-                btnAddToCart.Enabled = false;
-                btnBuyNow.Enabled = false;
-                btnAddToCart.Text = "HẾT HÀNG";
-                btnBuyNow.Text = "HẾT HÀNG";
-                btnAddToCart.FillColor = Color.Gray;
-                btnBuyNow.FillColor = Color.Gray;
+                
 
                 // Disable cả nút +/-
                 btnMinus.Enabled = false;
@@ -209,12 +204,7 @@ namespace QLBTS_GUI
             }
             else
             {
-                btnAddToCart.Enabled = true;
-                btnBuyNow.Enabled = true;
-                btnAddToCart.Text = "THÊM VÀO GIỎ";
-                btnBuyNow.Text = "MUA NGAY";
-                btnAddToCart.FillColor = Color.Red;
-                btnBuyNow.FillColor = Color.Red;
+                
 
                 // Enable nút +/-
                 btnMinus.Enabled = true;

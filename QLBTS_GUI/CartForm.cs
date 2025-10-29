@@ -106,7 +106,7 @@ namespace QLBTS_GUI
             ConfigureLayout();
         }
 
-        // ===== PUBLIC METHODS - Leader gọi từ bên ngoài =====
+        // ===== PUBLIC METHODS  =====
 
         /// <summary>
         /// Load giỏ hàng của Khách hàng từ database
