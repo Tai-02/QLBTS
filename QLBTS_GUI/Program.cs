@@ -17,25 +17,25 @@ namespace QLBTS_GUI
         //}
 
         //===== TEST XEM TRẠNG THÁI ĐƠN HÀNG =====
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+        //static void Main()
+        //{
+        //    Application.EnableVisualStyles();
+        //    Application.SetCompatibleTextRenderingDefault(false);
 
-            try
-            {
-                // TEST: Xem đơn hàng của khách (MaTK = 5)
-                OrderStatusForm orderForm = new OrderStatusForm(5);
-                orderForm.ShowDialog();
+        //    try
+        //    {
+        //        // TEST: Xem đơn hàng của khách (MaTK = 5)
+        //        OrderStatusForm orderForm = new OrderStatusForm(5);
+        //        orderForm.ShowDialog();
 
 
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
         //===== TEST HIỂN THỊ CHI TIẾT ĐƠN HÀNG =====
         //static void Main()
@@ -59,36 +59,36 @@ namespace QLBTS_GUI
 
 
         //===== TEST LOAD GIỎ HÀNG =====
-        //static void Main()
-        //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-        //    try
-        //    {
-        //        // TEST: Load giỏ hàng của Khách hàng MaKH = 5
-        //        CartForm cartForm = new CartForm(5);
-        //        cartForm.LoadCartFromDatabase(maTK: 5);
+            try
+            {
+                // TEST: Load giỏ hàng của Khách hàng MaKH = 5
+                CartForm cartForm = new CartForm(5);
+                cartForm.LoadCartFromDatabase(maTK: 5);
 
-        //        Application.Run(cartForm);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(
-        //            $"Lỗi khởi động ứng dụng:\n{ex.Message}\n\n" +
-        //            $"Chi tiết:\n{ex.StackTrace}\n\n" +
-        //            $"Kiểm tra:\n" +
-        //            $"1. MySQL đã chạy chưa?\n" +
-        //            $"2. Database QLBTS đã tạo chưa?\n" +
-        //            $"3. Connection string trong CartDAL.cs đúng chưa?\n" +
-        //            $"4. Đã cài MySql.Data NuGet chưa?\n" +
-        //            $"5. Đã thêm Reference QLBTS_DTO vào các project chưa?",
-        //            "Lỗi khởi động",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Error
-        //        );
-        //    }
-        //}
+                Application.Run(cartForm);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi khởi động ứng dụng:\n{ex.Message}\n\n" +
+                    $"Chi tiết:\n{ex.StackTrace}\n\n" +
+                    $"Kiểm tra:\n" +
+                    $"1. MySQL đã chạy chưa?\n" +
+                    $"2. Database QLBTS đã tạo chưa?\n" +
+                    $"3. Connection string trong CartDAL.cs đúng chưa?\n" +
+                    $"4. Đã cài MySql.Data NuGet chưa?\n" +
+                    $"5. Đã thêm Reference QLBTS_DTO vào các project chưa?",
+                    "Lỗi khởi động",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
 
         //===== TEST LOAD CHI TIẾT SẢN PHẨM =====
         //static void Main()

@@ -103,7 +103,6 @@ namespace QLBTS_GUI
 
             _cartBLL = new CartBLL();
             _maTK = maTK;
-            ConfigureLayout();
         }
 
         // ===== PUBLIC METHODS  =====
@@ -541,30 +540,6 @@ namespace QLBTS_GUI
         /// <summary>
         /// Cấu hình layout form
         /// </summary>
-        private void ConfigureLayout()
-        {
-            this.ClientSize = new Size(1020, 660);
-            this.BackColor = Color.White;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.MaximizeBox = false;
-            this.Text = "Giỏ hàng - MOMOCHA";
-
-            // Panel trái
-            leftPanel.Location = new Point(0, 0);
-            leftPanel.Size = new Size(620, 660);
-            leftPanel.BackColor = Color.White;
-            leftPanel.AutoScroll = true;
-
-            // Panel phải
-            rightPanel.Location = new Point(620, 0);
-            rightPanel.Size = new Size(400, 660);
-            rightPanel.BackColor = ColorTranslator.FromHtml("#E8F4F8");
-
-            rightPanel.BringToFront();
-        }
-
-        // ===== HELPER METHODS - Hiển thị thông báo =====
 
         private void ShowError(string message)
         {
