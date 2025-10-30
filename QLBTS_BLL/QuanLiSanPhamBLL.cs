@@ -52,5 +52,11 @@ namespace QLBTS_BLL
                 throw new ArgumentException("Mã sản phẩm không hợp lệ!");
             return QuanliSanPhamDAL.Delete(maSP);
         }
+
+        public List<string> GetDistinctLoaiSP()
+        {
+            return QuanliSanPhamDAL.GetDistinctLoaiSP();
+        }
+
     }
 }

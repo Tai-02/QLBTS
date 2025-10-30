@@ -20,32 +20,46 @@ namespace QLBTS_GUI
 
         private void NVQUAY_Load(object sender, EventArgs e)
         {
-            ui.OpenChildForm(new QuanLiSanPham(), NVQ_pn_tab);
+
+            NVQ_lb_sp_Click(sender, e);
         }
 
         private void NVQ_lb_sp_Click(object sender, EventArgs e)
         {
-            //ui.OpenChildForm
+            doimaulb(NVQ_lb_sp);
+            ui.OpenChildForm(new DanhMucSanPham(), NVQ_pn_tab);
         }
 
         private void NVQ_lb_gh_Click(object sender, EventArgs e)
         {
-
+            doimaulb(NVQ_lb_gh);
         }
 
         private void NVQ_lb_qlsp_Click(object sender, EventArgs e)
         {
+            doimaulb(NVQ_lb_qlsp);
             ui.OpenChildForm(new QuanLiSanPham(), NVQ_pn_tab);
         }
 
         private void NVQ_lb_qldh_Click(object sender, EventArgs e)
         {
-
+            doimaulb(NVQ_lb_qldh);
         }
 
         private void NVQ_lb_ls_Click(object sender, EventArgs e)
         {
             ui.OpenChildForm(new LichSuNhanDon(), NVQ_pn_tab);
+            doimaulb(NVQ_lb_ls);
+        }
+
+        private void doimaulb(Control lb)
+        {
+            NVQ_lb_gh.ForeColor = Color.White;
+            NVQ_lb_ls.ForeColor = Color.White;
+            NVQ_lb_qldh.ForeColor = Color.White;
+            NVQ_lb_qlsp.ForeColor = Color.White;
+            NVQ_lb_sp.ForeColor = Color.White;
+            lb.ForeColor = Color.Yellow;
         }
     }
 }

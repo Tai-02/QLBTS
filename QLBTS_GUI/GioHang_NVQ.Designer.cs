@@ -76,7 +76,7 @@
             button1.TabIndex = 9;
             button1.Text = "Xác nhận và in bill";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += BtnXacNhan_Click;
             // 
             // label12
             // 
@@ -204,7 +204,7 @@
             label1.TabIndex = 3;
             label1.Text = "Giỏ hàng của khách";
             // 
-            // GioHang
+            // GioHang_NVQ
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -215,9 +215,9 @@
             Controls.Add(label3);
             Controls.Add(flowCart);
             Controls.Add(panel1);
-            Name = "GioHang";
+            Name = "GioHang_NVQ";
             Text = "GioHang";
-            Load += GioHang_Load;
+            Load += GioHang_NVQ_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

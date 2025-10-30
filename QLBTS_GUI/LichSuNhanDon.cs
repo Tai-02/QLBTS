@@ -10,12 +10,12 @@ namespace QLBTS_GUI
     public partial class LichSuNhanDon : Form
     {
         private int maNVGiao;
-        private FormLichSuNhanDonBBL bbl;
+        private LichSuHoatDongBBL bbl;
 
         public LichSuNhanDon()
         {
             InitializeComponent();
-            bbl = new FormLichSuNhanDonBBL();
+            bbl = new LichSuHoatDongBBL();
             maNVGiao = 2;
             InitUI();
             LoadData();
@@ -83,7 +83,7 @@ namespace QLBTS_GUI
         private void LoadData()
         {
             // Gọi tầng nghiệp vụ để lấy dữ liệu
-            List<LichSuHoatDongDTO> ds = bbl.LayLichSuTheoMaNV(maNVGiao);
+            List<LichSuHoatDongDTO> ds = bbl.LayLichSuBanHang(maNVGiao);
 
             // Gán vào DataGridView
             DataGridView dgv = panel1.Controls["dgvLichSu"] as DataGridView;

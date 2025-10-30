@@ -1,26 +1,29 @@
 ﻿using MySql.Data.MySqlClient;
+using QLBTS_DAL;
+using QLBTS_DTO;
+using QLBTS_BLL;
 using QLBTS_GUI.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace QLBTS_GUI
 {
     public partial class TrangChu : Form
     {
-        string connectionString = "Server=127.0.0.1;Database=QLBTS;Uid=root;Pwd=48692005;";
+        private DanhMucSanPhamBLL sanPhamBLL = new DanhMucSanPhamBLL();
+
         public TrangChu()
         {
             InitializeComponent();
         }
-
 
         private void TrangChu_Load(object sender, EventArgs e)
         {
@@ -29,93 +32,86 @@ namespace QLBTS_GUI
 
         private void LoadBestSellers()
         {
-            // 1. Gom nhóm các controls để dễ dàng truy cập trong vòng lặp
-            // Đảm bảo tên control khớp với tên bạn đặt trong Designer
-            List<Panel> panels = new List<Panel>
-            {
-                pnBestSeller1, pnBestSeller2, pnBestSeller3, pnBestSeller4, pnBestSeller5
-            };
+            List<Panel> panels = new List<Panel> { pnBestSeller1, pnBestSeller2, pnBestSeller3, pnBestSeller4, pnBestSeller5 };
+            List<PictureBox> pics = new List<PictureBox> { pcBest1, pcBest2, pcBest3, pcBest4, pcBest5 };
+            List<PictureBox> pickm = new List<PictureBox> { guna2CirclePictureBox1, guna2CirclePictureBox2, guna2CirclePictureBox3, guna2CirclePictureBox4, guna2CirclePictureBox5 };
 
-            List<PictureBox> pictureBoxes = new List<PictureBox>
-            {
-                pcBest1, pcBest2, pcBest3, pcBest4, pcBest5
-            };
-
-            List<Label> nameLabels = new List<Label>
-            {
-                lbTenSPBest1, lbTenSPBest2, lbTenSPBest3, lbTenSPBest4, lbTenSPBest5
-            };
-
-            List<Label> priceLabels = new List<Label>
-            {
-                lbGiaSPBest1, lbGiaSPBest2, lbGiaSPBest3, lbGiaSPBest4, lbGiaSPBest5
-            };
-
-            // Ẩn tất cả các panel trước khi tải
-            foreach (Panel p in panels)
+            foreach (var p in panels)
             {
                 p.Visible = false;
+                p.Controls.Clear();
+                p.BorderStyle = BorderStyle.None;
             }
 
-            MySqlConnection conn = null;
             try
             {
-                conn = new MySqlConnection(connectionString);
-                conn.Open();
-
-                // 2. Viết truy vấn SQL
-                // Lấy 5 sản phẩm có số lượng bán cao nhất
-                //string query = "SELECT TenSP, Gia, HinhAnh FROM SanPham ORDER BY SoLuongDaBan DESC LIMIT 5";
-                string query = "SELECT MaSP, TenSP, Gia, HinhAnh FROM SanPham WHERE MaSP BETWEEN 1 AND 5";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                // 3. Dùng MySqlDataReader để đọc dữ liệu
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                List<SanPhamDTO> ds = sanPhamBLL.LayDanhSachSanPham("BestSeller");
+                for (int i = 0; i < ds.Count && i < panels.Count; i++)
                 {
-                    int index = 0; // Biến đếm để gán vào đúng panel
-                    while (reader.Read() && index < panels.Count)
+                    SanPhamDTO sp = ds[i];
+                    Panel pn = panels[i];
+
+                    // Ảnh sản phẩm
+                    PictureBox pic = pics[i];
+                    pic.Dock = DockStyle.Fill;
+                    pic.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pic.Image = null;
+                    if (sp.HinhAnh != null && sp.HinhAnh.Length > 0)
                     {
-                        // Lấy dữ liệu từ cột
-                        string tenSP = reader["TenSP"].ToString();
-                        decimal giaBan = Convert.ToDecimal(reader["Gia"]);
-
-                        // Lấy dữ liệu hình ảnh (dạng BLOB)
-                        byte[] imgData = (byte[])reader["HinhAnh"];
-
-                        // 4. Gán dữ liệu vào controls
-
-                        // Xử lý tên và giá
-                        nameLabels[index].Text = tenSP;
-                        priceLabels[index].Text = giaBan.ToString("N0") + " VNĐ"; // Định dạng tiền tệ 100,000 VNĐ
-
-                        // Xử lý hình ảnh
-                        if (imgData != null && imgData.Length > 0)
+                        using (MemoryStream ms = new MemoryStream(sp.HinhAnh))
                         {
-                            using (MemoryStream ms = new MemoryStream(imgData))
-                            {
-                                pictureBoxes[index].Image = Image.FromStream(ms);
-                            }
+                            pic.Image = Image.FromStream(ms);
                         }
-
-                        // Hiển thị panel này lên
-                        panels[index].Visible = true;
-
-                        // Tăng biến đếm
-                        index++;
                     }
+                    pn.Controls.Add(pic);
+
+                    PictureBox pi = pickm[i];                    
+                    pi.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pi.Image = Properties.Resources.Bestseller;
+                    pic.Controls.Add(pi);
+                    pi.BringToFront();
+                    
+                    // Tên sản phẩm (in đậm)
+                    Label lbTen = new Label();
+                    lbTen.Text = sp.TenSP;
+                    lbTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                    lbTen.AutoSize = false;
+                    lbTen.TextAlign = ContentAlignment.MiddleCenter;
+                    lbTen.Dock = DockStyle.Bottom;
+                    lbTen.Height = 25;
+                    pn.Controls.Add(lbTen);
+
+                    // Giá gốc (den, có gạch ngang)
+                    Label lbGiaGoc = new Label();
+                    lbGiaGoc.Text = $"{sp.Gia:N0} VNĐ";
+                    lbGiaGoc.Font = new Font("Segoe UI", 9, FontStyle.Strikeout);
+                    lbGiaGoc.ForeColor = Color.Black;
+                    lbGiaGoc.AutoSize = false;
+                    lbGiaGoc.TextAlign = ContentAlignment.MiddleCenter;
+                    lbGiaGoc.Dock = DockStyle.Bottom;
+                    lbGiaGoc.Height = 18;
+                    pn.Controls.Add(lbGiaGoc);
+
+                    // Giá khuyến mãi (đỏ, dưới cùng)
+                    int giaKM = (int)(Math.Round((sp.Gia - (sp.Gia * sp.KhuyenMai / 100.0)) / 1000.0) * 1000);
+                    Label lbGiaKM = new Label();
+                    lbGiaKM.Text = $"{giaKM:N0} VNĐ (-{sp.KhuyenMai}%)";
+                    lbGiaKM.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                    lbGiaKM.ForeColor = Color.Red;
+                    lbGiaKM.AutoSize = false;
+                    lbGiaKM.TextAlign = ContentAlignment.MiddleCenter;
+                    lbGiaKM.Dock = DockStyle.Bottom;
+                    lbGiaKM.Height = 22;
+                    pn.Controls.Add(lbGiaKM);
+
+                    pn.Visible = true;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải dữ liệu Best Seller: " + ex.Message);
-            }
-            finally
-            {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                MessageBox.Show("Lỗi khi tải danh sách Best Seller: " + ex.Message);
             }
         }
+
     }
 }

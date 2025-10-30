@@ -313,7 +313,7 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = Properties.Resources.location1;
+            pictureBox4.Image = Properties.Resources.location;
             pictureBox4.Location = new Point(36, 281);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(58, 57);
@@ -333,7 +333,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.email1;
+            pictureBox2.Image = Properties.Resources.email;
             pictureBox2.Location = new Point(36, 129);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(58, 57);
@@ -343,7 +343,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.iconUser;
+            pictureBox1.Image = Properties.Resources.icons8_user_32;
             pictureBox1.Location = new Point(36, 54);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(58, 57);

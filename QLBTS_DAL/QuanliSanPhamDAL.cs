@@ -28,6 +28,7 @@ namespace QLBTS_DAL
                     {
                         MaSP = reader.GetInt32("MaSP"),
                         TenSP = reader.GetString("TenSP"),
+                        LoaiSP = reader.GetString("LoaiSP"),
                         Size = reader.GetString("Size"),
                         SoLuong = reader.GetInt32("SoLuong"),
                         Gia = reader.GetInt32("Gia"),
@@ -42,14 +43,15 @@ namespace QLBTS_DAL
 
         public static bool Insert(SanPhamDTO sp)
         {
-            string query = "INSERT INTO SanPham (TenSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh) " +
-                           "VALUES (@TenSP, @Size, @SoLuong, @Gia, @KhuyenMai, @HinhAnh)";
+            string query = "INSERT INTO SanPham (TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh) " +
+               "VALUES (@TenSP, @LoaiSP, @Size, @SoLuong, @Gia, @KhuyenMai, @HinhAnh)";
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@LoaiSP", sp.LoaiSP);
                 cmd.Parameters.AddWithValue("@Size", sp.Size);
                 cmd.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
                 cmd.Parameters.AddWithValue("@Gia", sp.Gia);
@@ -63,13 +65,14 @@ namespace QLBTS_DAL
 
         public static bool Update(SanPhamDTO sp)
         {
-            string query = "UPDATE SanPham SET TenSP=@TenSP, Size=@Size, SoLuong=@SoLuong, Gia=@Gia, KhuyenMai=@KhuyenMai, HinhAnh=@HinhAnh WHERE MaSP=@MaSP";
+            string query = "UPDATE SanPham SET TenSP=@TenSP,LoaiSP=@LoaiSP ,Size=@Size, SoLuong=@SoLuong, Gia=@Gia, KhuyenMai=@KhuyenMai, HinhAnh=@HinhAnh WHERE MaSP=@MaSP";
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
                 cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@LoaiSP", sp.LoaiSP);
                 cmd.Parameters.AddWithValue("@Size", sp.Size);
                 cmd.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
                 cmd.Parameters.AddWithValue("@Gia", sp.Gia);
@@ -96,5 +99,23 @@ namespace QLBTS_DAL
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+
+        public static List<string> GetDistinctLoaiSP()
+        {
+            List<string> list = new List<string>();
+            string query = "SELECT DISTINCT LoaiSP FROM SanPham";
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(reader.GetString("LoaiSP"));
+                }
+            }
+            return list;
+        }
+
     }
 }

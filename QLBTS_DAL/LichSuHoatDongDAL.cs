@@ -5,9 +5,9 @@ using QLBTS_DTO;
 
 namespace QLBTS_DAL
 {
-    public class LichSuNhanDonDAL
+    public class LichSuHoatDongDAL
     {
-        public static List<LichSuHoatDongDTO> LayLichSuTheoMaNV(int maNVQuay)
+        public static List<LichSuHoatDongDTO> GetLichSuBanHang(int maNVQuay)
         {
             List<LichSuHoatDongDTO> list = new List<LichSuHoatDongDTO>();
 

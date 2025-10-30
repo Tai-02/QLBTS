@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class TimKiemSanPham
+    partial class DanhMucSanPham
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimKiemSanPham));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DanhMucSanPham));
             pnLocTimKiem = new Panel();
+            cbb_loai = new ComboBox();
             chkTopping = new CheckBox();
-            chkTratraicay = new CheckBox();
+            chkTrasua = new CheckBox();
             chkMonmoi = new CheckBox();
             chkBestseller = new CheckBox();
             label1 = new Label();
@@ -46,15 +47,25 @@
             // pnLocTimKiem
             // 
             pnLocTimKiem.BorderStyle = BorderStyle.FixedSingle;
+            pnLocTimKiem.Controls.Add(cbb_loai);
             pnLocTimKiem.Controls.Add(chkTopping);
-            pnLocTimKiem.Controls.Add(chkTratraicay);
+            pnLocTimKiem.Controls.Add(chkTrasua);
             pnLocTimKiem.Controls.Add(chkMonmoi);
             pnLocTimKiem.Controls.Add(chkBestseller);
             pnLocTimKiem.Controls.Add(label1);
             pnLocTimKiem.Location = new Point(6, 74);
             pnLocTimKiem.Name = "pnLocTimKiem";
-            pnLocTimKiem.Size = new Size(214, 283);
+            pnLocTimKiem.Size = new Size(214, 337);
             pnLocTimKiem.TabIndex = 9;
+            // 
+            // cbb_loai
+            // 
+            cbb_loai.FormattingEnabled = true;
+            cbb_loai.Location = new Point(20, 281);
+            cbb_loai.Name = "cbb_loai";
+            cbb_loai.Size = new Size(151, 28);
+            cbb_loai.TabIndex = 13;
+            cbb_loai.SelectedIndexChanged += cbb_loai_SelectedIndexChanged;
             // 
             // chkTopping
             // 
@@ -68,17 +79,17 @@
             chkTopping.UseVisualStyleBackColor = true;
             chkTopping.CheckedChanged += chkTopping_CheckedChanged;
             // 
-            // chkTratraicay
+            // chkTrasua
             // 
-            chkTratraicay.AutoSize = true;
-            chkTratraicay.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chkTratraicay.Location = new Point(20, 175);
-            chkTratraicay.Name = "chkTratraicay";
-            chkTratraicay.Size = new Size(127, 25);
-            chkTratraicay.TabIndex = 3;
-            chkTratraicay.Text = "Trà trái cây";
-            chkTratraicay.UseVisualStyleBackColor = true;
-            chkTratraicay.CheckedChanged += chkTratraicay_CheckedChanged;
+            chkTrasua.AutoSize = true;
+            chkTrasua.Font = new Font("Cambria", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkTrasua.Location = new Point(20, 175);
+            chkTrasua.Name = "chkTrasua";
+            chkTrasua.Size = new Size(96, 25);
+            chkTrasua.TabIndex = 3;
+            chkTrasua.Text = "Trà sữa";
+            chkTrasua.UseVisualStyleBackColor = true;
+            chkTrasua.CheckedChanged += chkTraSua_CheckedChanged;
             // 
             // chkMonmoi
             // 
@@ -139,10 +150,6 @@
             txtTimkiem.Name = "txtTimkiem";
             txtTimkiem.Size = new Size(210, 30);
             txtTimkiem.TabIndex = 11;
-            txtTimkiem.TextChanged += txtTimkiem_TextChanged;
-            txtTimkiem.Enter += txtTimkiem_Enter;
-            txtTimkiem.KeyDown += txtTimkiem_KeyDown;
-            txtTimkiem.Leave += txtTimkiem_Leave;
             // 
             // btnTimkiem
             // 
@@ -157,7 +164,7 @@
             btnTimkiem.UseVisualStyleBackColor = true;
             btnTimkiem.Click += btnTimkiem_Click;
             // 
-            // TimKiemSanPham
+            // DanhMucSanPham
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -167,9 +174,9 @@
             Controls.Add(flpSanPham);
             Controls.Add(txtTimkiem);
             Controls.Add(btnTimkiem);
-            Name = "TimKiemSanPham";
+            Name = "DanhMucSanPham";
             Text = "TimKiemSanPham";
-            Load += TimKiemSanPham_Load;
+            Load += DanhMucSanPham_Load;
             pnLocTimKiem.ResumeLayout(false);
             pnLocTimKiem.PerformLayout();
             flpSanPham.ResumeLayout(false);
@@ -181,7 +188,7 @@
 
         private Panel pnLocTimKiem;
         private CheckBox chkTopping;
-        private CheckBox chkTratraicay;
+        private CheckBox chkTrasua;
         private CheckBox chkMonmoi;
         private CheckBox chkBestseller;
         private Label label1;
@@ -189,5 +196,6 @@
         private Panel panel2;
         private TextBox txtTimkiem;
         private Button btnTimkiem;
+        private ComboBox cbb_loai;
     }
 }

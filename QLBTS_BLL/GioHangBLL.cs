@@ -7,36 +7,43 @@ namespace QLBTS_BLL
 {
     public class GioHangBLL
     {
-        // Lấy giỏ hàng
-        public List<SanPhamDTO> LayGioHangTheoMaKH(int maKH)
+        private int maTK; // Mã TK của NV quầy
+
+        public GioHangBLL(int maTK)
         {
-            return GioHangDAL.LayGioHangTheoMaKH(maKH);
+            this.maTK = maTK;
         }
 
-        // Cập nhật số lượng tăng/giảm
-        public void ThayDoiSoLuong(int maKH, SanPhamDTO sp, int delta)
+        // 1️⃣ Lấy giỏ hàng của NV quầy
+        public List<SanPhamDTO> LayGioHang()
+        {
+            return GioHangDAL.LayGioHangTheoMaTK(maTK);
+        }
+
+        // 2️⃣ Thay đổi số lượng sản phẩm
+        public void ThayDoiSoLuong(SanPhamDTO sp, int delta)
         {
             int soLuongMoi = sp.SoLuong + delta;
             if (soLuongMoi < 1) soLuongMoi = 1;
             if (soLuongMoi > 99) soLuongMoi = 99;
 
             sp.SoLuong = soLuongMoi;
-            GioHangDAL.CapNhatSoLuong(maKH, sp.MaSP, sp.SoLuong);
+            GioHangDAL.CapNhatSoLuong(maTK, sp.MaSP, sp.SoLuong);
         }
 
-        // Xóa 1 sản phẩm
-        public void XoaSanPhamKhoiGio(int maKH, int maSP)
+        // 3️⃣ Xóa sản phẩm khỏi giỏ
+        public void XoaSanPhamKhoiGio(int maSP)
         {
-            GioHangDAL.XoaSanPhamKhoiGio(maKH, maSP);
+            GioHangDAL.XoaSanPhamKhoiGio(maTK, maSP);
         }
 
-        // Xóa toàn bộ
-        public void XoaToanBoGio(int maKH)
+        // 4️⃣ Xóa toàn bộ giỏ
+        public void XoaToanBoGio()
         {
-            GioHangDAL.XoaToanBoGio(maKH);
+            GioHangDAL.XoaToanBoGio(maTK);
         }
 
-        // Tính tổng tiền
+        // 5️⃣ Tính tổng tiền trước giảm giá
         public decimal TinhTongTien(List<SanPhamDTO> danhSach)
         {
             decimal tong = 0;
@@ -45,7 +52,7 @@ namespace QLBTS_BLL
             return tong;
         }
 
-        // Tính thành tiền sau giảm giá
+        // 6️⃣ Tính tiền sau giảm giá
         public decimal TinhThanhTien(decimal tong, string giam)
         {
             string phanTramStr = giam.Replace("%", "").Trim();
@@ -54,7 +61,7 @@ namespace QLBTS_BLL
             return tong;
         }
 
-        // Tạo chuỗi hóa đơn
+        // 7️⃣ Tạo hóa đơn dạng text
         public string TaoHoaDonText(List<SanPhamDTO> danhSach, string giam)
         {
             string bill = "=========== HÓA ĐƠN ===========\n";
@@ -71,6 +78,12 @@ namespace QLBTS_BLL
             bill += "\nCảm ơn quý khách!\n";
 
             return bill;
+        }
+
+        // 8️⃣ Xác nhận đơn hàng: trực tiếp thành Hoàn tất
+        public void XacNhanDonHang(int maDH)
+        {
+            GioHangDAL.XacNhanDonHang(maDH);
         }
     }
 }

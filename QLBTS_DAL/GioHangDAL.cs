@@ -7,8 +7,8 @@ namespace QLBTS_DAL
 {
     public class GioHangDAL
     {
-        // 1️⃣ Lấy giỏ hàng theo mã khách
-        public static List<SanPhamDTO> LayGioHangTheoMaKH(int maKH)
+        // 1️⃣ Lấy giỏ hàng theo mã tài khoản (MaTK)
+        public static List<SanPhamDTO> LayGioHangTheoMaTK(int maTK)
         {
             List<SanPhamDTO> danhSach = new List<SanPhamDTO>();
 
@@ -24,7 +24,7 @@ namespace QLBTS_DAL
                 FROM ChiTietGioHang ctgh
                 JOIN SanPham sp ON ctgh.MaSP = sp.MaSP
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-                WHERE gh.MaKH = @MaKH;
+                WHERE gh.MaTK = @MaTK;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -32,7 +32,7 @@ namespace QLBTS_DAL
                 conn.Open();
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaKH", maKH);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -58,13 +58,13 @@ namespace QLBTS_DAL
         }
 
         // 2️⃣ Cập nhật số lượng sản phẩm trong giỏ hàng
-        public static void CapNhatSoLuong(int maKH, int maSP, int soLuong)
+        public static void CapNhatSoLuong(int maTK, int maSP, int soLuong)
         {
             string query = @"
                 UPDATE ChiTietGioHang ctgh
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
                 SET ctgh.SoLuong = @SoLuong
-                WHERE gh.MaKH = @MaKH AND ctgh.MaSP = @MaSP;
+                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -73,7 +73,7 @@ namespace QLBTS_DAL
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@SoLuong", soLuong);
-                    cmd.Parameters.AddWithValue("@MaKH", maKH);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
                     cmd.Parameters.AddWithValue("@MaSP", maSP);
                     cmd.ExecuteNonQuery();
                 }
@@ -81,12 +81,12 @@ namespace QLBTS_DAL
         }
 
         // 3️⃣ Xóa sản phẩm khỏi giỏ hàng
-        public static void XoaSanPhamKhoiGio(int maKH, int maSP)
+        public static void XoaSanPhamKhoiGio(int maTK, int maSP)
         {
             string query = @"
                 DELETE ctgh FROM ChiTietGioHang ctgh
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-                WHERE gh.MaKH = @MaKH AND ctgh.MaSP = @MaSP;
+                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -94,7 +94,7 @@ namespace QLBTS_DAL
                 conn.Open();
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaKH", maKH);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
                     cmd.Parameters.AddWithValue("@MaSP", maSP);
                     cmd.ExecuteNonQuery();
                 }
@@ -102,12 +102,12 @@ namespace QLBTS_DAL
         }
 
         // 4️⃣ Xóa toàn bộ giỏ hàng sau khi thanh toán
-        public static void XoaToanBoGio(int maKH)
+        public static void XoaToanBoGio(int maTK)
         {
             string query = @"
                 DELETE ctgh FROM ChiTietGioHang ctgh
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-                WHERE gh.MaKH = @MaKH;
+                WHERE gh.MaTK = @MaTK;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -115,10 +115,32 @@ namespace QLBTS_DAL
                 conn.Open();
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaKH", maKH);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
+        // 5️⃣ Xác nhận đơn hàng (Chờ xác nhận -> Đã nhận)
+        public static void XacNhanDonHang(int maDH)
+        {
+            string query = @"
+                UPDATE DonHang
+                SET TrangThai = 'Hoàn tất'
+                WHERE MaDH = @MaDH AND TrangThai = 'Chờ xác nhận';
+            ";
+
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaDH", maDH);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
+

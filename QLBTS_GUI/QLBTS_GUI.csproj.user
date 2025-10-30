@@ -28,7 +28,7 @@
     <Compile Update="NVQUAY.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="TimKiemSanPham.cs">
+    <Compile Update="DanhMucSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormDonHang.cs">
@@ -44,6 +44,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="GioHangCuaBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="TrangChu.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

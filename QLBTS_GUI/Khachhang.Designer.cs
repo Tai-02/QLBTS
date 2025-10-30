@@ -32,12 +32,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            label1 = new Label();
+            KH_lb_ls = new Label();
+            KH_lb_ttcn = new Label();
+            KH_lb_ttd = new Label();
+            KH_lb_gh = new Label();
+            KH_lb_sp = new Label();
+            KH_lb_Trangchu = new Label();
             pictureBox2 = new PictureBox();
             KH_pn_tab = new Panel();
             KH_pn_menu.SuspendLayout();
@@ -50,12 +50,12 @@
             KH_pn_menu.BackColor = Color.Transparent;
             KH_pn_menu.BorderRadius = 30;
             KH_pn_menu.Controls.Add(pictureBox1);
-            KH_pn_menu.Controls.Add(label6);
-            KH_pn_menu.Controls.Add(label5);
-            KH_pn_menu.Controls.Add(label4);
-            KH_pn_menu.Controls.Add(label3);
-            KH_pn_menu.Controls.Add(label2);
-            KH_pn_menu.Controls.Add(label1);
+            KH_pn_menu.Controls.Add(KH_lb_ls);
+            KH_pn_menu.Controls.Add(KH_lb_ttcn);
+            KH_pn_menu.Controls.Add(KH_lb_ttd);
+            KH_pn_menu.Controls.Add(KH_lb_gh);
+            KH_pn_menu.Controls.Add(KH_lb_sp);
+            KH_pn_menu.Controls.Add(KH_lb_Trangchu);
             KH_pn_menu.CustomizableEdges = customizableEdges1;
             KH_pn_menu.FillColor = Color.Black;
             KH_pn_menu.Location = new Point(12, 35);
@@ -75,77 +75,83 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // label6
+            // KH_lb_ls
             // 
-            label6.AutoSize = true;
-            label6.BackColor = Color.Black;
-            label6.Font = new Font("Segoe UI", 10.2F);
-            label6.ForeColor = Color.White;
-            label6.Location = new Point(851, 22);
-            label6.Name = "label6";
-            label6.Size = new Size(62, 23);
-            label6.TabIndex = 6;
-            label6.Text = "Lịch sử";
+            KH_lb_ls.AutoSize = true;
+            KH_lb_ls.BackColor = Color.Black;
+            KH_lb_ls.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_ls.ForeColor = Color.White;
+            KH_lb_ls.Location = new Point(851, 22);
+            KH_lb_ls.Name = "KH_lb_ls";
+            KH_lb_ls.Size = new Size(62, 23);
+            KH_lb_ls.TabIndex = 6;
+            KH_lb_ls.Text = "Lịch sử";
+            KH_lb_ls.Click += KH_lb_ls_Click;
             // 
-            // label5
+            // KH_lb_ttcn
             // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Black;
-            label5.Font = new Font("Segoe UI", 10.2F);
-            label5.ForeColor = Color.White;
-            label5.Location = new Point(685, 22);
-            label5.Name = "label5";
-            label5.Size = new Size(150, 23);
-            label5.TabIndex = 5;
-            label5.Text = "Thông tin cá nhân";
+            KH_lb_ttcn.AutoSize = true;
+            KH_lb_ttcn.BackColor = Color.Black;
+            KH_lb_ttcn.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_ttcn.ForeColor = Color.White;
+            KH_lb_ttcn.Location = new Point(685, 22);
+            KH_lb_ttcn.Name = "KH_lb_ttcn";
+            KH_lb_ttcn.Size = new Size(150, 23);
+            KH_lb_ttcn.TabIndex = 5;
+            KH_lb_ttcn.Text = "Thông tin cá nhân";
+            KH_lb_ttcn.Click += KH_lb_ttcn_Click;
             // 
-            // label4
+            // KH_lb_ttd
             // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Black;
-            label4.Font = new Font("Segoe UI", 10.2F);
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(557, 22);
-            label4.Name = "label4";
-            label4.Size = new Size(122, 23);
-            label4.TabIndex = 4;
-            label4.Text = "Trạng thái đơn";
+            KH_lb_ttd.AutoSize = true;
+            KH_lb_ttd.BackColor = Color.Black;
+            KH_lb_ttd.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_ttd.ForeColor = Color.White;
+            KH_lb_ttd.Location = new Point(557, 22);
+            KH_lb_ttd.Name = "KH_lb_ttd";
+            KH_lb_ttd.Size = new Size(122, 23);
+            KH_lb_ttd.TabIndex = 4;
+            KH_lb_ttd.Text = "Trạng thái đơn";
+            KH_lb_ttd.Click += KH_lb_ttd_Click;
             // 
-            // label3
+            // KH_lb_gh
             // 
-            label3.AutoSize = true;
-            label3.BackColor = Color.Black;
-            label3.Font = new Font("Segoe UI", 10.2F);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(244, 22);
-            label3.Name = "label3";
-            label3.Size = new Size(108, 23);
-            label3.TabIndex = 3;
-            label3.Text = "Giỏ hàng \U0001f6d2";
+            KH_lb_gh.AutoSize = true;
+            KH_lb_gh.BackColor = Color.Black;
+            KH_lb_gh.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_gh.ForeColor = Color.White;
+            KH_lb_gh.Location = new Point(244, 22);
+            KH_lb_gh.Name = "KH_lb_gh";
+            KH_lb_gh.Size = new Size(108, 23);
+            KH_lb_gh.TabIndex = 3;
+            KH_lb_gh.Text = "Giỏ hàng \U0001f6d2";
+            KH_lb_gh.Click += KH_lb_gh_Click;
             // 
-            // label2
+            // KH_lb_sp
             // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.Black;
-            label2.Font = new Font("Segoe UI", 10.2F);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(132, 22);
-            label2.Name = "label2";
-            label2.Size = new Size(87, 23);
-            label2.TabIndex = 2;
-            label2.Text = "Sản phẩm";
+            KH_lb_sp.AutoSize = true;
+            KH_lb_sp.BackColor = Color.Black;
+            KH_lb_sp.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_sp.ForeColor = Color.White;
+            KH_lb_sp.Location = new Point(132, 22);
+            KH_lb_sp.Name = "KH_lb_sp";
+            KH_lb_sp.Size = new Size(87, 23);
+            KH_lb_sp.TabIndex = 2;
+            KH_lb_sp.Text = "Sản phẩm";
+            KH_lb_sp.Click += KH_lb_sp_Click;
             // 
-            // label1
+            // KH_lb_Trangchu
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Black;
-            label1.Font = new Font("Segoe UI", 10.2F);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(25, 22);
-            label1.Name = "label1";
-            label1.Size = new Size(86, 23);
-            label1.TabIndex = 1;
-            label1.Text = "Trang chủ";
+            KH_lb_Trangchu.AutoSize = true;
+            KH_lb_Trangchu.BackColor = Color.Black;
+            KH_lb_Trangchu.Font = new Font("Segoe UI", 10.2F);
+            KH_lb_Trangchu.ForeColor = Color.White;
+            KH_lb_Trangchu.Location = new Point(25, 22);
+            KH_lb_Trangchu.Name = "KH_lb_Trangchu";
+            KH_lb_Trangchu.Size = new Size(86, 23);
+            KH_lb_Trangchu.TabIndex = 1;
+            KH_lb_Trangchu.Text = "Trang chủ";
+            KH_lb_Trangchu.Click += KH_lb_Trangchu_Click;
             // 
             // pictureBox2
             // 
@@ -190,11 +196,11 @@
         private Panel KH_pn_tab;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
-        private Label label1;
+        private Label KH_lb_ls;
+        private Label KH_lb_ttcn;
+        private Label KH_lb_ttd;
+        private Label KH_lb_gh;
+        private Label KH_lb_sp;
+        private Label KH_lb_Trangchu;
     }
 }

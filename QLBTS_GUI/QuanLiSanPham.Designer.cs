@@ -46,17 +46,21 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             dataGridView1 = new DataGridView();
             panel1 = new Panel();
+            QLSP_cbb_loai = new Guna.UI2.WinForms.Guna2ComboBox();
+            label8 = new Label();
             pictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             xoa_btn = new Guna.UI2.WinForms.Guna2Button();
             capnhat_btn = new Guna.UI2.WinForms.Guna2Button();
             them_btn = new Guna.UI2.WinForms.Guna2Button();
-            textBox5 = new Guna.UI2.WinForms.Guna2TextBox();
-            textBox4 = new Guna.UI2.WinForms.Guna2TextBox();
-            textBox3 = new Guna.UI2.WinForms.Guna2TextBox();
-            textBox2 = new Guna.UI2.WinForms.Guna2TextBox();
-            textBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            QLSP_txt_khuyenmai = new Guna.UI2.WinForms.Guna2TextBox();
+            QLSP_txt_soluong = new Guna.UI2.WinForms.Guna2TextBox();
+            QLSP_txt_kichthuoc = new Guna.UI2.WinForms.Guna2TextBox();
+            QLSP_txt_gia = new Guna.UI2.WinForms.Guna2TextBox();
+            QLSP_txt_tensp = new Guna.UI2.WinForms.Guna2TextBox();
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
@@ -88,15 +92,17 @@
             // panel1
             // 
             panel1.BackColor = Color.Gainsboro;
+            panel1.Controls.Add(QLSP_cbb_loai);
+            panel1.Controls.Add(label8);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(xoa_btn);
             panel1.Controls.Add(capnhat_btn);
             panel1.Controls.Add(them_btn);
-            panel1.Controls.Add(textBox5);
-            panel1.Controls.Add(textBox4);
-            panel1.Controls.Add(textBox3);
-            panel1.Controls.Add(textBox2);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(QLSP_txt_khuyenmai);
+            panel1.Controls.Add(QLSP_txt_soluong);
+            panel1.Controls.Add(QLSP_txt_kichthuoc);
+            panel1.Controls.Add(QLSP_txt_gia);
+            panel1.Controls.Add(QLSP_txt_tensp);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label5);
@@ -109,14 +115,42 @@
             panel1.Size = new Size(477, 497);
             panel1.TabIndex = 1;
             // 
+            // QLSP_cbb_loai
+            // 
+            QLSP_cbb_loai.BackColor = Color.Transparent;
+            QLSP_cbb_loai.BorderRadius = 20;
+            QLSP_cbb_loai.CustomizableEdges = customizableEdges1;
+            QLSP_cbb_loai.DrawMode = DrawMode.OwnerDrawFixed;
+            QLSP_cbb_loai.DropDownStyle = ComboBoxStyle.DropDownList;
+            QLSP_cbb_loai.FocusedColor = Color.FromArgb(94, 148, 255);
+            QLSP_cbb_loai.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_cbb_loai.Font = new Font("Segoe UI", 10F);
+            QLSP_cbb_loai.ForeColor = Color.FromArgb(68, 88, 112);
+            QLSP_cbb_loai.ItemHeight = 30;
+            QLSP_cbb_loai.Location = new Point(146, 218);
+            QLSP_cbb_loai.Name = "QLSP_cbb_loai";
+            QLSP_cbb_loai.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            QLSP_cbb_loai.Size = new Size(286, 36);
+            QLSP_cbb_loai.TabIndex = 2;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Location = new Point(83, 226);
+            label8.Name = "label8";
+            label8.Size = new Size(50, 20);
+            label8.TabIndex = 25;
+            label8.Text = "Loại :";
+            // 
             // pictureBox1
             // 
             pictureBox1.BorderRadius = 35;
-            pictureBox1.CustomizableEdges = customizableEdges1;
+            pictureBox1.CustomizableEdges = customizableEdges3;
             pictureBox1.ImageRotate = 0F;
-            pictureBox1.Location = new Point(168, 46);
+            pictureBox1.Location = new Point(168, 28);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            pictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges4;
             pictureBox1.Size = new Size(244, 143);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 23;
@@ -127,7 +161,7 @@
             // 
             xoa_btn.BackColor = Color.Transparent;
             xoa_btn.BorderRadius = 15;
-            xoa_btn.CustomizableEdges = customizableEdges3;
+            xoa_btn.CustomizableEdges = customizableEdges5;
             xoa_btn.DisabledState.BorderColor = Color.DarkGray;
             xoa_btn.DisabledState.CustomBorderColor = Color.DarkGray;
             xoa_btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -137,7 +171,7 @@
             xoa_btn.ForeColor = Color.White;
             xoa_btn.Location = new Point(325, 444);
             xoa_btn.Name = "xoa_btn";
-            xoa_btn.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            xoa_btn.ShadowDecoration.CustomizableEdges = customizableEdges6;
             xoa_btn.Size = new Size(137, 28);
             xoa_btn.TabIndex = 22;
             xoa_btn.Text = "Xóa sản phẩm";
@@ -147,7 +181,7 @@
             // 
             capnhat_btn.BackColor = Color.Transparent;
             capnhat_btn.BorderRadius = 15;
-            capnhat_btn.CustomizableEdges = customizableEdges5;
+            capnhat_btn.CustomizableEdges = customizableEdges7;
             capnhat_btn.DisabledState.BorderColor = Color.DarkGray;
             capnhat_btn.DisabledState.CustomBorderColor = Color.DarkGray;
             capnhat_btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -157,7 +191,7 @@
             capnhat_btn.ForeColor = Color.White;
             capnhat_btn.Location = new Point(168, 444);
             capnhat_btn.Name = "capnhat_btn";
-            capnhat_btn.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            capnhat_btn.ShadowDecoration.CustomizableEdges = customizableEdges8;
             capnhat_btn.Size = new Size(137, 28);
             capnhat_btn.TabIndex = 21;
             capnhat_btn.Text = "Cập nhật";
@@ -167,7 +201,7 @@
             // 
             them_btn.BackColor = Color.Transparent;
             them_btn.BorderRadius = 15;
-            them_btn.CustomizableEdges = customizableEdges7;
+            them_btn.CustomizableEdges = customizableEdges9;
             them_btn.DisabledState.BorderColor = Color.DarkGray;
             them_btn.DisabledState.CustomBorderColor = Color.DarkGray;
             them_btn.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -177,117 +211,117 @@
             them_btn.ForeColor = Color.White;
             them_btn.Location = new Point(17, 444);
             them_btn.Name = "them_btn";
-            them_btn.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            them_btn.ShadowDecoration.CustomizableEdges = customizableEdges10;
             them_btn.Size = new Size(137, 28);
             them_btn.TabIndex = 20;
             them_btn.Text = "Thêm sản phẩm";
             them_btn.Click += them_btn_Click;
             // 
-            // textBox5
+            // QLSP_txt_khuyenmai
             // 
-            textBox5.BorderRadius = 20;
-            textBox5.CustomizableEdges = customizableEdges9;
-            textBox5.DefaultText = "";
-            textBox5.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            textBox5.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            textBox5.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            textBox5.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            textBox5.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox5.Font = new Font("Segoe UI", 9F);
-            textBox5.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox5.Location = new Point(147, 380);
-            textBox5.Margin = new Padding(3, 4, 3, 4);
-            textBox5.Name = "textBox5";
-            textBox5.PlaceholderText = "";
-            textBox5.SelectedText = "";
-            textBox5.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            textBox5.Size = new Size(286, 32);
-            textBox5.TabIndex = 19;
+            QLSP_txt_khuyenmai.BorderRadius = 20;
+            QLSP_txt_khuyenmai.CustomizableEdges = customizableEdges11;
+            QLSP_txt_khuyenmai.DefaultText = "";
+            QLSP_txt_khuyenmai.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            QLSP_txt_khuyenmai.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            QLSP_txt_khuyenmai.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_khuyenmai.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_khuyenmai.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_khuyenmai.Font = new Font("Segoe UI", 9F);
+            QLSP_txt_khuyenmai.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_khuyenmai.Location = new Point(147, 380);
+            QLSP_txt_khuyenmai.Margin = new Padding(3, 4, 3, 4);
+            QLSP_txt_khuyenmai.Name = "QLSP_txt_khuyenmai";
+            QLSP_txt_khuyenmai.PlaceholderText = "";
+            QLSP_txt_khuyenmai.SelectedText = "";
+            QLSP_txt_khuyenmai.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            QLSP_txt_khuyenmai.Size = new Size(286, 32);
+            QLSP_txt_khuyenmai.TabIndex = 19;
             // 
-            // textBox4
+            // QLSP_txt_soluong
             // 
-            textBox4.BorderRadius = 20;
-            textBox4.CustomizableEdges = customizableEdges11;
-            textBox4.DefaultText = "";
-            textBox4.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            textBox4.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            textBox4.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            textBox4.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            textBox4.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox4.Font = new Font("Segoe UI", 9F);
-            textBox4.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox4.Location = new Point(147, 340);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Name = "textBox4";
-            textBox4.PlaceholderText = "";
-            textBox4.SelectedText = "";
-            textBox4.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            textBox4.Size = new Size(286, 32);
-            textBox4.TabIndex = 18;
+            QLSP_txt_soluong.BorderRadius = 20;
+            QLSP_txt_soluong.CustomizableEdges = customizableEdges13;
+            QLSP_txt_soluong.DefaultText = "";
+            QLSP_txt_soluong.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            QLSP_txt_soluong.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            QLSP_txt_soluong.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_soluong.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_soluong.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_soluong.Font = new Font("Segoe UI", 9F);
+            QLSP_txt_soluong.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_soluong.Location = new Point(147, 340);
+            QLSP_txt_soluong.Margin = new Padding(3, 4, 3, 4);
+            QLSP_txt_soluong.Name = "QLSP_txt_soluong";
+            QLSP_txt_soluong.PlaceholderText = "";
+            QLSP_txt_soluong.SelectedText = "";
+            QLSP_txt_soluong.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            QLSP_txt_soluong.Size = new Size(286, 32);
+            QLSP_txt_soluong.TabIndex = 18;
             // 
-            // textBox3
+            // QLSP_txt_kichthuoc
             // 
-            textBox3.BorderRadius = 20;
-            textBox3.CustomizableEdges = customizableEdges13;
-            textBox3.DefaultText = "";
-            textBox3.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            textBox3.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            textBox3.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            textBox3.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            textBox3.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox3.Font = new Font("Segoe UI", 9F);
-            textBox3.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox3.Location = new Point(147, 300);
-            textBox3.Margin = new Padding(3, 4, 3, 4);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "";
-            textBox3.SelectedText = "";
-            textBox3.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            textBox3.Size = new Size(286, 32);
-            textBox3.TabIndex = 17;
+            QLSP_txt_kichthuoc.BorderRadius = 20;
+            QLSP_txt_kichthuoc.CustomizableEdges = customizableEdges15;
+            QLSP_txt_kichthuoc.DefaultText = "";
+            QLSP_txt_kichthuoc.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            QLSP_txt_kichthuoc.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            QLSP_txt_kichthuoc.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_kichthuoc.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_kichthuoc.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_kichthuoc.Font = new Font("Segoe UI", 9F);
+            QLSP_txt_kichthuoc.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_kichthuoc.Location = new Point(147, 300);
+            QLSP_txt_kichthuoc.Margin = new Padding(3, 4, 3, 4);
+            QLSP_txt_kichthuoc.Name = "QLSP_txt_kichthuoc";
+            QLSP_txt_kichthuoc.PlaceholderText = "";
+            QLSP_txt_kichthuoc.SelectedText = "";
+            QLSP_txt_kichthuoc.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            QLSP_txt_kichthuoc.Size = new Size(286, 32);
+            QLSP_txt_kichthuoc.TabIndex = 17;
             // 
-            // textBox2
+            // QLSP_txt_gia
             // 
-            textBox2.BorderRadius = 20;
-            textBox2.CustomizableEdges = customizableEdges15;
-            textBox2.DefaultText = "";
-            textBox2.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            textBox2.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            textBox2.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            textBox2.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            textBox2.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox2.Font = new Font("Segoe UI", 9F);
-            textBox2.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox2.Location = new Point(147, 260);
-            textBox2.Margin = new Padding(3, 4, 3, 4);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "";
-            textBox2.SelectedText = "";
-            textBox2.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            textBox2.Size = new Size(286, 32);
-            textBox2.TabIndex = 16;
-            textBox2.KeyPress += textBox2_KeyPress;
+            QLSP_txt_gia.BorderRadius = 20;
+            QLSP_txt_gia.CustomizableEdges = customizableEdges17;
+            QLSP_txt_gia.DefaultText = "";
+            QLSP_txt_gia.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            QLSP_txt_gia.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            QLSP_txt_gia.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_gia.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_gia.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_gia.Font = new Font("Segoe UI", 9F);
+            QLSP_txt_gia.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_gia.Location = new Point(147, 260);
+            QLSP_txt_gia.Margin = new Padding(3, 4, 3, 4);
+            QLSP_txt_gia.Name = "QLSP_txt_gia";
+            QLSP_txt_gia.PlaceholderText = "";
+            QLSP_txt_gia.SelectedText = "";
+            QLSP_txt_gia.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            QLSP_txt_gia.Size = new Size(286, 32);
+            QLSP_txt_gia.TabIndex = 16;
+            QLSP_txt_gia.KeyPress += textBox2_KeyPress;
             // 
-            // textBox1
+            // QLSP_txt_tensp
             // 
-            textBox1.BorderRadius = 20;
-            textBox1.CustomizableEdges = customizableEdges17;
-            textBox1.DefaultText = "";
-            textBox1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            textBox1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            textBox1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            textBox1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            textBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox1.Font = new Font("Segoe UI", 9F);
-            textBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            textBox1.Location = new Point(147, 220);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "";
-            textBox1.SelectedText = "";
-            textBox1.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            textBox1.Size = new Size(286, 32);
-            textBox1.TabIndex = 1;
+            QLSP_txt_tensp.BorderRadius = 20;
+            QLSP_txt_tensp.CustomizableEdges = customizableEdges19;
+            QLSP_txt_tensp.DefaultText = "";
+            QLSP_txt_tensp.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            QLSP_txt_tensp.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            QLSP_txt_tensp.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_tensp.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            QLSP_txt_tensp.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_tensp.Font = new Font("Segoe UI", 9F);
+            QLSP_txt_tensp.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            QLSP_txt_tensp.Location = new Point(147, 180);
+            QLSP_txt_tensp.Margin = new Padding(3, 4, 3, 4);
+            QLSP_txt_tensp.Name = "QLSP_txt_tensp";
+            QLSP_txt_tensp.PlaceholderText = "";
+            QLSP_txt_tensp.SelectedText = "";
+            QLSP_txt_tensp.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            QLSP_txt_tensp.Size = new Size(286, 32);
+            QLSP_txt_tensp.TabIndex = 1;
             // 
             // label7
             // 
@@ -333,7 +367,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(17, 226);
+            label3.Location = new Point(17, 186);
             label3.Name = "label3";
             label3.Size = new Size(116, 20);
             label3.TabIndex = 3;
@@ -391,14 +425,16 @@
         private Label label3;
         private Label label2;
         private Label label7;
-        private Guna.UI2.WinForms.Guna2TextBox textBox5;
-        private Guna.UI2.WinForms.Guna2TextBox textBox4;
-        private Guna.UI2.WinForms.Guna2TextBox textBox3;
-        private Guna.UI2.WinForms.Guna2TextBox textBox2;
-        private Guna.UI2.WinForms.Guna2TextBox textBox1;
+        private Guna.UI2.WinForms.Guna2TextBox QLSP_txt_khuyenmai;
+        private Guna.UI2.WinForms.Guna2TextBox QLSP_txt_soluong;
+        private Guna.UI2.WinForms.Guna2TextBox QLSP_txt_kichthuoc;
+        private Guna.UI2.WinForms.Guna2TextBox QLSP_txt_gia;
+        private Guna.UI2.WinForms.Guna2TextBox QLSP_txt_tensp;
         private Guna.UI2.WinForms.Guna2Button capnhat_btn;
         private Guna.UI2.WinForms.Guna2Button them_btn;
         private Guna.UI2.WinForms.Guna2Button xoa_btn;
         private Guna.UI2.WinForms.Guna2PictureBox pictureBox1;
+        private Label label8;
+        private Guna.UI2.WinForms.Guna2ComboBox QLSP_cbb_loai;
     }
 }

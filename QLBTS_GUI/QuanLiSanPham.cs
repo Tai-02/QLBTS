@@ -4,6 +4,8 @@ using QLBTS_DTO;
 using System;
 using System.Data;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
+using Guna.UI2.WinForms.Enums;
 
 namespace QLBTS_GUI
 {
@@ -21,9 +23,27 @@ namespace QLBTS_GUI
         {
             LoadData();
             ClearForm();
+            Loadcbb();
         }
 
-        // Load toan bo san pham
+        private void Loadcbb()
+        {
+            QLSP_cbb_loai.Items.Clear();
+
+            var loaiSPList = sanPhamBLL.GetDistinctLoaiSP();
+            foreach (var loai in loaiSPList)
+            {
+                QLSP_cbb_loai.Items.Add(loai);
+            }
+
+            QLSP_cbb_loai.Items.Add("...");
+            QLSP_cbb_loai.SelectedIndex = 0;
+
+            QLSP_cbb_loai.SelectedIndexChanged -= QLSP_cbb_loai_SelectedIndexChanged;
+            QLSP_cbb_loai.SelectedIndexChanged += QLSP_cbb_loai_SelectedIndexChanged;
+        }
+
+
         private void LoadData()
         {
             dataGridView1.DataSource = sanPhamBLL.GetAllSanPham();
@@ -33,11 +53,12 @@ namespace QLBTS_GUI
         // Lam moi form nhap lieu
         private void ClearForm()
         {
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
+            QLSP_txt_tensp.Clear();
+            Loadcbb();
+            QLSP_txt_gia.Clear();
+            QLSP_txt_kichthuoc.Clear();
+            QLSP_txt_soluong.Clear();
+            QLSP_txt_khuyenmai.Clear();
             pictureBox1.Image = null;
             dataGridView1.ClearSelection();
         }
@@ -48,11 +69,12 @@ namespace QLBTS_GUI
             if (e.RowIndex >= 0)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
-                textBox1.Text = row.Cells["TenSP"].Value.ToString();
-                textBox2.Text = row.Cells["Gia"].Value.ToString();
-                textBox3.Text = row.Cells["Size"].Value.ToString();
-                textBox4.Text = row.Cells["SoLuong"].Value.ToString();
-                textBox5.Text = row.Cells["KhuyenMai"].Value.ToString();
+                QLSP_txt_tensp.Text = row.Cells["TenSP"].Value.ToString();
+                QLSP_cbb_loai.SelectedItem = row.Cells["LoaiSP"].Value.ToString();
+                QLSP_txt_gia.Text = row.Cells["Gia"].Value.ToString();
+                QLSP_txt_kichthuoc.Text = row.Cells["Size"].Value.ToString();
+                QLSP_txt_soluong.Text = row.Cells["SoLuong"].Value.ToString();
+                QLSP_txt_khuyenmai.Text = row.Cells["KhuyenMai"].Value.ToString();
 
                 if (row.Cells["HinhAnh"] != null)
                 {
@@ -98,11 +120,12 @@ namespace QLBTS_GUI
             {
                 SanPhamDTO sp = new SanPhamDTO
                 {
-                    TenSP = textBox1.Text.ToString(),
-                    Size = textBox3.Text.ToString(),
-                    SoLuong = int.Parse(textBox4.Text),
-                    Gia = int.Parse(textBox2.Text),
-                    KhuyenMai = int.Parse(textBox5.Text),
+                    TenSP = QLSP_txt_tensp.Text.ToString(),
+                    LoaiSP = QLSP_cbb_loai.Text.Trim(),
+                    Size = QLSP_txt_kichthuoc.Text.ToString(),
+                    SoLuong = int.Parse(QLSP_txt_soluong.Text),
+                    Gia = int.Parse(QLSP_txt_gia.Text),
+                    KhuyenMai = int.Parse(QLSP_txt_khuyenmai.Text),
                     HinhAnh = tempAnh,
                 };
 
@@ -164,11 +187,11 @@ namespace QLBTS_GUI
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(textBox1.Text) ||
-                    string.IsNullOrWhiteSpace(textBox2.Text) ||
-                    string.IsNullOrWhiteSpace(textBox3.Text) ||
-                    string.IsNullOrWhiteSpace(textBox4.Text) ||
-                    string.IsNullOrWhiteSpace(textBox5.Text))
+                if (string.IsNullOrWhiteSpace(QLSP_txt_tensp.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_gia.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_kichthuoc.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_soluong.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_khuyenmai.Text))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm!", "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -179,11 +202,12 @@ namespace QLBTS_GUI
                 SanPhamDTO sp = new SanPhamDTO
                 {
                     MaSP = maSP,
-                    TenSP = textBox1.Text,
-                    Gia = int.Parse(textBox2.Text),
-                    Size = textBox3.Text,
-                    SoLuong = int.Parse(textBox4.Text),
-                    KhuyenMai = int.Parse(textBox5.Text),
+                    TenSP = QLSP_txt_tensp.Text,
+                    LoaiSP = QLSP_cbb_loai.Text.Trim(),
+                    Gia = int.Parse(QLSP_txt_gia.Text),
+                    Size = QLSP_txt_kichthuoc.Text,
+                    SoLuong = int.Parse(QLSP_txt_soluong.Text),
+                    KhuyenMai = int.Parse(QLSP_txt_khuyenmai.Text),
                     HinhAnh = tempAnh 
                 };
                 if (sanPhamBLL.CapNhatSanPham(sp))
@@ -247,6 +271,59 @@ namespace QLBTS_GUI
                 tempAnh = File.ReadAllBytes(filePath);
 
                 MessageBox.Show("Ảnh đã được chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private string ShowInputForm(string title, string labelText)
+        {
+            string result = null;
+
+            Form form = new Form();
+            form.Text = title;
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.Width = 300;
+            form.Height = 150;
+
+            Label label = new Label() { Left = 10, Top = 10, Text = labelText, AutoSize = true };
+            TextBox textBox = new TextBox() { Left = 10, Top = 35, Width = 260 };
+            Button btnOK = new Button() { Text = "OK", Left = 50, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+            Button btnCancel = new Button() { Text = "Cancel", Left = 150, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+            form.Controls.Add(label);
+            form.Controls.Add(textBox);
+            form.Controls.Add(btnOK);
+            form.Controls.Add(btnCancel);
+
+            form.AcceptButton = btnOK;
+            form.CancelButton = btnCancel;
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                result = textBox.Text.Trim();
+            }
+
+            form.Dispose();
+            return result;
+        }
+
+        private void QLSP_cbb_loai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (QLSP_cbb_loai.SelectedItem != null && QLSP_cbb_loai.SelectedItem.ToString() == "...")
+            {
+                string loaiMoi = ShowInputForm("Nhập loại mới", "Loại sản phẩm:");
+
+                if (!string.IsNullOrEmpty(loaiMoi))
+                {                    
+                    QLSP_cbb_loai.Items.Insert(QLSP_cbb_loai.Items.Count - 1, loaiMoi);
+                    QLSP_cbb_loai.SelectedItem = loaiMoi;
+                }
+                else
+                {
+                    QLSP_cbb_loai.SelectedIndex = 0;
+                }
             }
         }
 
