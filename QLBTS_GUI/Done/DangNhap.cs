@@ -63,6 +63,7 @@ namespace QLBTS_GUI
                 {
                     ui.OpenChildForm(new NVQUAY(), ParentPanel);
                 }
+                Khung.MaTK_temp = bll.LayMaTK(username);
             }
             else
             {

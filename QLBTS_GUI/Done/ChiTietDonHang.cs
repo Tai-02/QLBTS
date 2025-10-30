@@ -1,5 +1,4 @@
 ﻿using QLBTS_BLL;
-using QLBTS_DAL;
 using QLBTS_DTO;
 using System;
 using System.Collections.Generic;
@@ -10,26 +9,30 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    public partial class GioHangCuaBan : Form
+    public partial class ChiTietDonHang : Form
     {
-        private int maKH = 1;
-        private List<SanPhamDTO> danhSachSP = new();
-        private GioHangCuaBanBLL gioHangBLL = new();
+        private int maTK;
+        private int maDH;
+        ChiTietDonHangBLL ctdhBLL = new ChiTietDonHangBLL();
+        DonHangBLL donHangBLL = new DonHangBLL();
 
-        public GioHangCuaBan()
+        public ChiTietDonHang(int _maDH)
         {
             InitializeComponent();
+            maTK = Khung.MaTK_temp;
+            maDH = _maDH;
         }
 
-        private void GioHangCuaBan_Load(object sender, EventArgs e)
+        private void Chitietdonhang_Load(object sender, EventArgs e)
         {
-            LoadGioHang();
+            maTK = Khung.MaTK_temp;
+            LoadChiTietDonhang();
         }
 
-        private void LoadGioHang()
+        private void LoadChiTietDonhang()
         {
             flowCart.Controls.Clear();
-            danhSachSP = gioHangBLL.LayGioHangTheoMaKH(maKH);
+            var danhSachSP = ctdhBLL.LayChiTietDonHangTheoMaDH(maDH);
 
             foreach (var sp in danhSachSP)
             {
@@ -107,8 +110,11 @@ namespace QLBTS_GUI
             }
 
             label2.Text = danhSachSP.Count.ToString();
-            label7.Text = $"{gioHangBLL.TinhTongTien(danhSachSP):N0}đ";
-            label12.Text = $"{gioHangBLL.TinhThanhTienSauGiam(label7.Text, label8.Text):N0}đ";
+            decimal[] tongTien = donHangBLL.TinhTongTienDonHang(maDH);
+
+            // Tổng tiền trước và sau giảm giá
+            label7.Text = $"{tongTien[0]:N0}đ";   // Tổng trước khuyến mãi
+            label12.Text = $"{tongTien[1]:N0}đ";  // Tổng sau khuyến mãi
         }
     }
 }

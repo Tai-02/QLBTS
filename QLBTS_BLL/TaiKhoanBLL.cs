@@ -77,6 +77,10 @@ namespace QLBTS_BLL
             return dal.LayLevelID(tenDangNhap);
         }
 
+        public int LayMaTK(string tenDangNhap)
+        {
+            return dal.LayMaTK(tenDangNhap);
+        }
     }
 }
 

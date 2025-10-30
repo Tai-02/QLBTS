@@ -49,9 +49,9 @@ namespace QLBTS_GUI
             // NVQ_pn_tab
             // 
             NVQ_pn_tab.BackColor = SystemColors.Control;
-            NVQ_pn_tab.Location = new Point(1, 159);
+            NVQ_pn_tab.Location = new Point(1, 143);
             NVQ_pn_tab.Name = "NVQ_pn_tab";
-            NVQ_pn_tab.Size = new Size(980, 492);
+            NVQ_pn_tab.Size = new Size(980, 508);
             NVQ_pn_tab.TabIndex = 2;
             // 
             // KH_pn_menu
@@ -66,7 +66,7 @@ namespace QLBTS_GUI
             KH_pn_menu.Controls.Add(NVQ_lb_sp);
             KH_pn_menu.CustomizableEdges = customizableEdges1;
             KH_pn_menu.FillColor = Color.Black;
-            KH_pn_menu.Location = new Point(12, 43);
+            KH_pn_menu.Location = new Point(13, 31);
             KH_pn_menu.Name = "KH_pn_menu";
             KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
             KH_pn_menu.Size = new Size(942, 68);
@@ -153,7 +153,7 @@ namespace QLBTS_GUI
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImage = Resources.icon_momocha;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(370, -15);
+            pictureBox2.Location = new Point(371, -26);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(200, 200);
             pictureBox2.TabIndex = 7;
@@ -177,8 +177,6 @@ namespace QLBTS_GUI
         }
 
         #endregion
-
-        private Panel NVQ_pn_tab;
         private PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2Panel KH_pn_menu;
         private Label NVQ_lb_ls;
@@ -187,5 +185,6 @@ namespace QLBTS_GUI
         private Label NVQ_lb_gh;
         private Label NVQ_lb_sp;
         private PictureBox pictureBox2;
+        public static Panel NVQ_pn_tab;
     }
 }

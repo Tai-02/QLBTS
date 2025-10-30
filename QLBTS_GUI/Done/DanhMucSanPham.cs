@@ -19,6 +19,8 @@ namespace QLBTS_GUI
 {
     public partial class DanhMucSanPham : Form
     {
+        UI_Form ui = new UI_Form();
+        SanPhamBLL SanPhamBLL = new SanPhamBLL();
         private DanhMucSanPhamBLL bll = new DanhMucSanPhamBLL();
         List<SanPhamDTO> list = new List<SanPhamDTO>();
         private QuanLiSanPhamBLL qlspBLL = new QuanLiSanPhamBLL();
@@ -152,7 +154,8 @@ namespace QLBTS_GUI
                 Size = new Size(220, 220),
                 BackColor = Color.White,
                 Margin = new Padding(10),
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                Tag = sp.MaSP
             };
 
             PictureBox picImage = new PictureBox
@@ -220,7 +223,7 @@ namespace QLBTS_GUI
                     ForeColor = Color.Gray,
                     Size = new Size(flpSanPham.ClientSize.Width - 20, 50),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    Margin = new Padding(50)
+                    Margin = new Padding(50), 
                 };
                 flpSanPham.Controls.Add(lblNotFound);
             }
@@ -241,30 +244,26 @@ namespace QLBTS_GUI
         private void ProductPanel_Click(object sender, EventArgs e)
         {
             Control clickedControl = sender as Control;
-            Panel selectedPanel = null;
+            Panel selectedPanel = clickedControl as Panel ?? clickedControl.Parent as Panel;
+            if (selectedPanel == null) return;
 
-            if (clickedControl is Panel)
+            SanPhamDTO sp = SanPhamBLL.LaySanPham(Convert.ToInt32(selectedPanel.Tag));
+            if (sp == null)
             {
-                selectedPanel = (Panel)clickedControl;
+                MessageBox.Show("Không tìm thấy thông tin sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 🔹 Mở form chi tiết sản phẩm
+            if (Khung.lvID_temp == 0)
+            {
+                ui.OpenChildForm(new ChiTietSanPham(sp), Khachhang.KH_pn_tab);
             }
             else
             {
-                selectedPanel = clickedControl.Parent as Panel;
+                ui.OpenChildForm(new ChiTietSanPham(sp), NVQUAY.NVQ_pn_tab);
             }
 
-            if (selectedPanel == null) return;
-
-            foreach (Control ctrl in flpSanPham.Controls)
-            {
-                if (ctrl is Panel p)
-                {
-                    p.BackColor = Color.White;
-                    p.Padding = new Padding(0);
-                }
-            }
-
-            selectedPanel.BackColor = Color.DeepSkyBlue;
-            selectedPanel.Padding = new Padding(3);
         }
 
         private void btnTimkiem_Click(object sender, EventArgs e)

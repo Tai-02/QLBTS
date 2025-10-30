@@ -167,9 +167,9 @@
             // KH_pn_tab
             // 
             KH_pn_tab.BackColor = SystemColors.Control;
-            KH_pn_tab.Location = new Point(1, 159);
+            KH_pn_tab.Location = new Point(1, 143);
             KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(980, 492);
+            KH_pn_tab.Size = new Size(980, 508);
             KH_pn_tab.TabIndex = 1;
             // 
             // Khachhang
@@ -193,7 +193,6 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel KH_pn_menu;
-        private Panel KH_pn_tab;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private Label KH_lb_ls;
@@ -202,5 +201,6 @@
         private Label KH_lb_gh;
         private Label KH_lb_sp;
         private Label KH_lb_Trangchu;
+        public static Panel KH_pn_tab;
     }
 }

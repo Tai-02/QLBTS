@@ -1,9 +1,16 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class GioHangCuaBan
+    partial class GioHang_KH
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -15,14 +22,19 @@
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
+            BtnXacNhan = new Guna.UI2.WinForms.Guna2Button();
             label12 = new Label();
             label11 = new Label();
             label10 = new Label();
-            label8 = new Label();
-            label9 = new Label();
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
@@ -37,11 +49,10 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientActiveCaption;
+            panel1.Controls.Add(BtnXacNhan);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(label11);
             panel1.Controls.Add(label10);
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(label9);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label5);
@@ -49,14 +60,32 @@
             panel1.Font = new Font("Times New Roman", 16.2F, FontStyle.Bold);
             panel1.Location = new Point(642, -1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(337, 553);
+            panel1.Size = new Size(294, 502);
             panel1.TabIndex = 1;
+            // 
+            // BtnXacNhan
+            // 
+            BtnXacNhan.BorderRadius = 24;
+            BtnXacNhan.CustomizableEdges = customizableEdges1;
+            BtnXacNhan.DisabledState.BorderColor = Color.DarkGray;
+            BtnXacNhan.DisabledState.CustomBorderColor = Color.DarkGray;
+            BtnXacNhan.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            BtnXacNhan.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            BtnXacNhan.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnXacNhan.ForeColor = Color.White;
+            BtnXacNhan.Location = new Point(15, 443);
+            BtnXacNhan.Name = "BtnXacNhan";
+            BtnXacNhan.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            BtnXacNhan.Size = new Size(276, 45);
+            BtnXacNhan.TabIndex = 0;
+            BtnXacNhan.Text = "Đặt hàng";
+            BtnXacNhan.Click += BtnXacNhan_Click;
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Times New Roman", 16.2F);
-            label12.Location = new Point(94, 373);
+            label12.Location = new Point(73, 377);
             label12.Name = "label12";
             label12.Size = new Size(120, 33);
             label12.TabIndex = 8;
@@ -75,36 +104,17 @@
             // label10
             // 
             label10.BackColor = SystemColors.ControlText;
-            label10.Location = new Point(24, 295);
+            label10.Location = new Point(0, 284);
             label10.Name = "label10";
             label10.Size = new Size(300, 1);
             label10.TabIndex = 6;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Times New Roman", 16.2F);
-            label8.Location = new Point(183, 223);
-            label8.Name = "label8";
-            label8.Size = new Size(52, 33);
-            label8.TabIndex = 5;
-            label8.Text = "0%";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Times New Roman", 16.2F);
-            label9.Location = new Point(24, 223);
-            label9.Name = "label9";
-            label9.Size = new Size(114, 33);
-            label9.TabIndex = 4;
-            label9.Text = "Giảm giá";
+            label10.Text = "d";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Times New Roman", 16.2F, FontStyle.Strikeout);
-            label7.Location = new Point(183, 143);
+            label7.Font = new Font("Times New Roman", 16.2F, FontStyle.Strikeout, GraphicsUnit.Point, 0);
+            label7.Location = new Point(73, 201);
             label7.Name = "label7";
             label7.Size = new Size(120, 33);
             label7.TabIndex = 3;
@@ -114,7 +124,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Times New Roman", 16.2F);
-            label6.Location = new Point(24, 143);
+            label6.Location = new Point(3, 143);
             label6.Name = "label6";
             label6.Size = new Size(114, 33);
             label6.TabIndex = 2;
@@ -123,15 +133,16 @@
             // label5
             // 
             label5.BackColor = SystemColors.ControlText;
-            label5.Location = new Point(24, 105);
+            label5.Location = new Point(0, 108);
             label5.Name = "label5";
             label5.Size = new Size(300, 1);
             label5.TabIndex = 1;
+            label5.Text = "d";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Times New Roman", 19.8F, FontStyle.Bold);
+            label4.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.Location = new Point(24, 24);
             label4.Name = "label4";
             label4.Size = new Size(198, 38);
@@ -143,7 +154,7 @@
             flowCart.AutoScroll = true;
             flowCart.Location = new Point(12, 77);
             flowCart.Name = "flowCart";
-            flowCart.Size = new Size(611, 475);
+            flowCart.Size = new Size(611, 424);
             flowCart.TabIndex = 2;
             // 
             // label2
@@ -169,27 +180,27 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 16.2F, FontStyle.Bold);
+            label1.Font = new Font("Times New Roman", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(237, 32);
+            label1.Size = new Size(254, 32);
             label1.TabIndex = 3;
-            label1.Text = "Giỏ hàng của bạn";
+            label1.Text = "Giỏ hàng của khách";
             // 
-            // GioHangCuaBan
+            // GioHang_KH
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(982, 553);
+            ClientSize = new Size(948, 513);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(label3);
             Controls.Add(flowCart);
             Controls.Add(panel1);
-            Name = "GioHangCuaBan";
-            Text = "GioHangCuaBan";
-            Load += GioHangCuaBan_Load;
+            Name = "GioHang_KH";
+            Text = "GioHang";
+            Load += GioHang_NVQ_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -197,7 +208,6 @@
         }
 
         #endregion
-
         private Panel panel1;
         private FlowLayoutPanel flowCart;
         private Label label1;
@@ -210,7 +220,6 @@
         private Label label12;
         private Label label11;
         private Label label10;
-        private Label label8;
-        private Label label9;
+        private Guna.UI2.WinForms.Guna2Button BtnXacNhan;
     }
 }

@@ -33,6 +33,7 @@ namespace QLBTS_GUI
         private void NVQ_lb_gh_Click(object sender, EventArgs e)
         {
             doimaulb(NVQ_lb_gh);
+            ui.OpenChildForm(new GioHang_NVQ(), NVQ_pn_tab);
         }
 
         private void NVQ_lb_qlsp_Click(object sender, EventArgs e)
@@ -48,7 +49,7 @@ namespace QLBTS_GUI
 
         private void NVQ_lb_ls_Click(object sender, EventArgs e)
         {
-            ui.OpenChildForm(new LichSuNhanDon(), NVQ_pn_tab);
+            ui.OpenChildForm(new LichSu(Khung.MaTK_temp), NVQ_pn_tab);
             doimaulb(NVQ_lb_ls);
         }
 

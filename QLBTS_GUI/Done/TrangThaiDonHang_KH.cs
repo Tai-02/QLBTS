@@ -13,20 +13,18 @@ using QLBTS_DTO;
 
 namespace QLBTS_GUI
 {
-    public partial class OrderStatusForm : Form
+    public partial class TrangThaiDonHang_KH : Form
     {
         // ===== FIELDS =====
-        private List<OrderListViewModel> _allOrders;
-        private List<OrderListViewModel> _filteredOrders;
-        private OrderBLL _orderBLL;
+        UI_Form ui = new UI_Form();
+        private DonHangBLL donHangBLL;
         private int _maTK;
 
         // ===== CONSTRUCTOR =====
-        public OrderStatusForm(int maTK)
+        public TrangThaiDonHang_KH()
         {
-            InitializeComponent();
-            _orderBLL = new OrderBLL();
-            _maTK = maTK;
+            InitializeComponent();            
+            _maTK = Khung.MaTK_temp;
 
             SetupDataGridView();
             LoadOrders();
@@ -42,7 +40,7 @@ namespace QLBTS_GUI
             dgvOrders.CellClick += DgvOrders_CellClick;
             dgvOrders.CellFormatting += DgvOrders_CellFormatting;
             dgvOrders.CellPainting += DgvOrders_CellPainting;
-            dgvOrders.CellMouseEnter += DgvOrders_CellMouseEnter;
+            //dgvOrders.CellMouseEnter += DgvOrders_CellMouseEnter;
             dgvOrders.CellMouseLeave += DgvOrders_CellMouseLeave;
         }
 
@@ -53,9 +51,15 @@ namespace QLBTS_GUI
         {
             try
             {
-                _allOrders = _orderBLL.GetOrdersByCustomer(_maTK);
-                _filteredOrders = new List<OrderListViewModel>(_allOrders);
-                RefreshGrid();
+                var dh = donHangBLL.LayDonHangTheoKhach(_maTK);
+
+                if (dh == null || dh.Count == 0)
+                {
+                    dgvOrders.DataSource = null;
+                    return;
+                }
+
+                RefreshGrid(dh);
             }
             catch (Exception ex)
             {
@@ -66,9 +70,9 @@ namespace QLBTS_GUI
         /// <summary>
         /// Refresh DataGridView
         /// </summary>
-        private void RefreshGrid()
+        private void RefreshGrid(List<DonHangDTO> dh)
         {
-            if (_filteredOrders == null || !_filteredOrders.Any())
+            if (dh == null)
             {
                 dgvOrders.DataSource = null;
                 lblTitle.Text = "Trạng thái đơn hàng (0 đơn)";
@@ -76,15 +80,8 @@ namespace QLBTS_GUI
             }
 
             dgvOrders.AutoGenerateColumns = false;
-            var bindingList = new BindingList<OrderListViewModel>(_filteredOrders);
+            var bindingList = dh;
             dgvOrders.DataSource = bindingList;
-
-            // ✅ ĐẢM BẢO THỨ TỰ CỘT
-            dgvOrders.Columns["colMaDH"].DisplayIndex = 0;
-            dgvOrders.Columns["colGia"].DisplayIndex = 1;
-            dgvOrders.Columns["colTrangThai"].DisplayIndex = 2;
-            dgvOrders.Columns["colThongTin"].DisplayIndex = 3;
-            dgvOrders.Columns["colChiTiet"].DisplayIndex = 4;
 
             // Ẩn các cột tự động sinh
             foreach (DataGridViewColumn col in dgvOrders.Columns)
@@ -94,8 +91,6 @@ namespace QLBTS_GUI
                     col.Visible = false;
                 }
             }
-
-            lblTitle.Text = $"Trạng thái đơn hàng ({_filteredOrders.Count} đơn)";
         }
 
         /// <summary>
@@ -104,21 +99,22 @@ namespace QLBTS_GUI
         private void DgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
-            var order = _filteredOrders[e.RowIndex];
+            
+            var order = donHangBLL.LayDonHangTheoKhach(_maTK)[e.RowIndex];
 
             // ✅ XỬ LÝ CỘT "THÔNG TIN ĐƠN" (chứa 2 nút: Đã nhận / Hủy đơn)
             if (dgvOrders.Columns[e.ColumnIndex].Name == "colThongTin")
             {
                 // Nếu đang giao → Click vào nút "Đã nhận"
+                
+                // Nếu chờ xác nhận → Click vào nút "Hủy đơn"
+                if (order.TrangThai == "Chờ xác nhận")
+                {
+                    CancelOrder(order.MaDH);
+                }
                 if (order.TrangThai == "Đang giao")
                 {
                     ConfirmOrderReceived(order.MaDH);
-                }
-                // Nếu chờ xác nhận → Click vào nút "Hủy đơn"
-                else if (order.TrangThai == "Chờ xác nhận")
-                {
-                    CancelOrder(order.MaDH);
                 }
             }
             // XỬ LÝ NÚT "XEM CHI TIẾT"
@@ -133,14 +129,49 @@ namespace QLBTS_GUI
         /// </summary>
         private void DgvOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Tô màu cột "Trạng thái"
-            if (dgvOrders.Columns[e.ColumnIndex].Name == "colTrangThai")
+            // Chỉ xử lý cột "Trạng thái"
+            if (dgvOrders.Columns[e.ColumnIndex].Name == "colTrangThai" && e.Value != null)
             {
-                if (e.RowIndex >= 0 && e.RowIndex < _filteredOrders.Count)
+                string trangThai = e.Value.ToString();
+
+                e.CellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+
+                switch (trangThai)
                 {
-                    var order = _filteredOrders[e.RowIndex];
-                    e.CellStyle.ForeColor = order.ColorTrangThai;
-                    e.CellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                    case "Chờ xác nhận":
+                        e.CellStyle.ForeColor = Color.Red;
+                        e.CellStyle.BackColor = Color.MistyRose;
+                        break;
+
+                    case "Đang giao":
+                        e.CellStyle.ForeColor = Color.ForestGreen;
+                        e.CellStyle.BackColor = Color.Honeydew;
+                        break;
+
+                    case "Đã nhận":
+                        e.CellStyle.ForeColor = Color.RoyalBlue;
+                        e.CellStyle.BackColor = Color.AliceBlue;
+                        break;
+
+                    case "Đã giao":
+                        e.CellStyle.ForeColor = Color.MediumBlue;
+                        e.CellStyle.BackColor = Color.LightCyan;
+                        break;
+
+                    case "Hoàn tất":
+                        e.CellStyle.ForeColor = Color.DarkGreen;
+                        e.CellStyle.BackColor = Color.Honeydew;
+                        break;
+
+                    case "Đã hủy":
+                        e.CellStyle.ForeColor = Color.Gray;
+                        e.CellStyle.BackColor = Color.Gainsboro;
+                        break;
+
+                    default:
+                        e.CellStyle.ForeColor = Color.Black;
+                        e.CellStyle.BackColor = Color.White;
+                        break;
                 }
             }
         }
@@ -152,7 +183,7 @@ namespace QLBTS_GUI
         {
             if (e.RowIndex < 0) return;
 
-            var order = _filteredOrders[e.RowIndex];
+            var order = donHangBLL.LayDonHangTheoKhach(_maTK)[e.RowIndex];
 
             // ✅ VẼ CỘT "THÔNG TIN ĐƠN" (chứa 2 loại nút)
             if (dgvOrders.Columns[e.ColumnIndex].Name == "colThongTin")
@@ -288,7 +319,7 @@ namespace QLBTS_GUI
 
                 if (result == DialogResult.Yes)
                 {
-                    bool success = _orderBLL.UpdateOrderStatus(maDH, "Đã giao");
+                    bool success = donHangBLL.DoiTrangThai(maDH, "Hoàn tất");
 
                     if (success)
                     {
@@ -320,11 +351,7 @@ namespace QLBTS_GUI
         {
             try
             {
-                OrderDetailForm detailForm = new OrderDetailForm();
-                detailForm.LoadOrderDetail(maDH);
-                detailForm.ShowDialog();
-
-                LoadOrders();
+                ui.OpenChildForm(new ChiTietDonHang(maDH), Khachhang.KH_pn_tab);
             }
             catch (Exception ex)
             {
@@ -332,32 +359,32 @@ namespace QLBTS_GUI
             }
         }
 
-        /// <summary>
-        /// Event: Đổi con trỏ chuột khi hover vào button
-        /// </summary>
-        private void DgvOrders_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
+        ///// <summary>
+        ///// Event: Đổi con trỏ chuột khi hover vào button
+        ///// </summary>
+        //private void DgvOrders_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.RowIndex < 0) return;
 
-            string colName = dgvOrders.Columns[e.ColumnIndex].Name;
+        //    string colName = dgvOrders.Columns[e.ColumnIndex].Name;
 
-            // Luôn hiện con trỏ Hand cho cột "Xem chi tiết"
-            if (colName == "colChiTiet")
-            {
-                dgvOrders.Cursor = Cursors.Hand;
-            }
-            // Hiện con trỏ Hand cho cột "Thông tin đơn" khi có nút
-            else if (colName == "colThongTin")
-            {
-                var order = _filteredOrders[e.RowIndex];
+        //    // Luôn hiện con trỏ Hand cho cột "Xem chi tiết"
+        //    if (colName == "colChiTiet")
+        //    {
+        //        dgvOrders.Cursor = Cursors.Hand;
+        //    }
+        //    // Hiện con trỏ Hand cho cột "Thông tin đơn" khi có nút
+        //    else if (colName == "colThongTin")
+        //    {
+        //        var order = _filteredOrders[e.RowIndex];
 
-                // Có nút "Đã nhận" hoặc "Hủy đơn"
-                if (order.TrangThai == "Đang giao" || order.TrangThai == "Chờ xác nhận")
-                {
-                    dgvOrders.Cursor = Cursors.Hand;
-                }
-            }
-        }
+        //        // Có nút "Đã nhận" hoặc "Hủy đơn"
+        //        if (order.TrangThai == "Đang giao" || order.TrangThai == "Chờ xác nhận")
+        //        {
+        //            dgvOrders.Cursor = Cursors.Hand;
+        //        }
+        //    }
+        //}
 
         private void DgvOrders_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
@@ -380,7 +407,7 @@ namespace QLBTS_GUI
 
                 if (result == DialogResult.Yes)
                 {
-                    bool success = _orderBLL.CancelOrder(maDH, _maTK);
+                    bool success = donHangBLL.DoiTrangThai(maDH, "Đã hủy");
 
                     if (success)
                     {

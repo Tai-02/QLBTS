@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class OrderStatusForm
+    partial class TrangThaiDonHang_KH
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +35,11 @@
             lblTitle = new Label();
             dgvOrders = new DataGridView();
             colMaDH = new DataGridViewTextBoxColumn();
+            colNgayDat = new DataGridViewTextBoxColumn();
             colGia = new DataGridViewTextBoxColumn();
             colTrangThai = new DataGridViewTextBoxColumn();
-            colThongTin = new DataGridViewButtonColumn();
-            colChiTiet = new DataGridViewButtonColumn();
+            colThongTin = new DataGridViewTextBoxColumn();
+            colChiTiet = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
             SuspendLayout();
             // 
@@ -73,7 +74,7 @@
             dgvOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvOrders.ColumnHeadersHeight = 45;
             dgvOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { colMaDH, colGia, colTrangThai, colThongTin, colChiTiet });
+            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { colMaDH, colNgayDat, colGia, colTrangThai, colThongTin, colChiTiet });
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.FromArgb(224, 224, 224);
             dgvOrders.Location = new Point(40, 140);
@@ -89,6 +90,7 @@
             // 
             // colMaDH
             // 
+            colMaDH.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             colMaDH.DataPropertyName = "DisplayMaDH";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -98,13 +100,20 @@
             colMaDH.MinimumWidth = 6;
             colMaDH.Name = "colMaDH";
             colMaDH.ReadOnly = true;
+            colMaDH.Width = 158;
+            // 
+            // colNgayDat
+            // 
+            colNgayDat.HeaderText = "Ngày đặt đơn";
+            colNgayDat.MinimumWidth = 6;
+            colNgayDat.Name = "colNgayDat";
+            colNgayDat.ReadOnly = true;
             // 
             // colGia
             // 
             colGia.DataPropertyName = "DisplayTongTien";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.Padding = new Padding(0, 0, 0, 0);
             colGia.DefaultCellStyle = dataGridViewCellStyle3;
             colGia.FillWeight = 90F;
             colGia.HeaderText = "Giá";
@@ -125,28 +134,19 @@
             // 
             // colThongTin
             // 
-            colThongTin.DataPropertyName = "ThongTinDon";
-            colThongTin.FillWeight = 100F;
-            colThongTin.FlatStyle = FlatStyle.Flat;
             colThongTin.HeaderText = "Thông tin đơn";
             colThongTin.MinimumWidth = 6;
             colThongTin.Name = "colThongTin";
             colThongTin.ReadOnly = true;
-            colThongTin.Text = "";
-            colThongTin.UseColumnTextForButtonValue = false;
             // 
             // colChiTiet
             // 
-            colChiTiet.FillWeight = 80F;
-            colChiTiet.FlatStyle = FlatStyle.Flat;
             colChiTiet.HeaderText = "Chi tiết";
             colChiTiet.MinimumWidth = 6;
             colChiTiet.Name = "colChiTiet";
             colChiTiet.ReadOnly = true;
-            colChiTiet.Text = "Xem chi tiết";
-            colChiTiet.UseColumnTextForButtonValue = true;
             // 
-            // OrderStatusForm
+            // TrangThaiDonHang_KH
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -156,7 +156,7 @@
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "OrderStatusForm";
+            Name = "TrangThaiDonHang_KH";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Trạng thái đơn hàng - MOMOCHA";
             ((System.ComponentModel.ISupportInitialize)dgvOrders).EndInit();
@@ -169,11 +169,11 @@
 
         #endregion
 
-
         private DataGridViewTextBoxColumn colMaDH;
+        private DataGridViewTextBoxColumn colNgayDat;
         private DataGridViewTextBoxColumn colGia;
         private DataGridViewTextBoxColumn colTrangThai;
-        private DataGridViewButtonColumn colThongTin;
-        private DataGridViewButtonColumn colChiTiet;
+        private DataGridViewTextBoxColumn colThongTin;
+        private DataGridViewTextBoxColumn colChiTiet;
     }
 }

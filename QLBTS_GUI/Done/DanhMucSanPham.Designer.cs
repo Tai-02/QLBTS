@@ -55,7 +55,7 @@
             pnLocTimKiem.Controls.Add(label1);
             pnLocTimKiem.Location = new Point(6, 74);
             pnLocTimKiem.Name = "pnLocTimKiem";
-            pnLocTimKiem.Size = new Size(214, 337);
+            pnLocTimKiem.Size = new Size(198, 337);
             pnLocTimKiem.TabIndex = 9;
             // 
             // cbb_loai
@@ -119,7 +119,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(34, 12);
+            label1.Location = new Point(10, 13);
             label1.Name = "label1";
             label1.Size = new Size(161, 28);
             label1.TabIndex = 0;
@@ -129,9 +129,9 @@
             // 
             flpSanPham.AutoScroll = true;
             flpSanPham.Controls.Add(panel2);
-            flpSanPham.Location = new Point(251, 51);
+            flpSanPham.Location = new Point(210, 41);
             flpSanPham.Name = "flpSanPham";
-            flpSanPham.Size = new Size(726, 497);
+            flpSanPham.Size = new Size(737, 472);
             flpSanPham.TabIndex = 12;
             // 
             // panel2
@@ -146,7 +146,7 @@
             txtTimkiem.BackColor = Color.LightGray;
             txtTimkiem.BorderStyle = BorderStyle.FixedSingle;
             txtTimkiem.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtTimkiem.Location = new Point(648, 5);
+            txtTimkiem.Location = new Point(638, 5);
             txtTimkiem.Name = "txtTimkiem";
             txtTimkiem.Size = new Size(210, 30);
             txtTimkiem.TabIndex = 11;
@@ -169,7 +169,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(982, 553);
+            ClientSize = new Size(948, 513);
             Controls.Add(pnLocTimKiem);
             Controls.Add(flpSanPham);
             Controls.Add(txtTimkiem);

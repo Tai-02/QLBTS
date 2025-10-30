@@ -9,19 +9,17 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    public partial class GioHang_NVQ : Form
+    public partial class GioHang_KH : Form
     {
         private int maTK;
         private List<SanPhamDTO> danhSachSP = new();
         private GioHangBLL gioHangBLL;
 
-        public GioHang_NVQ(int maNVQ)
+        public GioHang_KH()
         {
             InitializeComponent();
-            maTK = maNVQ;
-            gioHangBLL = new GioHangBLL(maTK); // BLL theo NV quầy
-
-            // Gán nút xác nhận đơn
+            maTK = Khung.MaTK_temp;
+            gioHangBLL = new GioHangBLL(); 
         }
 
         private void GioHang_NVQ_Load(object sender, EventArgs e)
@@ -32,7 +30,7 @@ namespace QLBTS_GUI
         private void LoadGioHang()
         {
             flowCart.Controls.Clear();
-            danhSachSP = gioHangBLL.LayGioHang(); // lấy giỏ hàng NV quầy
+            danhSachSP = gioHangBLL.LayGioHangTheoMaTK(maTK);
 
             foreach (var sp in danhSachSP)
             {
@@ -114,13 +112,13 @@ namespace QLBTS_GUI
                 };
 
                 // Sự kiện thay đổi số lượng
-                btnCong.Click += (s, e) => { gioHangBLL.ThayDoiSoLuong(sp, 1); lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
-                btnTru.Click += (s, e) => { gioHangBLL.ThayDoiSoLuong(sp, -1); lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
+                btnCong.Click += (s, e) => { gioHangBLL.TangSoLuong(maTK, sp.MaSP) ; lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
+                btnTru.Click += (s, e) => { gioHangBLL.GiamSoLuong(maTK, sp.MaSP); lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
                 btnXoa.Click += (s, e) =>
                 {
                     if (MessageBox.Show("Xóa sản phẩm khỏi giỏ hàng?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        gioHangBLL.XoaSanPhamKhoiGio(sp.MaSP);
+                        gioHangBLL.XoaSanPhamKhoiGio(maTK, sp.MaSP);
                         LoadGioHang();
                     }
                 };
@@ -135,10 +133,9 @@ namespace QLBTS_GUI
 
         private void TinhTongTien()
         {
-            decimal tong = gioHangBLL.TinhTongTien(danhSachSP);
-            label7.Text = $"{tong:N0}đ"; // Tạm tính
-            string giam = label8.Text.Replace("%", "").Trim();
-            label12.Text = $"{gioHangBLL.TinhThanhTien(tong, giam):N0}đ"; // Thành tiền
+            decimal[] tong = gioHangBLL.TinhTongTienGioHang(maTK);
+            label7.Text = $"{tong[0]:N0}đ"; // Tạm tính
+            label12.Text = $"{tong[1]:N0}đ"; // Thành tiền
         }
 
         private void BtnXacNhan_Click(object sender, EventArgs e)
@@ -149,12 +146,10 @@ namespace QLBTS_GUI
                 return;
             }
 
-            // Tạo hóa đơn
-            string bill = gioHangBLL.TaoHoaDonText(danhSachSP, label8.Text);
-            MessageBox.Show(bill, "HÓA ĐƠN", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            gioHangBLL.DatHangKH(maTK, gioHangBLL.LayGioHangTheoMaTK(maTK));
+            
             // Xóa toàn bộ giỏ hàng
-            gioHangBLL.XoaToanBoGio();
+            gioHangBLL.XoaToanBoGio(maTK);
 
             // Reload giỏ hàng
             LoadGioHang();

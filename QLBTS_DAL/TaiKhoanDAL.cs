@@ -196,6 +196,31 @@ namespace QLBTS_DAL
             return levelID;
         }
 
+        public int LayMaTK(string tenDangNhap)
+        {
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT MaTK FROM TaiKhoan WHERE TenDangNhap = @TenDangNhap";
 
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhap);
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                            return Convert.ToInt32(result);
+                        else
+                            return -1; 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - LayMaTK: {ex.Message}", ex);
+            }
+        }
     }
 }

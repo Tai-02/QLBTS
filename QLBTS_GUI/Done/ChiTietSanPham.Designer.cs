@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class ProductDetailForm
+    partial class ChiTietSanPham
     {
         /// <summary>
         /// Required designer variable.
@@ -239,6 +239,7 @@
             rdoSizeL.TabIndex = 4;
             rdoSizeL.Text = "L";
             rdoSizeL.UseVisualStyleBackColor = true;
+            rdoSizeL.CheckedChanged += rdoSizeL_CheckedChanged;
             // 
             // rdoSizeM
             // 
@@ -253,6 +254,7 @@
             rdoSizeM.TabStop = true;
             rdoSizeM.Text = "M";
             rdoSizeM.UseVisualStyleBackColor = true;
+            rdoSizeM.CheckedChanged += rdoSizeM_CheckedChanged;
             // 
             // lblSizeLabel
             // 
@@ -285,7 +287,7 @@
             lblProductName.TabIndex = 0;
             lblProductName.Text = "Trà sữa khoai môn";
             // 
-            // ProductDetailForm
+            // ChiTietSanPham
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -294,9 +296,10 @@
             Controls.Add(leftPanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "ProductDetailForm";
+            Name = "ChiTietSanPham";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chi tiết sản phẩm - MOMOCHA";
+            Load += ChiTietSanPham_Load;
             leftPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)productImage).EndInit();
             rightPanel.ResumeLayout(false);

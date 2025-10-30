@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="CartForm.cs">
+    <Compile Update="Done\ChiTietSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="DangKi.cs">
+    <Compile Update="Done\DangKi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="DangNhap.cs">
+    <Compile Update="Done\DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmThongTinCaNhan.cs">
@@ -16,10 +16,13 @@
     <Compile Update="KhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Khung.cs">
+    <Compile Update="Done\Khung.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="NhapOTP.cs">
+    <Compile Update="Done\NhapOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\LichSu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="NVGIAO.cs">
@@ -28,25 +31,25 @@
     <Compile Update="NVQUAY.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="DanhMucSanPham.cs">
+    <Compile Update="Done\DanhMucSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="LichSuNhanDon.cs">
+    <Compile Update="Done\TrangThaiDonHang_KH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="QuanLiSanPham.cs">
+    <Compile Update="Done\QuanLiSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="GioHang_NVQ.cs">
+    <Compile Update="Done\GioHang_NVQ.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="GioHangCuaBan.cs">
+    <Compile Update="Done\ChiTietDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="TrangChu.cs">
+    <Compile Update="Done\TrangChu.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

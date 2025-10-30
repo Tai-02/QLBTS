@@ -7,83 +7,89 @@ namespace QLBTS_BLL
 {
     public class GioHangBLL
     {
-        private int maTK; // Mã TK của NV quầy
+        GioHangDAL dal = new GioHangDAL();
 
-        public GioHangBLL(int maTK)
+        // 1️⃣ Lấy giỏ hàng theo mã tài khoản
+        public List<SanPhamDTO> LayGioHangTheoMaTK(int maTK)
         {
-            this.maTK = maTK;
-        }
+            if (maTK <= 0)
+                throw new ArgumentException("Mã tài khoản không hợp lệ!");
 
-        // 1️⃣ Lấy giỏ hàng của NV quầy
-        public List<SanPhamDTO> LayGioHang()
-        {
             return GioHangDAL.LayGioHangTheoMaTK(maTK);
         }
 
-        // 2️⃣ Thay đổi số lượng sản phẩm
-        public void ThayDoiSoLuong(SanPhamDTO sp, int delta)
+        // 2️⃣ Thêm sản phẩm vào giỏ hàng
+        public void ThemSanPhamVaoGio(int maTK, SanPhamDTO sp, int soLuong = 1)
         {
-            int soLuongMoi = sp.SoLuong + delta;
-            if (soLuongMoi < 1) soLuongMoi = 1;
-            if (soLuongMoi > 99) soLuongMoi = 99;
+            if (sp == null)
+                throw new ArgumentNullException(nameof(sp), "Sản phẩm không được null!");
 
-            sp.SoLuong = soLuongMoi;
-            GioHangDAL.CapNhatSoLuong(maTK, sp.MaSP, sp.SoLuong);
+            if (soLuong <= 0)
+                throw new ArgumentException("Số lượng phải lớn hơn 0!");
+
+            try
+            {
+                GioHangDAL.ThemSanPhamVaoGio(maTK, sp, soLuong);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("đã có trong giỏ"))
+                    throw new Exception("Sản phẩm đã tồn tại trong giỏ hàng!");
+                throw;
+            }
         }
 
-        // 3️⃣ Xóa sản phẩm khỏi giỏ
-        public void XoaSanPhamKhoiGio(int maSP)
+        // 3️⃣ Cập nhật số lượng
+        public void CapNhatSoLuong(int maTK, int maSP, int soLuong)
+        {
+            if (soLuong <= 0)
+                throw new ArgumentException("Số lượng phải lớn hơn 0!");
+            GioHangDAL.CapNhatSoLuong(maTK, maSP, soLuong);
+        }
+
+        // 4️⃣ Xóa 1 sản phẩm
+        public void XoaSanPhamKhoiGio(int maTK, int maSP)
         {
             GioHangDAL.XoaSanPhamKhoiGio(maTK, maSP);
         }
 
-        // 4️⃣ Xóa toàn bộ giỏ
-        public void XoaToanBoGio()
+        // 5️⃣ Xóa toàn bộ giỏ hàng
+        public void XoaToanBoGio(int maTK)
         {
             GioHangDAL.XoaToanBoGio(maTK);
         }
 
-        // 5️⃣ Tính tổng tiền trước giảm giá
-        public decimal TinhTongTien(List<SanPhamDTO> danhSach)
+        // 6️⃣ Khách hàng đặt hàng
+        public int DatHangKH(int maKhach, List<SanPhamDTO> listSP)
         {
-            decimal tong = 0;
-            foreach (var sp in danhSach)
-                tong += sp.Gia * sp.SoLuong;
-            return tong;
+            if (listSP == null || listSP.Count == 0)
+                throw new Exception("Không có sản phẩm nào để đặt hàng!");
+
+            return GioHangDAL.DatHangKH(maKhach, listSP);
         }
 
-        // 6️⃣ Tính tiền sau giảm giá
-        public decimal TinhThanhTien(decimal tong, string giam)
+        // 7️⃣ Bán hàng nhân viên quầy
+        public int BanHangNVQ(List<SanPhamDTO> listSP)
         {
-            string phanTramStr = giam.Replace("%", "").Trim();
-            if (decimal.TryParse(phanTramStr, out decimal phanTram) && phanTram > 0)
-                return tong * (1 - phanTram / 100);
-            return tong;
+            if (listSP == null || listSP.Count == 0)
+                throw new Exception("Không có sản phẩm nào để bán!");
+
+            return GioHangDAL.BanHangNVQ(listSP);
         }
 
-        // 7️⃣ Tạo hóa đơn dạng text
-        public string TaoHoaDonText(List<SanPhamDTO> danhSach, string giam)
+        public void TangSoLuong(int maTK, int maSP)
         {
-            string bill = "=========== HÓA ĐƠN ===========\n";
-            decimal tong = 0;
-            foreach (var sp in danhSach)
-            {
-                bill += $"{sp.TenSP} ({sp.Size}) - SL: {sp.SoLuong} - {sp.Gia:N0}đ\n";
-                tong += sp.Gia * sp.SoLuong;
-            }
-
-            decimal thanhTien = TinhThanhTien(tong, giam);
-            bill += "\n--------------------------------\n";
-            bill += $"Tạm tính: {tong:N0}đ\nGiảm giá: {giam}\nThành tiền: {thanhTien:N0}đ\n";
-            bill += "\nCảm ơn quý khách!\n";
-
-            return bill;
+            GioHangDAL.TangSoLuong(maTK, maSP);
         }
 
-        // 8️⃣ Xác nhận đơn hàng: trực tiếp thành Hoàn tất
-        public void XacNhanDonHang(int maDH)
+        public void GiamSoLuong(int maTK, int maSP)
         {
-            GioHangDAL.XacNhanDonHang(maDH);
+            GioHangDAL.GiamSoLuong(maTK, maSP);
         }
+        public decimal[] TinhTongTienGioHang(int maTK)
+        {
+            return GioHangDAL.TinhTongTienGioHang(maTK);
+        }
+
     }
 }

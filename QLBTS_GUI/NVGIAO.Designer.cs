@@ -45,9 +45,9 @@
             // KH_pn_tab
             // 
             KH_pn_tab.BackColor = SystemColors.Control;
-            KH_pn_tab.Location = new Point(1, 159);
+            KH_pn_tab.Location = new Point(1, 143);
             KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(980, 492);
+            KH_pn_tab.Size = new Size(980, 508);
             KH_pn_tab.TabIndex = 3;
             // 
             // pictureBox2
@@ -55,7 +55,7 @@
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImage = Properties.Resources.icon_momocha;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(370, -15);
+            pictureBox2.Location = new Point(370, -24);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(200, 200);
             pictureBox2.TabIndex = 8;
@@ -71,7 +71,7 @@
             KH_pn_menu.Controls.Add(label2);
             KH_pn_menu.CustomizableEdges = customizableEdges1;
             KH_pn_menu.FillColor = Color.Black;
-            KH_pn_menu.Location = new Point(12, 43);
+            KH_pn_menu.Location = new Point(12, 34);
             KH_pn_menu.Name = "KH_pn_menu";
             KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
             KH_pn_menu.Size = new Size(942, 68);

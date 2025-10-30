@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pcNenSP = new Panel();
             pnBestSeller3 = new Panel();
             guna2CirclePictureBox3 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
@@ -46,8 +46,8 @@
             guna2CirclePictureBox5 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             pcBest5 = new PictureBox();
             pnBestSeller1 = new Panel();
-            pcBest1 = new PictureBox();
             guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            pcBest1 = new PictureBox();
             pnBestSeller2 = new Panel();
             guna2CirclePictureBox2 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             pcBest2 = new PictureBox();
@@ -68,8 +68,8 @@
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pcBest5).BeginInit();
             pnBestSeller1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pcBest1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pcBest1).BeginInit();
             pnBestSeller2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pcBest2).BeginInit();
@@ -121,7 +121,7 @@
             guna2CirclePictureBox3.ImageRotate = 0F;
             guna2CirclePictureBox3.Location = new Point(155, -28);
             guna2CirclePictureBox3.Name = "guna2CirclePictureBox3";
-            guna2CirclePictureBox3.ShadowDecoration.CustomizableEdges = customizableEdges11;
+            guna2CirclePictureBox3.ShadowDecoration.CustomizableEdges = customizableEdges1;
             guna2CirclePictureBox3.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox3.Size = new Size(60, 63);
             guna2CirclePictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -156,7 +156,7 @@
             guna2CirclePictureBox5.ImageRotate = 0F;
             guna2CirclePictureBox5.Location = new Point(142, -28);
             guna2CirclePictureBox5.Name = "guna2CirclePictureBox5";
-            guna2CirclePictureBox5.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            guna2CirclePictureBox5.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2CirclePictureBox5.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox5.Size = new Size(60, 63);
             guna2CirclePictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
@@ -183,6 +183,21 @@
             pnBestSeller1.Size = new Size(185, 179);
             pnBestSeller1.TabIndex = 2;
             // 
+            // guna2CirclePictureBox1
+            // 
+            guna2CirclePictureBox1.BackColor = Color.Transparent;
+            guna2CirclePictureBox1.FillColor = Color.Transparent;
+            guna2CirclePictureBox1.Image = Properties.Resources.Bestseller;
+            guna2CirclePictureBox1.ImageRotate = 0F;
+            guna2CirclePictureBox1.Location = new Point(148, -27);
+            guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
+            guna2CirclePictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges3;
+            guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            guna2CirclePictureBox1.Size = new Size(60, 63);
+            guna2CirclePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            guna2CirclePictureBox1.TabIndex = 12;
+            guna2CirclePictureBox1.TabStop = false;
+            // 
             // pcBest1
             // 
             pcBest1.BackgroundImageLayout = ImageLayout.Stretch;
@@ -192,21 +207,6 @@
             pcBest1.SizeMode = PictureBoxSizeMode.Zoom;
             pcBest1.TabIndex = 0;
             pcBest1.TabStop = false;
-            // 
-            // guna2CirclePictureBox1
-            // 
-            guna2CirclePictureBox1.BackColor = Color.Transparent;
-            guna2CirclePictureBox1.FillColor = Color.Transparent;
-            guna2CirclePictureBox1.Image = Properties.Resources.Bestseller;
-            guna2CirclePictureBox1.ImageRotate = 0F;
-            guna2CirclePictureBox1.Location = new Point(148, -27);
-            guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
-            guna2CirclePictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges13;
-            guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            guna2CirclePictureBox1.Size = new Size(60, 63);
-            guna2CirclePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            guna2CirclePictureBox1.TabIndex = 12;
-            guna2CirclePictureBox1.TabStop = false;
             // 
             // pnBestSeller2
             // 
@@ -226,7 +226,7 @@
             guna2CirclePictureBox2.ImageRotate = 0F;
             guna2CirclePictureBox2.Location = new Point(155, -34);
             guna2CirclePictureBox2.Name = "guna2CirclePictureBox2";
-            guna2CirclePictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            guna2CirclePictureBox2.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2CirclePictureBox2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox2.Size = new Size(60, 63);
             guna2CirclePictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -261,7 +261,7 @@
             guna2CirclePictureBox4.ImageRotate = 0F;
             guna2CirclePictureBox4.Location = new Point(142, -34);
             guna2CirclePictureBox4.Name = "guna2CirclePictureBox4";
-            guna2CirclePictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges15;
+            guna2CirclePictureBox4.ShadowDecoration.CustomizableEdges = customizableEdges5;
             guna2CirclePictureBox4.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox4.Size = new Size(60, 63);
             guna2CirclePictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
@@ -286,7 +286,7 @@
             guna2CirclePictureBox11.ImageRotate = 0F;
             guna2CirclePictureBox11.Location = new Point(593, 84);
             guna2CirclePictureBox11.Name = "guna2CirclePictureBox11";
-            guna2CirclePictureBox11.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            guna2CirclePictureBox11.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2CirclePictureBox11.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox11.Size = new Size(60, 63);
             guna2CirclePictureBox11.SizeMode = PictureBoxSizeMode.Zoom;
@@ -301,7 +301,7 @@
             guna2CirclePictureBox40.ImageRotate = 0F;
             guna2CirclePictureBox40.Location = new Point(593, 320);
             guna2CirclePictureBox40.Name = "guna2CirclePictureBox40";
-            guna2CirclePictureBox40.ShadowDecoration.CustomizableEdges = customizableEdges17;
+            guna2CirclePictureBox40.ShadowDecoration.CustomizableEdges = customizableEdges7;
             guna2CirclePictureBox40.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox40.Size = new Size(60, 63);
             guna2CirclePictureBox40.SizeMode = PictureBoxSizeMode.Zoom;
@@ -316,7 +316,7 @@
             guna2CirclePictureBox20.ImageRotate = 0F;
             guna2CirclePictureBox20.Location = new Point(158, 320);
             guna2CirclePictureBox20.Name = "guna2CirclePictureBox20";
-            guna2CirclePictureBox20.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            guna2CirclePictureBox20.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2CirclePictureBox20.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox20.Size = new Size(60, 63);
             guna2CirclePictureBox20.SizeMode = PictureBoxSizeMode.Zoom;
@@ -331,7 +331,7 @@
             guna2CirclePictureBox30.ImageRotate = 0F;
             guna2CirclePictureBox30.Location = new Point(158, 84);
             guna2CirclePictureBox30.Name = "guna2CirclePictureBox30";
-            guna2CirclePictureBox30.ShadowDecoration.CustomizableEdges = customizableEdges19;
+            guna2CirclePictureBox30.ShadowDecoration.CustomizableEdges = customizableEdges9;
             guna2CirclePictureBox30.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox30.Size = new Size(60, 63);
             guna2CirclePictureBox30.SizeMode = PictureBoxSizeMode.Zoom;
@@ -346,7 +346,7 @@
             guna2CirclePictureBox50.ImageRotate = 0F;
             guna2CirclePictureBox50.Location = new Point(372, 188);
             guna2CirclePictureBox50.Name = "guna2CirclePictureBox50";
-            guna2CirclePictureBox50.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            guna2CirclePictureBox50.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2CirclePictureBox50.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CirclePictureBox50.Size = new Size(60, 63);
             guna2CirclePictureBox50.SizeMode = PictureBoxSizeMode.Zoom;
@@ -381,8 +381,8 @@
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pcBest5).EndInit();
             pnBestSeller1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pcBest1).EndInit();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pcBest1).EndInit();
             pnBestSeller2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pcBest2).EndInit();

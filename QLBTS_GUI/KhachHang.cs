@@ -30,27 +30,27 @@ namespace QLBTS_GUI
 
         private void KH_lb_sp_Click(object sender, EventArgs e)
         {
-
+            ui.OpenChildForm(new DanhMucSanPham(), KH_pn_tab);
         }
 
         private void KH_lb_gh_Click(object sender, EventArgs e)
         {
-
+            ui.OpenChildForm(new GioHang_KH(), KH_pn_tab);
         }
 
         private void KH_lb_ttd_Click(object sender, EventArgs e)
         {
-
+            ui.OpenChildForm(new TrangThaiDonHang_KH(), KH_pn_tab);
         }
 
         private void KH_lb_ttcn_Click(object sender, EventArgs e)
         {
-
+            //ui.OpenChildForm(new frmThongTinCaNhan(), KH_pn_tab);
         }
 
         private void KH_lb_ls_Click(object sender, EventArgs e)
         {
-
+            ui.OpenChildForm(new LichSu(Khung.MaTK_temp), KH_pn_tab);
         }
     }
 }
