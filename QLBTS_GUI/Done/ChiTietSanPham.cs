@@ -28,12 +28,22 @@ namespace QLBTS_GUI
         {
             InitializeComponent();
             _maTK = Khung.MaTK_temp;
+            _allSizes = new List<SanPhamDTO>();
 
             sanpham = sp;
             sanphamBLL = new SanPhamBLL();
             giohangBLL = new GioHangBLL();
-            if (sp.Size == "M") rdoSizeM.Checked = true;
-            else rdoSizeL.Checked = false;
+            if (sanpham.Size == "M")
+            {
+                rdoSizeM.Checked = true;
+                rdoSizeL.Checked = false;
+            }
+            else if (sanpham.Size == "L")
+            {
+                rdoSizeL.Checked = true;
+                rdoSizeM.Checked = false;
+            }
+
 
             txtQuantity.Text = "1";
             txtQuantity.ReadOnly = true;
@@ -51,7 +61,7 @@ namespace QLBTS_GUI
 
         private void btnPlus_Click(object sender, EventArgs e)
         {
-            if (_currentQuantity < sanpham.SoLuong)
+            if (_currentQuantity < sanphamBLL.GetSoLuongTon(sanpham.MaSP))
             {
                 _currentQuantity++;
                 txtQuantity.Text = _currentQuantity.ToString();
@@ -67,7 +77,7 @@ namespace QLBTS_GUI
             if (sanpham == null) return;
 
             // Kiểm tra tồn kho
-            if (_currentQuantity > sanpham.SoLuong)
+            if (_currentQuantity > sanphamBLL.GetSoLuongTon(sanpham.MaSP))
             {
                 MessageBox.Show(
                     $"Chỉ còn {sanpham.SoLuong} sản phẩm!",
@@ -75,6 +85,10 @@ namespace QLBTS_GUI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
+                _currentQuantity = sanphamBLL.GetSoLuongTon(sanpham.MaSP);
+
+                _currentQuantity = 1;
+                txtQuantity.Text = "1";
                 return;
             }
 
@@ -96,48 +110,72 @@ namespace QLBTS_GUI
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("đã có trong giỏ"))
-                    throw new Exception("Sản phẩm này đã có trong giỏ hàng!");
-
-                throw new Exception("Lỗi khi thêm sản phẩm vào giỏ hàng: " + ex.Message);
+                MessageBox.Show(ex.Message,"Lỗi khi thêm sản phẩm vào giỏ hàng",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
 
 
         private void rdoSizeL_CheckedChanged(object sender, EventArgs e)
         {
-            if (sanphamBLL.GetSanPhamCungTenKhacSize(sanpham) != null)
+            if (rdoSizeL.Checked)
             {
-                sanpham = sanphamBLL.GetSanPhamCungTenKhacSize(sanpham);
-                rdoSizeL.Checked = true;
+                if (sanphamBLL.GetGiaHienTai(sanpham.MaSP, "L") == 0)  // kiểm tra giá size L
+                {
+                    MessageBox.Show("Sản phẩm không có size L, không thể chọn.");
+                    rdoSizeL.Checked = false;
+                    return;
+                }
+
+                sanpham.Size = "L";
                 rdoSizeM.Checked = false;
             }
         }
 
         private void rdoSizeM_CheckedChanged(object sender, EventArgs e)
         {
-            if (sanphamBLL.GetSanPhamCungTenKhacSize(sanpham) != null)
+            if (rdoSizeM.Checked)
             {
-                sanpham = sanphamBLL.GetSanPhamCungTenKhacSize(sanpham);
-                rdoSizeL.Checked = true;
-                rdoSizeM.Checked = false;
+                if (sanphamBLL.GetGiaHienTai(sanpham.MaSP, "M") == 0)  // kiểm tra giá size M
+                {
+                    MessageBox.Show("Sản phẩm không có size M, không thể chọn.");
+                    rdoSizeM.Checked = false;
+                    return;
+                }
+
+                sanpham.Size = "M";
+                rdoSizeL.Checked = false;
             }
         }
+
 
         private void ChiTietSanPham_Load(object sender, EventArgs e)
         {
             if (sanpham == null) return;
 
             lblProductName.Text = sanpham.TenSP;
-            lblPrice.Text = sanphamBLL.GetTextGia(sanpham);
+            if (!string.IsNullOrEmpty(sanpham.Size))
+            {
+                lblPrice.Text = sanphamBLL.GetTextGia(sanpham, sanpham.Size);
+            }
+            else
+            {
+                lblPrice.Text = sanphamBLL.GetTextGia(sanpham, "");
+            }
 
-            productImage.Image = LoadImageFromBytes(sanpham.HinhAnh);
+            if (sanpham.HinhAnh != null && sanpham.HinhAnh.Length > 0)
+            {
+                productImage.Image = LoadImageFromBytes(sanpham.HinhAnh);
+            }
+            else
+            {
+                productImage.Image = null; 
+            }
             productImage.BackColor = (productImage.Image == null) ? Color.LightGray : Color.Transparent;
 
             txtQuantity.Text = _currentQuantity.ToString();
         }
 
-        private Image LoadImageFromBytes(byte[] bytes)
+        private Image? LoadImageFromBytes(byte[]? bytes)
         {
             if (bytes == null || bytes.Length == 0) return null;
 

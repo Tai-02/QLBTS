@@ -1,3 +1,6 @@
+﻿using System.Security.Cryptography;
+using System.Text;
+
 namespace QLBTS_GUI
 {
     internal static class Program

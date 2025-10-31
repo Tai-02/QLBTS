@@ -55,10 +55,11 @@ namespace QLBTS_GUI
         {
             QLSP_txt_tensp.Clear();
             Loadcbb();
-            QLSP_txt_gia.Clear();
-            QLSP_txt_kichthuoc.Clear();
+            QLSP_txt_giaM.Clear();
+            QLSP_txt_giaL.Clear();
             QLSP_txt_soluong.Clear();
-            QLSP_txt_khuyenmai.Clear();
+            QLSP_txt_khuyenmaiM.Clear();
+            QLSP_txt_khuyenmaiL.Clear();
             pictureBox1.Image = null;
             dataGridView1.ClearSelection();
         }
@@ -69,13 +70,21 @@ namespace QLBTS_GUI
             if (e.RowIndex >= 0)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
+
+                // Gán dữ liệu vào các control
                 QLSP_txt_tensp.Text = row.Cells["TenSP"].Value.ToString();
                 QLSP_cbb_loai.SelectedItem = row.Cells["LoaiSP"].Value.ToString();
-                QLSP_txt_gia.Text = row.Cells["Gia"].Value.ToString();
-                QLSP_txt_kichthuoc.Text = row.Cells["Size"].Value.ToString();
-                QLSP_txt_soluong.Text = row.Cells["SoLuong"].Value.ToString();
-                QLSP_txt_khuyenmai.Text = row.Cells["KhuyenMai"].Value.ToString();
 
+                // Giá và khuyến mãi cho size M, L
+                QLSP_txt_giaM.Text = row.Cells["GiaM"].Value.ToString();
+                QLSP_txt_giaL.Text = row.Cells["GiaL"].Value.ToString();
+                QLSP_txt_khuyenmaiM.Text = row.Cells["KhuyenMaiM"].Value.ToString();
+                QLSP_txt_khuyenmaiL.Text = row.Cells["KhuyenMaiL"].Value.ToString();
+
+                // Số lượng
+                QLSP_txt_soluong.Text = row.Cells["SoLuong"].Value.ToString();
+
+                // Ảnh sản phẩm
                 if (row.Cells["HinhAnh"] != null)
                 {
                     object value = row.Cells["HinhAnh"].Value;
@@ -122,10 +131,11 @@ namespace QLBTS_GUI
                 {
                     TenSP = QLSP_txt_tensp.Text.ToString(),
                     LoaiSP = QLSP_cbb_loai.Text.Trim(),
-                    Size = QLSP_txt_kichthuoc.Text.ToString(),
                     SoLuong = int.Parse(QLSP_txt_soluong.Text),
-                    Gia = int.Parse(QLSP_txt_gia.Text),
-                    KhuyenMai = int.Parse(QLSP_txt_khuyenmai.Text),
+                    GiaM = int.Parse(QLSP_txt_giaM.Text),
+                    GiaL = int.Parse(QLSP_txt_giaL.Text),
+                    KhuyenMaiM = int.Parse(QLSP_txt_khuyenmaiM.Text),
+                    KhuyenMaiL = int.Parse(QLSP_txt_khuyenmaiL.Text),
                     HinhAnh = tempAnh,
                 };
 
@@ -188,10 +198,10 @@ namespace QLBTS_GUI
                 }
 
                 if (string.IsNullOrWhiteSpace(QLSP_txt_tensp.Text) ||
-                    string.IsNullOrWhiteSpace(QLSP_txt_gia.Text) ||
-                    string.IsNullOrWhiteSpace(QLSP_txt_kichthuoc.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_giaM.Text) ||
+                    string.IsNullOrWhiteSpace(QLSP_txt_giaL.Text) ||
                     string.IsNullOrWhiteSpace(QLSP_txt_soluong.Text) ||
-                    string.IsNullOrWhiteSpace(QLSP_txt_khuyenmai.Text))
+                    string.IsNullOrWhiteSpace(QLSP_txt_khuyenmaiM.Text))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm!", "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -204,11 +214,12 @@ namespace QLBTS_GUI
                     MaSP = maSP,
                     TenSP = QLSP_txt_tensp.Text,
                     LoaiSP = QLSP_cbb_loai.Text.Trim(),
-                    Gia = int.Parse(QLSP_txt_gia.Text),
-                    Size = QLSP_txt_kichthuoc.Text,
+                    GiaM = int.Parse(QLSP_txt_giaM.Text),
+                    GiaL = int.Parse(QLSP_txt_giaL.Text),
                     SoLuong = int.Parse(QLSP_txt_soluong.Text),
-                    KhuyenMai = int.Parse(QLSP_txt_khuyenmai.Text),
-                    HinhAnh = tempAnh 
+                    KhuyenMaiM = int.Parse(QLSP_txt_khuyenmaiM.Text),
+                    KhuyenMaiL = int.Parse(QLSP_txt_khuyenmaiL.Text),
+                    HinhAnh = tempAnh
                 };
                 if (sanPhamBLL.CapNhatSanPham(sp))
                 {
@@ -316,7 +327,7 @@ namespace QLBTS_GUI
                 string loaiMoi = ShowInputForm("Nhập loại mới", "Loại sản phẩm:");
 
                 if (!string.IsNullOrEmpty(loaiMoi))
-                {                    
+                {
                     QLSP_cbb_loai.Items.Insert(QLSP_cbb_loai.Items.Count - 1, loaiMoi);
                     QLSP_cbb_loai.SelectedItem = loaiMoi;
                 }
@@ -326,6 +337,5 @@ namespace QLBTS_GUI
                 }
             }
         }
-
     }
 }

@@ -42,12 +42,18 @@ namespace QLBTS_DAL
         {
             string query = @"
                 SELECT 
-                SUM(ct.SoLuong * sp.Gia) AS TongTruocKM,
-                SUM(ct.SoLuong * (sp.Gia - (sp.Gia * sp.KhuyenMai / 100))) AS TongSauKM
+                SUM(ct.SoLuong * COALESCE(sp.GiaM, sp.GiaL)) AS TongTruocKM,
+                SUM(ct.SoLuong * (
+                    CASE 
+                    WHEN sp.GiaM IS NOT NULL THEN sp.GiaM * (1 - sp.KhuyenMaiM / 100)
+                    ELSE sp.GiaL * (1 - sp.KhuyenMaiL / 100)
+                    END
+                )) AS TongSauKM
                 FROM ChiTietDonHang ct
                 JOIN SanPham sp ON ct.MaSP = sp.MaSP
                 WHERE ct.MaDH = @MaDH;
-            ";
+                ";
+
 
             try
             {
@@ -141,5 +147,87 @@ namespace QLBTS_DAL
 
             return danhSach;
         }
+
+        public bool HuyDonHang(int maDH)
+        {
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            // 1️⃣ Lấy danh sách sản phẩm và số lượng trong đơn
+                            string queryChiTiet = @"
+                        SELECT MaSP, SoLuong
+                        FROM ChiTietDonHang
+                        WHERE MaDH = @MaDH;
+                    ";
+
+                            var chiTiet = new List<(int MaSP, int SoLuong)>();
+                            using (var cmdChiTiet = new MySqlCommand(queryChiTiet, conn, transaction))
+                            {
+                                cmdChiTiet.Parameters.AddWithValue("@MaDH", maDH);
+                                using (var reader = cmdChiTiet.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        chiTiet.Add((
+                                            reader.GetInt32("MaSP"),
+                                            reader.GetInt32("SoLuong")
+                                        ));
+                                    }
+                                }
+                            }
+
+                            // 2️⃣ Cập nhật trạng thái đơn hàng
+                            string queryUpdateDH = @"
+                        UPDATE DonHang
+                        SET TrangThai = 'Đã hủy'
+                        WHERE MaDH = @MaDH;
+                    ";
+                            using (var cmdUpdateDH = new MySqlCommand(queryUpdateDH, conn, transaction))
+                            {
+                                cmdUpdateDH.Parameters.AddWithValue("@MaDH", maDH);
+                                cmdUpdateDH.ExecuteNonQuery();
+                            }
+
+                            // 3️⃣ Cộng lại số lượng sản phẩm vào kho
+                            string queryUpdateSP = @"
+                        UPDATE SanPham
+                        SET SoLuong = SoLuong + @SoLuong
+                        WHERE MaSP = @MaSP;
+                    ";
+
+                            foreach (var item in chiTiet)
+                            {
+                                using (var cmdUpdateSP = new MySqlCommand(queryUpdateSP, conn, transaction))
+                                {
+                                    cmdUpdateSP.Parameters.AddWithValue("@SoLuong", item.SoLuong);
+                                    cmdUpdateSP.Parameters.AddWithValue("@MaSP", item.MaSP);
+                                    cmdUpdateSP.ExecuteNonQuery();
+                                }
+                            }
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - HuyDonHang: {ex.Message}", ex);
+            }
+        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace QLBTS_GUI
     {
         // ===== FIELDS =====
         UI_Form ui = new UI_Form();
-        private DonHangBLL donHangBLL;
+        private DonHangBLL donHangBLL = new DonHangBLL();
         private int _maTK;
 
         // ===== CONSTRUCTOR =====
@@ -51,6 +51,12 @@ namespace QLBTS_GUI
         {
             try
             {
+                if (donHangBLL == null)
+                    throw new Exception("donHangBLL chưa được khởi tạo.");
+
+                if (dgvOrders == null)
+                    throw new Exception("dgvOrders chưa được khởi tạo.");
+
                 var dh = donHangBLL.LayDonHangTheoKhach(_maTK);
 
                 if (dh == null || dh.Count == 0)
@@ -80,17 +86,16 @@ namespace QLBTS_GUI
             }
 
             dgvOrders.AutoGenerateColumns = false;
-            var bindingList = dh;
-            dgvOrders.DataSource = bindingList;
+            dgvOrders.DataSource = dh;
 
-            // Ẩn các cột tự động sinh
-            foreach (DataGridViewColumn col in dgvOrders.Columns)
-            {
-                if (!col.Name.StartsWith("col"))
-                {
-                    col.Visible = false;
-                }
-            }
+            //// Ẩn các cột tự động sinh
+            //foreach (DataGridViewColumn col in dgvOrders.Columns)
+            //{
+            //    if (!col.Name.StartsWith("col"))
+            //    {
+            //        col.Visible = false;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -130,7 +135,7 @@ namespace QLBTS_GUI
         private void DgvOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             // Chỉ xử lý cột "Trạng thái"
-            if (dgvOrders.Columns[e.ColumnIndex].Name == "colTrangThai" && e.Value != null)
+            if (dgvOrders.Columns[e.ColumnIndex].Name == "TrangThai" && e.Value != null)
             {
                 string trangThai = e.Value.ToString();
 
@@ -407,7 +412,7 @@ namespace QLBTS_GUI
 
                 if (result == DialogResult.Yes)
                 {
-                    bool success = donHangBLL.DoiTrangThai(maDH, "Đã hủy");
+                    bool success = donHangBLL.HuyDonHang(maDH);
 
                     if (success)
                     {

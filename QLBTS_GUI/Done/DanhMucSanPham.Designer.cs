@@ -60,6 +60,7 @@
             // 
             // cbb_loai
             // 
+            cbb_loai.DropDownStyle = ComboBoxStyle.DropDownList;
             cbb_loai.FormattingEnabled = true;
             cbb_loai.Location = new Point(20, 281);
             cbb_loai.Name = "cbb_loai";

@@ -7,10 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MySql.Data.MySqlClient;
+using QLBTS_DTO;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
 namespace QLBTS_DAL
 {
     public class DanhMucSanPhamDAL
     {
+        // 🔹 Lấy danh sách sản phẩm còn hàng, có thể filter theo loại
         public List<SanPhamDTO> LayDanhSachSanPham(string filterType = null)
         {
             List<SanPhamDTO> list = new List<SanPhamDTO>();
@@ -24,19 +32,51 @@ namespace QLBTS_DAL
                 {
                     while (reader.Read())
                     {
-                        SanPhamDTO sp = new SanPhamDTO
+                        int maSP = Convert.ToInt32(reader["MaSP"]);
+                        string tenSP = reader["TenSP"].ToString();
+                        string loaiSP = reader["LoaiSP"].ToString();
+                        int soLuong = Convert.ToInt32(reader["SoLuong"]);
+                        byte[] hinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null;
+
+                        int giaM = reader["GiaM"] != DBNull.Value ? Convert.ToInt32(reader["GiaM"]) : 0;
+                        int giaL = reader["GiaL"] != DBNull.Value ? Convert.ToInt32(reader["GiaL"]) : 0;
+                        int kmM = reader["KhuyenMaiM"] != DBNull.Value ? Convert.ToInt32(reader["KhuyenMaiM"]) : 0;
+                        int kmL = reader["KhuyenMaiL"] != DBNull.Value ? Convert.ToInt32(reader["KhuyenMaiL"]) : 0;
+                        string trangThai = reader["TrangThai"].ToString();
+
+                        // Size M
+                        if (giaM > 0)
                         {
-                            MaSP = Convert.ToInt32(reader["MaSP"]),
-                            TenSP = reader["TenSP"].ToString(),
-                            LoaiSP = reader["LoaiSP"].ToString(),
-                            Size = reader["Size"].ToString(),
-                            SoLuong = Convert.ToInt32(reader["SoLuong"]),
-                            Gia = Convert.ToInt32(reader["Gia"]),
-                            KhuyenMai = Convert.ToInt32(reader["KhuyenMai"]),
-                            TrangThai = reader["TrangThai"].ToString(),
-                            HinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null
-                        };
-                        list.Add(sp);
+                            list.Add(new SanPhamDTO
+                            {
+                                MaSP = maSP,
+                                TenSP = tenSP,
+                                LoaiSP = loaiSP,
+                                SoLuong = soLuong,
+                                GiaM = giaM,
+                                KhuyenMaiM = kmM,
+                                Size = "M",
+                                TrangThai = trangThai,
+                                HinhAnh = hinhAnh
+                            });
+                        }
+
+                        // Size L
+                        if (giaL > 0)
+                        {
+                            list.Add(new SanPhamDTO
+                            {
+                                MaSP = maSP,
+                                TenSP = tenSP,
+                                LoaiSP = loaiSP,
+                                SoLuong = soLuong,
+                                GiaL = giaL,
+                                KhuyenMaiL = kmL,
+                                Size = "L",
+                                TrangThai = trangThai,
+                                HinhAnh = hinhAnh
+                            });
+                        }
                     }
                 }
             }
@@ -45,41 +85,43 @@ namespace QLBTS_DAL
         }
 
 
+        // 🔹 Xây dựng câu lệnh SQL filter
         private string BuildFilterQuery(string filterType = null)
         {
-            string baseQuery = "SELECT MaSP, TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh, TrangThai FROM SanPham";
+            string baseQuery = "SELECT MaSP, TenSP, LoaiSP, SoLuong, GiaM, GiaL, KhuyenMaiM, KhuyenMaiL, HinhAnh, TrangThai FROM SanPham";
+            string condition = " WHERE TrangThai != 'Hết hàng'"; // luôn loại trừ sản phẩm hết hàng
+            string query = baseQuery;
 
             if (string.IsNullOrWhiteSpace(filterType))
-                return baseQuery;
-
-            string query = baseQuery + " ";
+                return query + condition; // tất cả sản phẩm còn hàng
 
             switch (filterType)
             {
                 case "BestSeller":
-                    query += "ORDER BY KhuyenMai DESC LIMIT 10";  // 10 sản phẩm có khuyến mãi cao nhất
+                    query += condition + " ORDER BY KhuyenMaiM DESC LIMIT 10";  // 10 sản phẩm có KM cao nhất
                     break;
 
                 case "Topping":
-                    query += "WHERE LOWER(LoaiSP) = 'topping'"; // loại = topping
+                    query += condition + " AND LOWER(LoaiSP) = 'topping'";
                     break;
 
                 case "TraSua":
-                    query += "WHERE REPLACE(LOWER(LoaiSP), ' ', '') LIKE '%trasua%'"; // loại chứa 'trasua', bỏ dấu, lowercase
+                    query += condition + " AND REPLACE(LOWER(LoaiSP), ' ', '') LIKE '%trasua%'";
                     break;
 
                 case "MonMoi":
-                    query += "ORDER BY MaSP DESC LIMIT 10"; // 10 sản phẩm mới nhất theo MaSP
+                    query += condition + " ORDER BY MaSP DESC LIMIT 10";
                     break;
+
                 default:
-                    // Nếu filterType khác, lọc theo LoaiSP = filterType
-                    query += "WHERE LOWER(LoaiSP) = '" + filterType.ToLower() + "'";
+                    query += condition + " AND LOWER(LoaiSP) = '" + filterType.ToLower() + "'";
                     break;
             }
 
             return query;
         }
 
+        // 🔹 Tìm kiếm sản phẩm theo từ khóa (không dấu, không phân biệt hoa thường)
         public List<SanPhamDTO> TimKiemSanPham(string keyword)
         {
             List<SanPhamDTO> list = new List<SanPhamDTO>();
@@ -87,10 +129,9 @@ namespace QLBTS_DAL
             if (string.IsNullOrWhiteSpace(keyword))
                 return list;
 
-            string normalizedKeyword = keyword.ToLower().Replace(" ", "");
+            string normalizedKeyword = RemoveAccents(keyword).ToLower().Replace(" ", "");
 
-            string query = "SELECT MaSP, TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh, TrangThai " +
-                           "FROM SanPham";
+            string query = "SELECT MaSP, TenSP, LoaiSP, SoLuong, GiaM, GiaL, KhuyenMaiM, KhuyenMaiL, HinhAnh, TrangThai FROM SanPham WHERE TrangThai != 'Hết hàng'";
 
             using (MySqlConnection conn = DatabaseHelper.GetConnection())
             {
@@ -100,9 +141,7 @@ namespace QLBTS_DAL
                 {
                     while (reader.Read())
                     {
-                        string loaiSP = reader["LoaiSP"].ToString();
                         string tenSP = reader["TenSP"].ToString();
-
                         string normalizedTenSP = RemoveAccents(tenSP).ToLower().Replace(" ", "");
 
                         if (!normalizedTenSP.Contains(normalizedKeyword))
@@ -112,11 +151,12 @@ namespace QLBTS_DAL
                         {
                             MaSP = Convert.ToInt32(reader["MaSP"]),
                             TenSP = tenSP,
-                            LoaiSP = loaiSP,
-                            Size = reader["Size"].ToString(),
+                            LoaiSP = reader["LoaiSP"].ToString(),
                             SoLuong = Convert.ToInt32(reader["SoLuong"]),
-                            Gia = Convert.ToInt32(reader["Gia"]),
-                            KhuyenMai = Convert.ToInt32(reader["KhuyenMai"]),
+                            GiaM = Convert.ToInt32(reader["GiaM"]),
+                            GiaL = Convert.ToInt32(reader["GiaL"]),
+                            KhuyenMaiM = Convert.ToInt32(reader["KhuyenMaiM"]),
+                            KhuyenMaiL = Convert.ToInt32(reader["KhuyenMaiL"]),
                             TrangThai = reader["TrangThai"].ToString(),
                             HinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null
                         };
@@ -129,6 +169,7 @@ namespace QLBTS_DAL
             return list;
         }
 
+        // 🔹 Loại bỏ dấu tiếng Việt
         public static string RemoveAccents(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return text;
@@ -146,4 +187,5 @@ namespace QLBTS_DAL
         }
     }
 }
+
 

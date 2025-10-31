@@ -155,7 +155,7 @@ namespace QLBTS_GUI
                 BackColor = Color.White,
                 Margin = new Padding(10),
                 Cursor = Cursors.Hand,
-                Tag = sp.MaSP
+                Tag = sp.MaSP + sp.Size
             };
 
             PictureBox picImage = new PictureBox
@@ -172,21 +172,28 @@ namespace QLBTS_GUI
                 Location = new Point(productPanel.Width - 48, 10),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.Transparent,
-                Visible = sp.KhuyenMai > 0
+                Visible = sp.KhuyenMaiM > 0
             };
 
             Label lblName = new Label
             {
-                Text = sp.TenSP,
+                Text = sp.TenSP + (sp.Size == "M" ? " (M)" : sp.Size == "L" ? " (L)" : ""),
                 Font = new Font("Arial", 10, FontStyle.Bold),
                 Location = new Point(20, 140),
                 Size = new Size(160, 40),
                 TextAlign = ContentAlignment.TopCenter
             };
 
+            int giaHienTai = 0;
+
+            if (sp.Size == "M")
+                giaHienTai = sp.GiaM;
+            else if (sp.Size == "L")
+                giaHienTai = sp.GiaL;
+
             Label lblPrice = new Label
             {
-                Text = $"Giá: {sp.Gia:N0}đ",
+                Text = $"Giá: {giaHienTai:N0}đ",
                 Font = new Font("Arial", 9, FontStyle.Regular),
                 ForeColor = Color.Red,
                 Location = new Point(60, 185),
@@ -247,14 +254,34 @@ namespace QLBTS_GUI
             Panel selectedPanel = clickedControl as Panel ?? clickedControl.Parent as Panel;
             if (selectedPanel == null) return;
 
-            SanPhamDTO sp = SanPhamBLL.LaySanPham(Convert.ToInt32(selectedPanel.Tag));
+            // 🔹 Lấy Tag và tách MaSP và Size
+            string tag = selectedPanel.Tag?.ToString();
+            if (string.IsNullOrEmpty(tag) || tag.Length < 2)
+            {
+                MessageBox.Show("Tag sản phẩm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Lấy size là ký tự cuối, MaSP là phần còn lại
+            string size = tag.Substring(tag.Length - 1, 1);
+            if (size != "M" && size != "L")
+                size = "M"; // mặc định M nếu không hợp lệ
+
+            if (!int.TryParse(tag.Substring(0, tag.Length - 1), out int maSP))
+            {
+                MessageBox.Show("Mã sản phẩm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 🔹 Lấy sản phẩm theo MaSP và Size
+            SanPhamDTO sp = SanPhamBLL.LaySanPham(maSP, size);
             if (sp == null)
             {
                 MessageBox.Show("Không tìm thấy thông tin sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // 🔹 Mở form chi tiết sản phẩm
+            sp.Size = size;
             if (Khung.lvID_temp == 0)
             {
                 ui.OpenChildForm(new ChiTietSanPham(sp), Khachhang.KH_pn_tab);
@@ -263,8 +290,8 @@ namespace QLBTS_GUI
             {
                 ui.OpenChildForm(new ChiTietSanPham(sp), NVQUAY.NVQ_pn_tab);
             }
-
         }
+
 
         private void btnTimkiem_Click(object sender, EventArgs e)
         {

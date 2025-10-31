@@ -8,8 +8,7 @@ namespace QLBTS_DAL
 {
     public class SanPhamDAL
     {
-        // 1️⃣ Lấy chi tiết sản phẩm theo MaSP
-        public SanPhamDTO GetSanPham(int maSP)
+        public SanPhamDTO GetSanPhamTheoMaSP(int maSP, string size)
         {
             SanPhamDTO sp = null;
 
@@ -17,44 +16,73 @@ namespace QLBTS_DAL
             {
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
-                    string query = @"
-                        SELECT MaSP, TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh, TrangThai
-                        FROM SanPham
-                        WHERE MaSP = @MaSP";
+                    string query = "";
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@MaSP", maSP);
-
-                    conn.Open();
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
+                    if (size == "M")
                     {
-                        sp = new SanPhamDTO
+                        query = @"
+                    SELECT MaSP, TenSP, LoaiSP, SoLuong, GiaM, KhuyenMaiM, HinhAnh
+                    FROM SanPham
+                    WHERE MaSP = @MaSP AND GiaM > 0";
+                    }
+                    else if (size == "L")
+                    {
+                        query = @"
+                    SELECT MaSP, TenSP, LoaiSP, SoLuong, GiaL, KhuyenMaiL, HinhAnh
+                    FROM SanPham
+                    WHERE MaSP = @MaSP AND GiaL > 0";
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Size không hợp lệ.");
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaSP", maSP);
+                        conn.Open();
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            MaSP = reader.GetInt32("MaSP"),
-                            TenSP = reader.GetString("TenSP"),
-                            LoaiSP = reader.GetString("LoaiSP"),
-                            Size = reader.GetString("Size"),
-                            SoLuong = reader.GetInt32("SoLuong"),
-                            Gia = reader.GetInt32("Gia"),
-                            KhuyenMai = reader.GetInt32("KhuyenMai"),
-                            TrangThai = reader.GetString("TrangThai"),
-                            HinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null
-                        };
+                            if (reader.Read())
+                            {
+                                byte[] hinh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : Array.Empty<byte>();
+
+                                sp = new SanPhamDTO
+                                {
+                                    MaSP = reader.GetInt32("MaSP"),
+                                    TenSP = reader.GetString("TenSP"),
+                                    LoaiSP = reader.GetString("LoaiSP"),
+                                    SoLuong = reader.GetInt32("SoLuong"),
+                                    Size = size,
+                                    HinhAnh = hinh
+                                };
+
+                                if (size == "M")
+                                {
+                                    sp.GiaM = reader["GiaM"] != DBNull.Value ? Convert.ToInt32(reader["GiaM"]) : 0;
+                                    sp.KhuyenMaiM = reader.GetInt32("KhuyenMaiM");
+                                }
+                                else // L
+                                {
+                                    sp.GiaL = reader["GiaL"] != DBNull.Value ? Convert.ToInt32(reader["GiaL"]) : 0;
+                                    sp.KhuyenMaiL = reader.GetInt32("KhuyenMaiL");
+                                }
+                            }
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi DAL - GetSanPham: {ex.Message}", ex);
+                throw new Exception($"Lỗi DAL - GetSanPhamTheoMaSP: {ex.Message}", ex);
             }
 
             return sp;
         }
 
-        // 2️⃣ Lấy tất cả sản phẩm cùng tên (để hiển thị tất cả size)
-        public List<SanPhamDTO> GetSanPhamTheoTen(string tenSP)
+        // 1️⃣ Lấy chi tiết sản phẩm theo MaSP
+        public List<SanPhamDTO> GetSanPhamHienThi(int maSP)
         {
             List<SanPhamDTO> list = new List<SanPhamDTO>();
 
@@ -63,50 +91,93 @@ namespace QLBTS_DAL
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     string query = @"
-                        SELECT MaSP, TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh, TrangThai
-                        FROM SanPham
-                        WHERE TenSP = @TenSP
-                        ORDER BY Size";
+                SELECT MaSP, TenSP, LoaiSP, SoLuong, GiaM, GiaL, KhuyenMaiM, KhuyenMaiL, HinhAnh
+                FROM SanPham
+                WHERE MaSP = @MaSP
+                  AND (GiaM > 0 OR GiaL > 0)"; // chỉ lấy SP có giá
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@TenSP", tenSP);
-
-                    conn.Open();
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        SanPhamDTO sp = new SanPhamDTO
+                        cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+                        conn.Open();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            MaSP = reader.GetInt32("MaSP"),
-                            TenSP = reader.GetString("TenSP"),
-                            LoaiSP = reader.GetString("LoaiSP"),
-                            Size = reader.GetString("Size"),
-                            SoLuong = reader.GetInt32("SoLuong"),
-                            Gia = reader.GetInt32("Gia"),
-                            KhuyenMai = reader.GetInt32("KhuyenMai"),
-                            TrangThai = reader.GetString("TrangThai"),
-                            HinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null
-                        };
-                        list.Add(sp);
+                            if (reader.Read())
+                            {
+                                int ma = reader.GetInt32("MaSP");
+                                string ten = reader.GetString("TenSP");
+                                string loai = reader.GetString("LoaiSP");
+                                int soLuong = reader.GetInt32("SoLuong"); byte[] hinh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : Array.Empty<byte>();
+                                int giaM = reader["GiaM"] != DBNull.Value ? Convert.ToInt32(reader["GiaM"]) : 0;
+                                int giaL = reader["GiaL"] != DBNull.Value ? Convert.ToInt32(reader["GiaL"]) : 0;
+                                int kmM = reader.GetInt32("KhuyenMaiM");
+                                int kmL = reader.GetInt32("KhuyenMaiL");
+
+                                // Size M
+                                if (giaM > 0)
+                                {
+                                    list.Add(new SanPhamDTO
+                                    {
+                                        MaSP = ma,
+                                        TenSP = ten,
+                                        LoaiSP = loai,
+                                        SoLuong = soLuong,
+                                        GiaM = giaM,
+                                        KhuyenMaiM = kmM,
+                                        Size = "M",
+                                        HinhAnh = hinh
+                                    });
+                                }
+
+                                // Size L
+                                if (giaL > 0)
+                                {
+                                    list.Add(new SanPhamDTO
+                                    {
+                                        MaSP = ma,
+                                        TenSP = ten,
+                                        LoaiSP = loai,
+                                        SoLuong = soLuong,
+                                        GiaL = giaL,
+                                        KhuyenMaiL = kmL,
+                                        Size = "L",
+                                        HinhAnh = hinh
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi DAL - GetSanPhamTheoTen: {ex.Message}", ex);
+                throw new Exception($"Lỗi DAL - GetSanPhamHienThi: {ex.Message}", ex);
             }
 
             return list;
         }
 
-        // 3️⃣ Kiểm tra tồn kho
+
         public bool CheckTonKho(int maSP, int soLuongCanMua)
         {
             try
             {
-                int tonKho = GetTonKhoHienTai(maSP);
-                return tonKho >= soLuongCanMua;
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    string query = "SELECT SoLuong FROM SanPham WHERE MaSP = @MaSP";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null)
+                        throw new Exception("Sản phẩm không tồn tại.");
+
+                    int tonKho = Convert.ToInt32(result);
+                    return tonKho >= soLuongCanMua;
+                }
             }
             catch (Exception ex)
             {
@@ -114,7 +185,8 @@ namespace QLBTS_DAL
             }
         }
 
-        // 4️⃣ Cập nhật tồn kho (trừ khi đặt hàng, cộng khi hủy)
+
+
         public bool CapNhatTonKho(int maSP, int soLuongThayDoi)
         {
             try
@@ -141,76 +213,73 @@ namespace QLBTS_DAL
             }
         }
 
-        // 5️⃣ Lấy số lượng tồn kho hiện tại
-        public int GetTonKhoHienTai(int maSP)
+        public int GetGiaHienTai(int maSP, string size)
+        {
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    string query = "";
+
+                    if (size == "M")
+                    {
+                        query = "SELECT GiaM FROM SanPham WHERE MaSP = @MaSP";
+                    }
+                    else if (size == "L")
+                    {
+                        query = "SELECT GiaL FROM SanPham WHERE MaSP = @MaSP";
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Size không hợp lệ.");
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+                        conn.Open();
+                        object result = cmd.ExecuteScalar();
+
+                        if (result == null || result == DBNull.Value)
+                            return 0;
+
+                        return Convert.ToInt32(result);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - GetGiaHienTai: {ex.Message}", ex);
+            }
+        }
+
+        public int GetSoLuongTon(int maSP)
         {
             try
             {
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     string query = "SELECT SoLuong FROM SanPham WHERE MaSP = @MaSP";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@MaSP", maSP);
-
-                    conn.Open();
-                    object result = cmd.ExecuteScalar();
-                    return result != null ? Convert.ToInt32(result) : 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi DAL - GetTonKhoHienTai: {ex.Message}", ex);
-            }
-        }
-
-        public SanPhamDTO GetSanPhamCungTenKhacSize(int maSP, string tenSP, string sizeHienTai)
-        {
-            SanPhamDTO sp = null;
-
-            try
-            {
-                using (MySqlConnection conn = DatabaseHelper.GetConnection())
-                {
-                    string query = @"
-                SELECT MaSP, TenSP, LoaiSP, Size, SoLuong, Gia, KhuyenMai, HinhAnh, TrangThai
-                FROM SanPham
-                WHERE TenSP = @TenSP AND Size != @SizeHienTai AND MaSP != @MaSP
-                LIMIT 1";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@TenSP", tenSP);
-                        cmd.Parameters.AddWithValue("@SizeHienTai", sizeHienTai);
                         cmd.Parameters.AddWithValue("@MaSP", maSP);
-
                         conn.Open();
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                sp = new SanPhamDTO
-                                {
-                                    MaSP = reader.GetInt32("MaSP"),
-                                    TenSP = reader.GetString("TenSP"),
-                                    LoaiSP = reader.GetString("LoaiSP"),
-                                    Size = reader.GetString("Size"),
-                                    SoLuong = reader.GetInt32("SoLuong"),
-                                    Gia = reader.GetInt32("Gia"),
-                                    KhuyenMai = reader.GetInt32("KhuyenMai"),
-                                    TrangThai = reader.GetString("TrangThai"),
-                                    HinhAnh = reader["HinhAnh"] != DBNull.Value ? (byte[])reader["HinhAnh"] : null
-                                };
-                            }
-                        }
+
+                        object result = cmd.ExecuteScalar();
+
+                        if (result == null || result == DBNull.Value)
+                            return 0;
+
+                        return Convert.ToInt32(result);
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi DAL - GetSanPhamCungTenKhacSize: {ex.Message}", ex);
+                throw new Exception($"Lỗi DAL - GetSoLuongTon: {ex.Message}", ex);
             }
-
-            return sp;
         }
 
 

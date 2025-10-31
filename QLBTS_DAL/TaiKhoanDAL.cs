@@ -34,8 +34,12 @@ namespace QLBTS_DAL
                     string sql = "SELECT COUNT(*) FROM TaiKhoan WHERE TenDangNhap=@u AND MatKhau=@p";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@u", tk.TenDangNhap);
+                        cmd.Parameters.AddWithValue("@u", tk.TenDangNhap); 
+                        if (tk.MatKhau == null)
+                            throw new ArgumentNullException(nameof(tk.MatKhau));
+
                         cmd.Parameters.AddWithValue("@p", HashMatKhau(tk.MatKhau));
+
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
@@ -106,7 +110,10 @@ namespace QLBTS_DAL
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap);
-                        cmd.Parameters.AddWithValue("@MatKhau", HashMatKhau(tk.MatKhau));
+                        if (tk.MatKhau == null)
+                            throw new ArgumentNullException(nameof(tk.MatKhau));
+
+                        cmd.Parameters.AddWithValue("@p", HashMatKhau(tk.MatKhau));
                         cmd.Parameters.AddWithValue("@Email", tk.Email);
                         cmd.Parameters.AddWithValue("@Otp", tk.Otp);
                         cmd.Parameters.AddWithValue("@VaiTro", tk.VaiTro);

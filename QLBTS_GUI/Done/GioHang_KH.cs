@@ -14,12 +14,14 @@ namespace QLBTS_GUI
         private int maTK;
         private List<SanPhamDTO> danhSachSP = new();
         private GioHangBLL gioHangBLL;
+        private TinhToanBLL tinhToanBLL;
 
         public GioHang_KH()
         {
             InitializeComponent();
             maTK = Khung.MaTK_temp;
             gioHangBLL = new GioHangBLL(); 
+            tinhToanBLL = new TinhToanBLL();
         }
 
         private void GioHang_NVQ_Load(object sender, EventArgs e)
@@ -34,6 +36,11 @@ namespace QLBTS_GUI
 
             foreach (var sp in danhSachSP)
             {
+                decimal giaGoc = sp.GiaHienTai;
+                decimal giaSauKM = sp.KhuyenMaiHienTai > 0 ? giaGoc * (100 - sp.KhuyenMaiHienTai) / 100 : giaGoc;
+
+                giaSauKM = tinhToanBLL.RoundToThousand(giaSauKM);
+
                 Panel pnl = new Panel
                 {
                     Width = 580,
@@ -86,39 +93,102 @@ namespace QLBTS_GUI
 
                 Label lblGia = new Label
                 {
-                    Text = $"Giá: {sp.Gia:N0}đ",
+                    Text = $"Giá: {giaGoc:N0}đ",
                     Location = new Point(110, 70),
                     AutoSize = true
                 };
 
+                if (sp.KhuyenMaiHienTai > 0)
+                {
+                    lblGia.Font = new Font("Times New Roman", 12, FontStyle.Strikeout);
+                    lblGia.ForeColor = Color.Gray;
+
+                    Label lblGiaKM = new Label
+                    {
+                        Text = $" {giaSauKM:N0}đ",
+                        Location = new Point(lblGia.Right + 5, 70),
+                        AutoSize = true,
+                        Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                        ForeColor = Color.Red
+                    };
+
+                    pnl.Controls.Add(lblGiaKM);
+                }
+
+                pnl.Controls.Add(lblGia);
+
                 // Nút số lượng
-                Button btnTru = new Button { Text = "-", Width = 30, Height = 30, Location = new Point(300, 40) };
+                Button btnTru = new Button
+                {
+                    Text = "-",
+                    Width = 30,
+                    Height = 30,
+                    Location = new Point(400, 40)
+                };
+
                 Label lblSoLuong = new Label
                 {
                     Text = sp.SoLuong.ToString(),
                     Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                    Width = 30,
+                    Width = 45, 
+                    Height = 30,
                     TextAlign = ContentAlignment.MiddleCenter,
-                    Location = new Point(335, 45)
+                    Location = new Point(435, 40) 
                 };
-                Button btnCong = new Button { Text = "+", Width = 30, Height = 30, Location = new Point(370, 40) };
+
+                Button btnCong = new Button
+                {
+                    Text = "+",
+                    Width = 30,
+                    Height = 30,
+                    Location = new Point(485, 40)
+                };
+
                 Button btnXoa = new Button
                 {
                     Text = "🗑",
                     Width = 40,
                     Height = 35,
-                    Location = new Point(420, 40),
+                    Location = new Point(530, 38),
                     BackColor = Color.LightCoral
                 };
 
                 // Sự kiện thay đổi số lượng
-                btnCong.Click += (s, e) => { gioHangBLL.TangSoLuong(maTK, sp.MaSP) ; lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
-                btnTru.Click += (s, e) => { gioHangBLL.GiamSoLuong(maTK, sp.MaSP); lblSoLuong.Text = sp.SoLuong.ToString(); TinhTongTien(); };
+                btnCong.Click += (s, e) =>
+                {
+                    try
+                    {
+                        gioHangBLL.TangSoLuong(maTK, sp.MaSP, sp.Size);
+                        sp.SoLuong++;
+                        lblSoLuong.Text = sp.SoLuong.ToString();
+                        TinhTongTien();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                };
+
+                btnTru.Click += (s, e) =>
+                {
+                    try
+                    {
+                        gioHangBLL.GiamSoLuong(maTK, sp.MaSP, sp.Size);
+                        sp.SoLuong--;
+                        lblSoLuong.Text = sp.SoLuong.ToString();
+                        TinhTongTien();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                };
+
                 btnXoa.Click += (s, e) =>
                 {
                     if (MessageBox.Show("Xóa sản phẩm khỏi giỏ hàng?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        gioHangBLL.XoaSanPhamKhoiGio(maTK, sp.MaSP);
+                        gioHangBLL.XoaSanPhamKhoiGio(maTK, sp.MaSP, sp.Size);
                         LoadGioHang();
                     }
                 };
@@ -130,6 +200,7 @@ namespace QLBTS_GUI
             label2.Text = danhSachSP.Count.ToString(); // số lượng sản phẩm
             TinhTongTien();
         }
+
 
         private void TinhTongTien()
         {

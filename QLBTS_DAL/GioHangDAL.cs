@@ -6,7 +6,7 @@ namespace QLBTS_DAL
 {
     public class GioHangDAL
     {
-        // 1️⃣ Lấy giỏ hàng theo mã tài khoản (MaTK)
+        // 🔹 1️⃣ Lấy giỏ hàng theo mã tài khoản
         public static List<SanPhamDTO> LayGioHangTheoMaTK(int maTK)
         {
             List<SanPhamDTO> danhSach = new List<SanPhamDTO>();
@@ -15,11 +15,15 @@ namespace QLBTS_DAL
                 SELECT 
                     sp.MaSP,
                     sp.TenSP,
-                    sp.Size,
-                    sp.Gia,
-                    sp.KhuyenMai,
+                    sp.LoaiSP,
+                    sp.SoLuong AS TonKho,
+                    sp.GiaM,
+                    sp.GiaL,
+                    sp.KhuyenMaiM,
+                    sp.KhuyenMaiL,
                     sp.HinhAnh,
-                    ctgh.SoLuong
+                    ctgh.SoLuong,
+                    ctgh.Size
                 FROM ChiTietGioHang ctgh
                 JOIN SanPham sp ON ctgh.MaSP = sp.MaSP
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
@@ -32,7 +36,6 @@ namespace QLBTS_DAL
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@MaTK", maTK);
-
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -41,10 +44,13 @@ namespace QLBTS_DAL
                             {
                                 MaSP = reader.GetInt32("MaSP"),
                                 TenSP = reader.GetString("TenSP"),
-                                Size = reader.GetString("Size"),
-                                Gia = reader.GetInt32("Gia"),
-                                KhuyenMai = reader.GetInt32("KhuyenMai"),
+                                LoaiSP = reader.GetString("LoaiSP"),
+                                Size = reader["Size"].ToString(),
                                 SoLuong = reader.GetInt32("SoLuong"),
+                                GiaM = reader.GetInt32("GiaM"),
+                                GiaL = reader.GetInt32("GiaL"),
+                                KhuyenMaiM = reader.GetInt32("KhuyenMaiM"),
+                                KhuyenMaiL = reader.GetInt32("KhuyenMaiL"),
                                 HinhAnh = reader["HinhAnh"] == DBNull.Value ? null : (byte[])reader["HinhAnh"]
                             };
                             danhSach.Add(sp);
@@ -56,6 +62,7 @@ namespace QLBTS_DAL
             return danhSach;
         }
 
+        // 🔹 2️⃣ Thêm sản phẩm vào giỏ
         public static void ThemSanPhamVaoGio(int maTK, SanPhamDTO sp, int soLuong = 1)
         {
             using (var conn = DatabaseHelper.GetConnection())
@@ -65,18 +72,19 @@ namespace QLBTS_DAL
                 {
                     try
                     {
-                        // 1️⃣ Kiểm tra giỏ hàng của maTK
                         int maGH = 0;
+
+                        // 🔹 Lấy hoặc tạo giỏ hàng
                         string queryLayGH = "SELECT MaGH FROM GioHang WHERE MaTK = @MaTK LIMIT 1;";
                         using (var cmdGH = new MySqlCommand(queryLayGH, conn, transaction))
                         {
                             cmdGH.Parameters.AddWithValue("@MaTK", maTK);
                             var result = cmdGH.ExecuteScalar();
+
                             if (result != null)
                                 maGH = Convert.ToInt32(result);
                             else
                             {
-                                // Tạo giỏ hàng mới
                                 string queryTaoGH = "INSERT INTO GioHang (MaTK) VALUES (@MaTK); SELECT LAST_INSERT_ID();";
                                 using (var cmdTao = new MySqlCommand(queryTaoGH, conn, transaction))
                                 {
@@ -86,28 +94,68 @@ namespace QLBTS_DAL
                             }
                         }
 
-                        // 2️⃣ Kiểm tra sản phẩm đã có trong giỏ chưa
-                        string queryKiemTra = "SELECT COUNT(*) FROM ChiTietGioHang WHERE MaGH = @MaGH AND MaSP = @MaSP;";
-                        using (var cmdKT = new MySqlCommand(queryKiemTra, conn, transaction))
+                        // 🔹 Lấy số lượng tồn kho từ bảng SanPham
+                        int tonKho = 0;
+                        string queryTonKho = "SELECT SoLuong FROM SanPham WHERE MaSP = @MaSP;";
+                        using (var cmdTon = new MySqlCommand(queryTonKho, conn, transaction))
+                        {
+                            cmdTon.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                            var result = cmdTon.ExecuteScalar();
+                            if (result == null)
+                                throw new Exception("Sản phẩm không tồn tại!");
+                            tonKho = Convert.ToInt32(result);
+                        }
+
+                        // 🔹 Kiểm tra xem sản phẩm + size đã có trong giỏ chưa
+                        string queryLaySL = "SELECT SoLuong FROM ChiTietGioHang WHERE MaGH = @MaGH AND MaSP = @MaSP AND Size = @Size;";
+                        int slHienCo = 0;
+
+                        using (var cmdKT = new MySqlCommand(queryLaySL, conn, transaction))
                         {
                             cmdKT.Parameters.AddWithValue("@MaGH", maGH);
                             cmdKT.Parameters.AddWithValue("@MaSP", sp.MaSP);
-                            int count = Convert.ToInt32(cmdKT.ExecuteScalar());
-                            if (count > 0)
-                                throw new Exception("Sản phẩm đã có trong giỏ hàng!");
+                            cmdKT.Parameters.AddWithValue("@Size", sp.Size);
+                            var result = cmdKT.ExecuteScalar();
+                            if (result != null)
+                                slHienCo = Convert.ToInt32(result);
                         }
 
-                        // 3️⃣ Thêm sản phẩm mới vào giỏ
-                        string queryThem = @"
-                            INSERT INTO ChiTietGioHang (MaGH, MaSP, SoLuong)
-                            VALUES (@MaGH, @MaSP, @SoLuong);";
+                        int slMoi = slHienCo + soLuong;
 
-                        using (var cmdThem = new MySqlCommand(queryThem, conn, transaction))
+                        // 🔹 Kiểm tra vượt tồn kho
+                        if (slMoi > tonKho)
+                            throw new Exception($"Sản phẩm vượt quá số lượng tồn kho (còn {tonKho}).");
+
+                        if (slHienCo > 0)
                         {
-                            cmdThem.Parameters.AddWithValue("@MaGH", maGH);
-                            cmdThem.Parameters.AddWithValue("@MaSP", sp.MaSP);
-                            cmdThem.Parameters.AddWithValue("@SoLuong", soLuong);
-                            cmdThem.ExecuteNonQuery();
+                            // 🔹 Cập nhật tăng số lượng
+                            string queryCapNhat = @"
+                        UPDATE ChiTietGioHang
+                        SET SoLuong = @SoLuongMoi
+                        WHERE MaGH = @MaGH AND MaSP = @MaSP AND Size = @Size;";
+                            using (var cmdUpdate = new MySqlCommand(queryCapNhat, conn, transaction))
+                            {
+                                cmdUpdate.Parameters.AddWithValue("@SoLuongMoi", slMoi);
+                                cmdUpdate.Parameters.AddWithValue("@MaGH", maGH);
+                                cmdUpdate.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmdUpdate.Parameters.AddWithValue("@Size", sp.Size);
+                                cmdUpdate.ExecuteNonQuery();
+                            }
+                        }
+                        else
+                        {
+                            // 🔹 Thêm mới
+                            string queryThem = @"
+                        INSERT INTO ChiTietGioHang (MaGH, MaSP, Size, SoLuong)
+                        VALUES (@MaGH, @MaSP, @Size, @SoLuong);";
+                            using (var cmdThem = new MySqlCommand(queryThem, conn, transaction))
+                            {
+                                cmdThem.Parameters.AddWithValue("@MaGH", maGH);
+                                cmdThem.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmdThem.Parameters.AddWithValue("@Size", sp.Size);
+                                cmdThem.Parameters.AddWithValue("@SoLuong", soLuong);
+                                cmdThem.ExecuteNonQuery();
+                            }
                         }
 
                         transaction.Commit();
@@ -122,14 +170,14 @@ namespace QLBTS_DAL
         }
 
 
-        // 2️⃣ Cập nhật số lượng sản phẩm trong giỏ hàng
-        public static void CapNhatSoLuong(int maTK, int maSP, int soLuong)
+        // 🔹 3️⃣ Cập nhật số lượng
+        public static void CapNhatSoLuong(int maTK, int maSP, string size, int soLuong)
         {
             string query = @"
                 UPDATE ChiTietGioHang ctgh
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
                 SET ctgh.SoLuong = @SoLuong
-                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;
+                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -140,18 +188,19 @@ namespace QLBTS_DAL
                     cmd.Parameters.AddWithValue("@SoLuong", soLuong);
                     cmd.Parameters.AddWithValue("@MaTK", maTK);
                     cmd.Parameters.AddWithValue("@MaSP", maSP);
+                    cmd.Parameters.AddWithValue("@Size", size);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        // 3️⃣ Xóa sản phẩm khỏi giỏ hàng
-        public static void XoaSanPhamKhoiGio(int maTK, int maSP)
+        // 🔹 4️⃣ Xóa 1 sản phẩm khỏi giỏ
+        public static void XoaSanPhamKhoiGio(int maTK, int maSP, string size)
         {
             string query = @"
                 DELETE ctgh FROM ChiTietGioHang ctgh
                 JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;
+                WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;
             ";
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -161,12 +210,13 @@ namespace QLBTS_DAL
                 {
                     cmd.Parameters.AddWithValue("@MaTK", maTK);
                     cmd.Parameters.AddWithValue("@MaSP", maSP);
+                    cmd.Parameters.AddWithValue("@Size", size);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        // 4️⃣ Xóa toàn bộ giỏ hàng sau khi thanh toán
+        // 🔹 5️⃣ Xóa toàn bộ giỏ
         public static void XoaToanBoGio(int maTK)
         {
             string query = @"
@@ -186,7 +236,7 @@ namespace QLBTS_DAL
             }
         }
 
-        // Đặt hàng danh cho khách
+        // 🔹 6️⃣ Đặt hàng khách hàng (có size)
         public static int DatHangKH(int maKhach, List<SanPhamDTO> listSP)
         {
             if (listSP == null || listSP.Count == 0)
@@ -197,94 +247,80 @@ namespace QLBTS_DAL
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                using (var transaction = conn.BeginTransaction())
+                using (var tran = conn.BeginTransaction())
                 {
                     try
                     {
-                        // 🔹 1. Kiểm tra tồn kho từng sản phẩm
+                        int tongTien = 0;
+
+                        // 🔹 1️⃣ Kiểm tra tồn kho và tính tổng tiền
                         foreach (var sp in listSP)
                         {
-                            string queryCheck = "SELECT SoLuong, TenSP FROM SanPham WHERE MaSP = @MaSP";
-                            using (var cmdCheck = new MySqlCommand(queryCheck, conn, transaction))
+                            string queryCheck = "SELECT SoLuong, TenSP FROM SanPham WHERE MaSP = @MaSP;";
+                            using (var cmd = new MySqlCommand(queryCheck, conn, tran))
                             {
-                                cmdCheck.Parameters.AddWithValue("@MaSP", sp.MaSP);
-
-                                using (var reader = cmdCheck.ExecuteReader())
+                                cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                using (var reader = cmd.ExecuteReader())
                                 {
                                     if (!reader.Read())
-                                        throw new Exception($"Sản phẩm có mã {sp.MaSP} không tồn tại.");
+                                        throw new Exception($"Không tồn tại sản phẩm có mã {sp.MaSP}.");
 
-                                    // ✅ sửa lại đây
-                                    int soLuongTon = Convert.ToInt32(reader["SoLuong"]);
-                                    string tenSP = reader["TenSP"].ToString();
+                                    int tonKho = Convert.ToInt32(reader["SoLuong"]);
+                                    string tenSP = Convert.ToString(reader["TenSP"]) ?? "";
 
-                                    if (soLuongTon < sp.SoLuong)
-                                    {
-                                        reader.Close();
-                                        throw new Exception($"Sản phẩm '{tenSP}' chỉ còn {soLuongTon} sản phẩm, không đủ để đặt hàng.");
-                                    }
+                                    if (tonKho < sp.SoLuong)
+                                        throw new Exception($"'{tenSP}' chỉ còn {tonKho} sản phẩm trong kho.");
+
+                                    tongTien += sp.GiaHienTai * sp.SoLuong;
                                 }
                             }
                         }
 
-                        // 🔹 2. Tính tổng tiền
-                        int tongTien = 0;
-                        foreach (var sp in listSP)
-                        {
-                            int donGia = ((sp.Gia - sp.Gia * sp.KhuyenMai / 100 + 500) / 1000) * 1000;
-                            tongTien += donGia * sp.SoLuong;
-                        }
-
-                        // 🔹 3. Tạo đơn hàng mới
-                        string queryDonHang = @"
+                        // 🔹 2️⃣ Tạo đơn hàng mới
+                        string queryDH = @"
                     INSERT INTO DonHang (MaKhach, NgayDat, TongTien, TrangThai)
-                    VALUES (@MaKhach, @NgayDat, @TongTien, 'Chờ xác nhận');
+                    VALUES (@MaKhach, NOW(), @TongTien, 'Chờ xác nhận');
                     SELECT LAST_INSERT_ID();";
-
-                        using (var cmd = new MySqlCommand(queryDonHang, conn, transaction))
+                        using (var cmd = new MySqlCommand(queryDH, conn, tran))
                         {
                             cmd.Parameters.AddWithValue("@MaKhach", maKhach);
-                            cmd.Parameters.AddWithValue("@NgayDat", DateTime.Now);
                             cmd.Parameters.AddWithValue("@TongTien", tongTien);
                             maDH = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        // 🔹 4. Thêm chi tiết đơn hàng + cập nhật tồn kho
-                        string queryCT = @"
-                    INSERT INTO ChiTietDonHang (MaDH, MaSP, SoLuong, DonGia)
-                    VALUES (@MaDH, @MaSP, @SoLuong, @DonGia);";
-
-                        string queryUpdateTonKho = @"
-                    UPDATE SanPham 
-                    SET SoLuong = SoLuong - @SoLuong
-                    WHERE MaSP = @MaSP;";
-
+                        // 🔹 3️⃣ Thêm chi tiết đơn hàng và trừ tồn kho
                         foreach (var sp in listSP)
                         {
-                            int donGia = ((sp.Gia - sp.Gia * sp.KhuyenMai / 100 + 500) / 1000) * 1000;
-
-                            using (var cmdCT = new MySqlCommand(queryCT, conn, transaction))
+                            // Chi tiết đơn hàng
+                            string queryCT = @"
+                        INSERT INTO ChiTietDonHang (MaDH, MaSP, Size, SoLuong, DonGia)
+                        VALUES (@MaDH, @MaSP, @Size, @SoLuong, @DonGia);";
+                            using (var cmd = new MySqlCommand(queryCT, conn, tran))
                             {
-                                cmdCT.Parameters.AddWithValue("@MaDH", maDH);
-                                cmdCT.Parameters.AddWithValue("@MaSP", sp.MaSP);
-                                cmdCT.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
-                                cmdCT.Parameters.AddWithValue("@DonGia", donGia);
-                                cmdCT.ExecuteNonQuery();
+                                cmd.Parameters.AddWithValue("@MaDH", maDH);
+                                cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmd.Parameters.AddWithValue("@Size", string.IsNullOrEmpty(sp.Size) ? DBNull.Value : (object)sp.Size);
+                                cmd.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
+                                cmd.Parameters.AddWithValue("@DonGia", sp.GiaHienTai);
+                                cmd.ExecuteNonQuery();
                             }
 
-                            using (var cmdUpdate = new MySqlCommand(queryUpdateTonKho, conn, transaction))
+                            // Cập nhật tồn kho
+                            string queryUpdate = "UPDATE SanPham SET SoLuong = SoLuong - @SL WHERE MaSP = @MaSP;";
+                            using (var cmdU = new MySqlCommand(queryUpdate, conn, tran))
                             {
-                                cmdUpdate.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
-                                cmdUpdate.Parameters.AddWithValue("@MaSP", sp.MaSP);
-                                cmdUpdate.ExecuteNonQuery();
+                                cmdU.Parameters.AddWithValue("@SL", sp.SoLuong);
+                                cmdU.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmdU.ExecuteNonQuery();
                             }
                         }
 
-                        transaction.Commit();
+                        // 🔹 4️⃣ Xác nhận giao dịch
+                        tran.Commit();
                     }
                     catch (Exception ex)
                     {
-                        transaction.Rollback();
+                        tran.Rollback();
                         throw new Exception($"Đặt hàng thất bại: {ex.Message}");
                     }
                 }
@@ -293,8 +329,7 @@ namespace QLBTS_DAL
             return maDH;
         }
 
-
-
+        // 7 ⃣ Bán hàng NVQ (có size)
         public static int BanHangNVQ(List<SanPhamDTO> listSP)
         {
             if (listSP == null || listSP.Count == 0)
@@ -305,95 +340,83 @@ namespace QLBTS_DAL
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                using (var transaction = conn.BeginTransaction())
+                using (var tran = conn.BeginTransaction())
                 {
                     try
                     {
-                        // 🔹 1. Kiểm tra tồn kho
+                        int tongTien = 0;
+
+                        // 🔹 1️⃣ Kiểm tra tồn kho + tính tổng tiền
                         foreach (var sp in listSP)
                         {
-                            string queryCheck = "SELECT SoLuong, TenSP FROM SanPham WHERE MaSP = @MaSP";
-                            using (var cmdCheck = new MySqlCommand(queryCheck, conn, transaction))
+                            string queryCheck = "SELECT SoLuong, TenSP FROM SanPham WHERE MaSP = @MaSP;";
+                            using (var cmd = new MySqlCommand(queryCheck, conn, tran))
                             {
-                                cmdCheck.Parameters.AddWithValue("@MaSP", sp.MaSP);
-
-                                using (var reader = cmdCheck.ExecuteReader())
+                                cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                using (var reader = cmd.ExecuteReader())
                                 {
                                     if (!reader.Read())
-                                        throw new Exception($"Sản phẩm có mã {sp.MaSP} không tồn tại.");
+                                        throw new Exception($"Không tồn tại sản phẩm có mã {sp.MaSP}.");
 
                                     int tonKho = Convert.ToInt32(reader["SoLuong"]);
-                                    string tenSP = reader["TenSP"].ToString();
+                                    string tenSP = Convert.ToString(reader["TenSP"]) ?? "";
 
                                     if (tonKho < sp.SoLuong)
-                                    {
-                                        reader.Close();
-                                        throw new Exception($"Sản phẩm '{tenSP}' chỉ còn {tonKho} sản phẩm trong kho.");
-                                    }
+                                        throw new Exception($"'{tenSP}' chỉ còn {tonKho} sản phẩm trong kho.");
+
+                                    tongTien += sp.GiaHienTai * sp.SoLuong;
                                 }
                             }
                         }
 
-                        // 🔹 2. Tính tổng tiền
-                        int tongTien = 0;
-                        foreach (var sp in listSP)
+                        // 🔹 2️⃣ Tạo đơn hàng mới (nhân viên bán trực tiếp => MaKhach = NULL)
+                        string queryDH = @"
+                    INSERT INTO DonHang (MaKhach, NgayDat, TongTien, TrangThai)
+                    VALUES (NULL, NOW(), @TongTien, 'Hoàn tất');
+                    SELECT LAST_INSERT_ID();";
+                        using (var cmd = new MySqlCommand(queryDH, conn, tran))
                         {
-                            int donGia = ((sp.Gia - sp.Gia * sp.KhuyenMai / 100 + 500) / 1000) * 1000;
-                            tongTien += donGia * sp.SoLuong;
-                        }
-
-                        // 🔹 3. Tạo đơn hàng mới
-                        string queryDonHang = @"
-                            INSERT INTO DonHang (MaKhach, NgayDat, TongTien, TrangThai)
-                            VALUES (NULL, @NgayDat, @TongTien, 'Hoàn tất');
-                            SELECT LAST_INSERT_ID();";
-
-                        using (var cmd = new MySqlCommand(queryDonHang, conn, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@NgayDat", DateTime.Now);
                             cmd.Parameters.AddWithValue("@TongTien", tongTien);
                             maDH = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
-                        // 🔹 4. Thêm chi tiết đơn hàng + trừ tồn kho
-                        string queryCT = @"
-                            INSERT INTO ChiTietDonHang (MaDH, MaSP, SoLuong, DonGia)
-                            VALUES (@MaDH, @MaSP, @SoLuong, @DonGia);";
-
-                        string queryUpdateTonKho = @"
-                            UPDATE SanPham 
-                            SET SoLuong = SoLuong - @SoLuong
-                            WHERE MaSP = @MaSP;";
-
+                        // 🔹 3️⃣ Thêm chi tiết đơn hàng + trừ tồn kho
                         foreach (var sp in listSP)
                         {
-                            int donGia = ((sp.Gia - sp.Gia * sp.KhuyenMai / 100 + 500) / 1000) * 1000;
+                            // Tính giá sau khuyến mãi và làm tròn
+                            int khuyenMai = sp.KhuyenMaiHienTai;
+                            int donGia = ((sp.GiaHienTai - sp.GiaHienTai * khuyenMai / 100 + 500) / 1000) * 1000;
 
-                            // Chi tiết đơn hàng
-                            using (var cmdCT = new MySqlCommand(queryCT, conn, transaction))
+                            // Thêm chi tiết đơn hàng
+                            string queryCT = @"
+                        INSERT INTO ChiTietDonHang (MaDH, MaSP, Size, SoLuong, DonGia)
+                        VALUES (@MaDH, @MaSP, @Size, @SoLuong, @DonGia);";
+                            using (var cmdCT = new MySqlCommand(queryCT, conn, tran))
                             {
                                 cmdCT.Parameters.AddWithValue("@MaDH", maDH);
                                 cmdCT.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmdCT.Parameters.AddWithValue("@Size", string.IsNullOrEmpty(sp.Size) ? DBNull.Value : (object)sp.Size);
                                 cmdCT.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
                                 cmdCT.Parameters.AddWithValue("@DonGia", donGia);
                                 cmdCT.ExecuteNonQuery();
                             }
 
                             // Giảm tồn kho
-                            using (var cmdUpdate = new MySqlCommand(queryUpdateTonKho, conn, transaction))
+                            string queryUpdate = "UPDATE SanPham SET SoLuong = SoLuong - @SL WHERE MaSP = @MaSP;";
+                            using (var cmdU = new MySqlCommand(queryUpdate, conn, tran))
                             {
-                                cmdUpdate.Parameters.AddWithValue("@SoLuong", sp.SoLuong);
-                                cmdUpdate.Parameters.AddWithValue("@MaSP", sp.MaSP);
-                                cmdUpdate.ExecuteNonQuery();
+                                cmdU.Parameters.AddWithValue("@SL", sp.SoLuong);
+                                cmdU.Parameters.AddWithValue("@MaSP", sp.MaSP);
+                                cmdU.ExecuteNonQuery();
                             }
                         }
 
-                        // 🔹 5. Hoàn tất
-                        transaction.Commit();
+                        // 🔹 4️⃣ Hoàn tất giao dịch
+                        tran.Commit();
                     }
                     catch (Exception ex)
                     {
-                        transaction.Rollback();
+                        tran.Rollback();
                         throw new Exception($"Bán hàng thất bại: {ex.Message}");
                     }
                 }
@@ -404,147 +427,205 @@ namespace QLBTS_DAL
 
 
         // 2️⃣.1 Tăng số lượng sản phẩm (+1)
-        public static void TangSoLuong(int maTK, int maSP)
+        public static void TangSoLuong(int maTK, int maSP, string size)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-
-                // Lấy số lượng tồn kho
-                int soLuongTon = 0;
-                string querySLTon = "SELECT SoLuong FROM SanPham WHERE MaSP = @MaSP;";
-                using (var cmdTon = new MySqlCommand(querySLTon, conn))
+                using (var tran = conn.BeginTransaction())
                 {
-                    cmdTon.Parameters.AddWithValue("@MaSP", maSP);
-                    var result = cmdTon.ExecuteScalar();
-                    soLuongTon = result == null ? 0 : Convert.ToInt32(result);
-                }
+                    try
+                    {
+                        // 🔹 1️⃣ Lấy số lượng tồn kho sản phẩm
+                        int soLuongTon = 0;
+                        string queryTonKho = "SELECT SoLuong, TenSP FROM SanPham WHERE MaSP = @MaSP;";
+                        string tenSP = "";
 
-                // Lấy số lượng hiện tại trong giỏ
-                int soLuongTrongGio = 0;
-                string querySLGio = @"
-            SELECT ctgh.SoLuong
-            FROM ChiTietGioHang ctgh
-            JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-            WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;";
-                using (var cmdGio = new MySqlCommand(querySLGio, conn))
-                {
-                    cmdGio.Parameters.AddWithValue("@MaTK", maTK);
-                    cmdGio.Parameters.AddWithValue("@MaSP", maSP);
-                    var result = cmdGio.ExecuteScalar();
-                    soLuongTrongGio = result == null ? 0 : Convert.ToInt32(result);
-                }
+                        using (var cmd = new MySqlCommand(queryTonKho, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@MaSP", maSP);
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                    throw new Exception("Sản phẩm không tồn tại!");
+                                soLuongTon = Convert.ToInt32(reader["SoLuong"]);
+                                tenSP = Convert.ToString(reader["TenSP"]) ?? "";
+                            }
+                        }
 
-                if (soLuongTrongGio + 1 > soLuongTon)
-                    throw new Exception("Sản phẩm trong kho không đủ số lượng!");
-
-                // Tăng +1
-                string queryUpdate = @"
-            UPDATE ChiTietGioHang ctgh
-            JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-            SET ctgh.SoLuong = ctgh.SoLuong + 1
-            WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;";
-                using (var cmdUp = new MySqlCommand(queryUpdate, conn))
-                {
-                    cmdUp.Parameters.AddWithValue("@MaTK", maTK);
-                    cmdUp.Parameters.AddWithValue("@MaSP", maSP);
-                    cmdUp.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // 2️⃣.2 Giảm số lượng sản phẩm (-1)
-        public static void GiamSoLuong(int maTK, int maSP)
-        {
-            using (var conn = DatabaseHelper.GetConnection())
-            {
-                conn.Open();
-
-                // Lấy số lượng hiện tại
-                int soLuongTrongGio = 0;
-                string querySL = @"
+                        // 🔹 2️⃣ Lấy số lượng hiện tại trong giỏ theo size
+                        int soLuongTrongGio = 0;
+                        string querySLGio = @"
                     SELECT ctgh.SoLuong
                     FROM ChiTietGioHang ctgh
                     JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-                    WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;";
-                using (var cmd = new MySqlCommand(querySL, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaTK", maTK);
-                    cmd.Parameters.AddWithValue("@MaSP", maSP);
-                    var result = cmd.ExecuteScalar();
-                    soLuongTrongGio = result == null ? 0 : Convert.ToInt32(result);
-                }
+                    WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;";
 
-                if (soLuongTrongGio <= 1)
-                    throw new Exception("Số lượng tối thiểu là 1!");
-
-                // Giảm -1
-                string queryUpdate = @"
-            UPDATE ChiTietGioHang ctgh
-            JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
-            SET ctgh.SoLuong = ctgh.SoLuong - 1
-            WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP;";
-                using (var cmdUp = new MySqlCommand(queryUpdate, conn))
-                {
-                    cmdUp.Parameters.AddWithValue("@MaTK", maTK);
-                    cmdUp.Parameters.AddWithValue("@MaSP", maSP);
-                    cmdUp.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public static decimal[] TinhTongTienGioHang(int maTK)
-        {
-            string query = @"
-                SELECT 
-                SUM(ct.SoLuong * sp.Gia) AS TongTruocKM,
-                SUM(ct.SoLuong * (sp.Gia - (sp.Gia * sp.KhuyenMai / 100))) AS TongSauKM
-                FROM ChiTietGioHang ct
-                JOIN GioHang gh ON ct.MaGH = gh.MaGH
-                JOIN SanPham sp ON ct.MaSP = sp.MaSP
-                WHERE gh.MaTK = @MaTK;
-            ";
-
-            try
-            {
-                using (var conn = DatabaseHelper.GetConnection())
-                {
-                    conn.Open();
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MaTK", maTK);
-
-                        using (var reader = cmd.ExecuteReader())
+                        using (var cmd = new MySqlCommand(querySLGio, conn, tran))
                         {
-                            decimal tongTruocKM = 0;
-                            decimal tongSauKM = 0;
-
-                            if (reader.Read())
-                            {
-                                tongTruocKM = reader["TongTruocKM"] != DBNull.Value
-                                    ? Convert.ToDecimal(reader["TongTruocKM"])
-                                    : 0;
-
-                                tongSauKM = reader["TongSauKM"] != DBNull.Value
-                                    ? Convert.ToDecimal(reader["TongSauKM"])
-                                    : 0;
-                            }
-
-                            // 🔹 Làm tròn đến hàng nghìn
-                            tongTruocKM = Math.Round(tongTruocKM / 1000m, 0) * 1000;
-                            tongSauKM = Math.Round(tongSauKM / 1000m, 0) * 1000;
-
-                            return new decimal[] { tongTruocKM, tongSauKM };
+                            cmd.Parameters.AddWithValue("@MaTK", maTK);
+                            cmd.Parameters.AddWithValue("@MaSP", maSP);
+                            cmd.Parameters.AddWithValue("@Size", size);
+                            var result = cmd.ExecuteScalar();
+                            soLuongTrongGio = result == null ? 0 : Convert.ToInt32(result);
                         }
+
+                        // 🔹 3️⃣ Kiểm tra tồn kho
+                        if (soLuongTrongGio + 1 > soLuongTon)
+                            throw new Exception($"'{tenSP}' chỉ còn {soLuongTon} sản phẩm trong kho.");
+
+                        // 🔹 4️⃣ Cập nhật tăng số lượng +1
+                        string queryTang = @"
+                    UPDATE ChiTietGioHang ctgh
+                    JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
+                    SET ctgh.SoLuong = ctgh.SoLuong + 1
+                    WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;";
+
+                        using (var cmd = new MySqlCommand(queryTang, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@MaTK", maTK);
+                            cmd.Parameters.AddWithValue("@MaSP", maSP);
+                            cmd.Parameters.AddWithValue("@Size", size);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw new Exception($"Không thể tăng số lượng: {ex.Message}");
                     }
                 }
             }
-            catch (Exception ex)
+        }
+
+
+        // 2️⃣.2 Giảm số lượng sản phẩm (-1)
+        public static void GiamSoLuong(int maTK, int maSP, string size)
+        {
+            using (var conn = DatabaseHelper.GetConnection())
             {
-                throw new Exception($"Lỗi DAL - TinhTongTienGioHang: {ex.Message}", ex);
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // 🔹 1️⃣ Lấy số lượng trong giỏ hiện tại theo size
+                        int soLuongTrongGio = 0;
+                        string querySLGio = @"
+                    SELECT ctgh.SoLuong
+                    FROM ChiTietGioHang ctgh
+                    JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
+                    WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;
+                ";
+                        using (var cmd = new MySqlCommand(querySLGio, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@MaTK", maTK);
+                            cmd.Parameters.AddWithValue("@MaSP", maSP);
+                            cmd.Parameters.AddWithValue("@Size", size);
+                            var result = cmd.ExecuteScalar();
+                            soLuongTrongGio = result == null ? 0 : Convert.ToInt32(result);
+                        }
+
+                        if (soLuongTrongGio <= 1)
+                            throw new Exception("Số lượng tối thiểu là 1!");
+
+                        // 🔹 2️⃣ Kiểm tra tồn kho thực tế (phòng lỗi dữ liệu)
+                        int soLuongTon = 0;
+                        string querySLTon = "SELECT SoLuong FROM SanPham WHERE MaSP = @MaSP;";
+                        using (var cmdTon = new MySqlCommand(querySLTon, conn, tran))
+                        {
+                            cmdTon.Parameters.AddWithValue("@MaSP", maSP);
+                            var result = cmdTon.ExecuteScalar();
+                            soLuongTon = result == null ? 0 : Convert.ToInt32(result);
+                        }
+
+                        if (soLuongTon <= 0)
+                            throw new Exception("Sản phẩm này hiện đã hết hàng trong kho!");
+
+                        // 🔹 3️⃣ Giảm -1 trong giỏ hàng theo size
+                        string queryUpdate = @"
+                    UPDATE ChiTietGioHang ctgh
+                    JOIN GioHang gh ON ctgh.MaGH = gh.MaGH
+                    SET ctgh.SoLuong = ctgh.SoLuong - 1
+                    WHERE gh.MaTK = @MaTK AND ctgh.MaSP = @MaSP AND ctgh.Size = @Size;
+                ";
+                        using (var cmdUp = new MySqlCommand(queryUpdate, conn, tran))
+                        {
+                            cmdUp.Parameters.AddWithValue("@MaTK", maTK);
+                            cmdUp.Parameters.AddWithValue("@MaSP", maSP);
+                            cmdUp.Parameters.AddWithValue("@Size", size);
+                            cmdUp.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw new Exception($"Không thể giảm số lượng: {ex.Message}");
+                    }
+                }
             }
         }
 
+        // 6️⃣ Tính tổng tiền giỏ hàng
+        public static decimal[] TinhTongTienGioHang(int maTK)
+        {
+            string query = @"
+        SELECT 
+            ct.SoLuong,
+            ct.Size,
+            sp.GiaM,
+            sp.GiaL,
+            sp.KhuyenMaiM,
+            sp.KhuyenMaiL
+        FROM ChiTietGioHang ct
+        JOIN GioHang gh ON ct.MaGH = gh.MaGH
+        JOIN SanPham sp ON ct.MaSP = sp.MaSP
+        WHERE gh.MaTK = @MaTK;
+    ";
+
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        decimal tongTruocKM = 0, tongSauKM = 0;
+
+                        while (reader.Read())
+                        {
+                            int soLuong = Convert.ToInt32(reader["SoLuong"]);
+                            string size = reader["Size"].ToString();
+
+                            decimal giaSP = size == "M" ? Convert.ToDecimal(reader["GiaM"])
+                                                        : Convert.ToDecimal(reader["GiaL"]);
+                            decimal km = size == "M" ? Convert.ToDecimal(reader["KhuyenMaiM"])
+                                                     : Convert.ToDecimal(reader["KhuyenMaiL"]);
+
+                            decimal giaSauKM = giaSP * (1 - km / 100);
+
+                            // Làm tròn từng sản phẩm
+                            giaSauKM = Math.Round(giaSauKM / 1000m) * 1000;
+
+                            tongTruocKM += giaSP * soLuong;
+                            tongSauKM += giaSauKM * soLuong;
+                        }
+
+                        // Tổng cuối cùng làm tròn
+                        tongTruocKM = Math.Ceiling(tongTruocKM / 1000m) * 1000;
+                        tongSauKM = Math.Ceiling(tongSauKM / 1000m) * 1000;
+
+                        return new decimal[] { tongTruocKM, tongSauKM };
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -83,7 +83,7 @@ namespace QLBTS_GUI
 
                     // Giá gốc (den, có gạch ngang)
                     Label lbGiaGoc = new Label();
-                    lbGiaGoc.Text = $"{sp.Gia:N0} VNĐ";
+                    lbGiaGoc.Text = $"{sp.GiaM:N0} VNĐ";
                     lbGiaGoc.Font = new Font("Segoe UI", 9, FontStyle.Strikeout);
                     lbGiaGoc.ForeColor = Color.Black;
                     lbGiaGoc.AutoSize = false;
@@ -93,9 +93,9 @@ namespace QLBTS_GUI
                     pn.Controls.Add(lbGiaGoc);
 
                     // Giá khuyến mãi (đỏ, dưới cùng)
-                    int giaKM = (int)(Math.Round((sp.Gia - (sp.Gia * sp.KhuyenMai / 100.0)) / 1000.0) * 1000);
+                    int giaKM = (int)(Math.Round((sp.GiaM - (sp.GiaM * sp.KhuyenMaiM / 100.0)) / 1000.0) * 1000);
                     Label lbGiaKM = new Label();
-                    lbGiaKM.Text = $"{giaKM:N0} VNĐ (-{sp.KhuyenMai}%)";
+                    lbGiaKM.Text = $"{giaKM:N0} VNĐ (-{sp.KhuyenMaiM}%)";
                     lbGiaKM.Font = new Font("Segoe UI", 10, FontStyle.Bold);
                     lbGiaKM.ForeColor = Color.Red;
                     lbGiaKM.AutoSize = false;

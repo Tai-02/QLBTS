@@ -88,7 +88,7 @@ namespace QLBTS_GUI
 
                 Label lblGia = new Label()
                 {
-                    Text = $"Giá: {sp.Gia:N0}đ",
+                    Text = $"Giá: {sp.GiaHienTai:N0}đ",
                     Location = new Point(110, 70),
                     AutoSize = true
                 };

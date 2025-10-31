@@ -183,9 +183,9 @@
             label1.Font = new Font("Times New Roman", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(254, 32);
+            label1.Size = new Size(227, 32);
             label1.TabIndex = 3;
-            label1.Text = "Giỏ hàng của khách";
+            label1.Text = "Giỏ hàng của bạn";
             // 
             // GioHang_KH
             // 

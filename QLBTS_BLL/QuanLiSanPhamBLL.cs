@@ -14,17 +14,7 @@ namespace QLBTS_BLL
 
         public bool ThemSanPham(SanPhamDTO sp)
         {
-            if (string.IsNullOrWhiteSpace(sp.TenSP))
-                throw new ArgumentException("Tên sản phẩm không được để trống!");
-            if (sp.Gia <= 0)
-                throw new ArgumentException("Giá sản phẩm phải lớn hơn 0!");
-            if (sp.Size != "M" && sp.Size != "L")
-                throw new ArgumentException("Size phải là M hoặc L");
-            if (sp.SoLuong < 0)
-                throw new ArgumentException("Số lượng không hợp lệ!");
-            if (sp.KhuyenMai < 0)
-                throw new ArgumentException("Khuyến mãi không hợp lệ!");
-
+            KiemTraHopLe(sp, isUpdate: false);
             return QuanliSanPhamDAL.Insert(sp);
         }
 
@@ -32,17 +22,8 @@ namespace QLBTS_BLL
         {
             if (sp.MaSP <= 0)
                 throw new ArgumentException("Mã sản phẩm không hợp lệ!");
-            if (string.IsNullOrWhiteSpace(sp.TenSP))
-                throw new ArgumentException("Tên sản phẩm không được để trống!");
-            if (sp.Gia <= 0)
-                throw new ArgumentException("Giá sản phẩm phải lớn hơn 0!");
-            if (sp.Size != "M" && sp.Size != "L")
-                throw new ArgumentException("Size phải là M hoặc L");
-            if (sp.SoLuong < 0)
-                throw new ArgumentException("Số lượng không hợp lệ!");
-            if (sp.KhuyenMai < 0)
-                throw new ArgumentException("Khuyến mãi không hợp lệ!");
 
+            KiemTraHopLe(sp, isUpdate: true);
             return QuanliSanPhamDAL.Update(sp);
         }
 
@@ -58,5 +39,26 @@ namespace QLBTS_BLL
             return QuanliSanPhamDAL.GetDistinctLoaiSP();
         }
 
+        // ✅ Kiểm tra hợp lệ (phù hợp DTO dùng int, không nullable)
+        private void KiemTraHopLe(SanPhamDTO sp, bool isUpdate)
+        {
+            if (sp == null)
+                throw new ArgumentNullException(nameof(sp), "Thông tin sản phẩm không được null!");
+
+            if (string.IsNullOrWhiteSpace(sp.TenSP))
+                throw new ArgumentException("Tên sản phẩm không được để trống!");
+
+            // ✅ Ít nhất 1 giá > 0
+            if (sp.GiaM <= 0 && sp.GiaL <= 0)
+                throw new ArgumentException("Phải có ít nhất một giá (M hoặc L) hợp lệ (> 0)!");
+
+            // ✅ Kiểm tra khuyến mãi (nếu có)
+            if (sp.KhuyenMaiM < 0 || sp.KhuyenMaiL < 0)
+                throw new ArgumentException("Khuyến mãi không được nhỏ hơn 0!");
+
+            if (sp.SoLuong < 0)
+                throw new ArgumentException("Số lượng không hợp lệ!");
+
+        }
     }
 }

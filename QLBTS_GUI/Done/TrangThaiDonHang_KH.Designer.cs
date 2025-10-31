@@ -34,10 +34,10 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             lblTitle = new Label();
             dgvOrders = new DataGridView();
-            colMaDH = new DataGridViewTextBoxColumn();
-            colNgayDat = new DataGridViewTextBoxColumn();
-            colGia = new DataGridViewTextBoxColumn();
-            colTrangThai = new DataGridViewTextBoxColumn();
+            MaDH = new DataGridViewTextBoxColumn();
+            NgayDat = new DataGridViewTextBoxColumn();
+            TongTien = new DataGridViewTextBoxColumn();
+            TrangThai = new DataGridViewTextBoxColumn();
             colThongTin = new DataGridViewTextBoxColumn();
             colChiTiet = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
@@ -74,7 +74,7 @@
             dgvOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvOrders.ColumnHeadersHeight = 45;
             dgvOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { colMaDH, colNgayDat, colGia, colTrangThai, colThongTin, colChiTiet });
+            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai, colThongTin, colChiTiet });
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.FromArgb(224, 224, 224);
             dgvOrders.Location = new Point(40, 140);
@@ -88,49 +88,50 @@
             dgvOrders.Size = new Size(920, 400);
             dgvOrders.TabIndex = 2;
             // 
-            // colMaDH
+            // MaDH
             // 
-            colMaDH.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            colMaDH.DataPropertyName = "DisplayMaDH";
+            MaDH.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            MaDH.DataPropertyName = "MaDH";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            colMaDH.DefaultCellStyle = dataGridViewCellStyle2;
-            colMaDH.FillWeight = 80F;
-            colMaDH.HeaderText = "Mã đơn hàng";
-            colMaDH.MinimumWidth = 6;
-            colMaDH.Name = "colMaDH";
-            colMaDH.ReadOnly = true;
-            colMaDH.Width = 158;
+            MaDH.DefaultCellStyle = dataGridViewCellStyle2;
+            MaDH.FillWeight = 80F;
+            MaDH.HeaderText = "Mã đơn hàng";
+            MaDH.MinimumWidth = 6;
+            MaDH.Name = "MaDH";
+            MaDH.ReadOnly = true;
+            MaDH.Width = 158;
             // 
-            // colNgayDat
+            // NgayDat
             // 
-            colNgayDat.HeaderText = "Ngày đặt đơn";
-            colNgayDat.MinimumWidth = 6;
-            colNgayDat.Name = "colNgayDat";
-            colNgayDat.ReadOnly = true;
+            NgayDat.DataPropertyName = "NgayDat";
+            NgayDat.HeaderText = "Ngày đặt đơn";
+            NgayDat.MinimumWidth = 6;
+            NgayDat.Name = "NgayDat";
+            NgayDat.ReadOnly = true;
             // 
-            // colGia
+            // TongTien
             // 
-            colGia.DataPropertyName = "DisplayTongTien";
+            TongTien.DataPropertyName = "TongTien";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            colGia.DefaultCellStyle = dataGridViewCellStyle3;
-            colGia.FillWeight = 90F;
-            colGia.HeaderText = "Giá";
-            colGia.MinimumWidth = 6;
-            colGia.Name = "colGia";
-            colGia.ReadOnly = true;
+            TongTien.DefaultCellStyle = dataGridViewCellStyle3;
+            TongTien.FillWeight = 90F;
+            TongTien.HeaderText = "Giá";
+            TongTien.MinimumWidth = 6;
+            TongTien.Name = "TongTien";
+            TongTien.ReadOnly = true;
             // 
-            // colTrangThai
+            // TrangThai
             // 
-            colTrangThai.DataPropertyName = "TextTrangThai";
+            TrangThai.DataPropertyName = "TrangThai";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            colTrangThai.DefaultCellStyle = dataGridViewCellStyle4;
-            colTrangThai.HeaderText = "Trạng thái";
-            colTrangThai.MinimumWidth = 6;
-            colTrangThai.Name = "colTrangThai";
-            colTrangThai.ReadOnly = true;
+            TrangThai.DefaultCellStyle = dataGridViewCellStyle4;
+            TrangThai.HeaderText = "Trạng thái";
+            TrangThai.MinimumWidth = 6;
+            TrangThai.Name = "TrangThai";
+            TrangThai.ReadOnly = true;
             // 
             // colThongTin
             // 
@@ -169,10 +170,10 @@
 
         #endregion
 
-        private DataGridViewTextBoxColumn colMaDH;
-        private DataGridViewTextBoxColumn colNgayDat;
-        private DataGridViewTextBoxColumn colGia;
-        private DataGridViewTextBoxColumn colTrangThai;
+        private DataGridViewTextBoxColumn MaDH;
+        private DataGridViewTextBoxColumn NgayDat;
+        private DataGridViewTextBoxColumn TongTien;
+        private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewTextBoxColumn colThongTin;
         private DataGridViewTextBoxColumn colChiTiet;
     }

@@ -12,70 +12,70 @@ namespace QLBTS_BLL
     {
         private SanPhamDAL dal = new SanPhamDAL();
 
-        // Lấy chi tiết sản phẩm theo MaSP
-        public SanPhamDTO LaySanPham(int maSP)
+        // 🔹 Lấy chi tiết sản phẩm theo MaSP
+        public SanPhamDTO LaySanPham(int maSP, string size)
         {
-            return dal.GetSanPham(maSP);
+            return dal.GetSanPhamTheoMaSP(maSP, size);
         }
 
-        // Lấy tất cả sản phẩm cùng tên (tất cả size)
-        public List<SanPhamDTO> LaySanPhamTheoTen(string tenSP)
-        {
-            return dal.GetSanPhamTheoTen(tenSP);
-        }
-
-        // Kiểm tra tồn kho trước khi đặt hàng
+        // 🔹 Kiểm tra tồn kho trước khi đặt hàng
         public bool KiemTraTonKho(int maSP, int soLuongCanMua)
         {
             return dal.CheckTonKho(maSP, soLuongCanMua);
         }
 
-        // Cập nhật tồn kho (trừ khi đặt hàng, cộng khi hủy)
+        // 🔹 Cập nhật tồn kho (trừ khi đặt hàng, cộng khi hủy)
         public bool CapNhatTonKho(int maSP, int soLuongThayDoi)
         {
             return dal.CapNhatTonKho(maSP, soLuongThayDoi);
         }
 
-        // Lấy tồn kho hiện tại
-        public int LayTonKhoHienTai(int maSP)
+        // 🔹 Lấy giá hiện tại theo size (có KM)
+        public int LayGiaHienTai(SanPhamDTO sp, string size)
         {
-            return dal.GetTonKhoHienTai(maSP);
+            if (sp == null) return 0;
+
+            int gia = size.ToUpper() == "M" ? sp.GiaM : sp.GiaL;
+            int km = size.ToUpper() == "M" ? sp.KhuyenMaiM : sp.KhuyenMaiL;
+
+            double giaSauKM = gia - (gia * km / 100.0);
+            // Làm tròn về bội số 1000
+            return (int)(Math.Round(giaSauKM / 1000.0) * 1000);
         }
 
-        // Ví dụ: đặt hàng 1 sản phẩm
+        // 🔹 Lấy giá hiển thị dạng string
+        public string GetTextGia(SanPhamDTO sp, string size)
+        {
+            int gia = LayGiaHienTai(sp, size);
+            return $"{gia:N0}đ";
+        }
+
+        // 🔹 Đặt hàng (trừ tồn kho)
         public bool DatHang(int maSP, int soLuong)
         {
             if (!KiemTraTonKho(maSP, soLuong))
                 return false;
 
-            // Trừ tồn kho
             return CapNhatTonKho(maSP, -soLuong);
         }
 
-        // Ví dụ: hủy đơn, trả lại hàng
+        // 🔹 Hủy đơn, trả lại hàng
         public bool HuyDon(int maSP, int soLuong)
         {
-            // Cộng tồn kho
             return CapNhatTonKho(maSP, soLuong);
         }
-        public string GetTextGia(SanPhamDTO sp)
+
+        public int GetGiaHienTai(int maSP, string size)
         {
-            if (sp == null) return "0đ";
+            if (size != "M" && size != "L")
+                throw new ArgumentException("Size không hợp lệ. Phải là 'M' hoặc 'L'.");
 
-            // Giá sau khuyến mãi
-            double giaSauKM = sp.Gia - sp.Gia * sp.KhuyenMai / 100.0;
-
-            // Làm tròn về bội số 1000
-            int giaLamTron = (int)(Math.Round(giaSauKM / 1000.0) * 1000);
-
-            return $"{giaLamTron:N0}đ";
+            return dal.GetGiaHienTai(maSP, size);
         }
 
-        // Kiểm tra có sản phẩm cùng tên cùng size khác MaSP
-        public SanPhamDTO GetSanPhamCungTenKhacSize(SanPhamDTO sp)
+        public int GetSoLuongTon(int maSP)
         {
-            return dal.GetSanPhamCungTenKhacSize(sp.MaSP, sp.TenSP, sp.Size);
+            return dal.GetSoLuongTon(maSP);
         }
-
     }
 }
