@@ -10,10 +10,10 @@
     <Compile Update="Done\DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmThongTinCaNhan.cs">
+    <Compile Update="Done\ThongTinCaNhan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="KhachHang.cs">
+    <Compile Update="Done\KhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\Khung.cs">
@@ -28,13 +28,13 @@
     <Compile Update="NVGIAO.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="NVQUAY.cs">
+    <Compile Update="Done\NVQUAY.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\DanhMucSanPham.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormDonHang.cs">
+    <Compile Update="Done\QuanLiDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\TrangThaiDonHang_KH.cs">

@@ -8,6 +8,83 @@ namespace QLBTS_DAL
 {
     public class TaiKhoanDAL
     {
+        public TaiKhoanDTO LayThongTinTaiKhoanTheoMaTK(int maTK)
+        {
+            TaiKhoanDTO tk = null;
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string query = @"SELECT TenDangNhap, MatKhau, Email, HoTen, SDT, DiaChi, Anh 
+                         FROM TaiKhoan 
+                         WHERE MaTK = @MaTK";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tk = new TaiKhoanDTO
+                            {
+                                TenDangNhap = reader["TenDangNhap"].ToString(),
+                                MatKhau = reader["MatKhau"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                HoTen = reader["HoTen"].ToString(),
+                                SDT = reader["SDT"].ToString(),
+                                DiaChi = reader["DiaChi"].ToString(),
+                                Anh = reader["Anh"] != DBNull.Value ? (byte[])reader["Anh"] : null
+                            };
+                        }
+                    }
+                }
+            }
+            return tk;
+        }
+
+        public bool CapNhatThongTin(TaiKhoanDTO tk)
+        {
+            // Kiểm tra email đã tồn tại (trừ email của chính tài khoản này)
+            if (EmailTonTai_koTK(tk.Email, tk.MaTK))
+                throw new Exception("Email đã tồn tại, vui lòng chọn email khác.");
+
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string sql = @"UPDATE TaiKhoan 
+                           SET HoTen = @HoTen,
+                               Email = @Email,
+                               SDT = @SDT,
+                               DiaChi = @DiaChi";
+
+                    if (tk.Anh != null)
+                        sql += ", Anh = @Anh";
+
+                    sql += " WHERE MaTK = @MaTK";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@HoTen", tk.HoTen);
+                        cmd.Parameters.AddWithValue("@Email", tk.Email);
+                        cmd.Parameters.AddWithValue("@SDT", tk.SDT);
+                        cmd.Parameters.AddWithValue("@DiaChi", tk.DiaChi);
+                        cmd.Parameters.AddWithValue("@MaTK", tk.MaTK);
+
+                        if (tk.Anh != null)
+                            cmd.Parameters.AddWithValue("@Anh", tk.Anh);
+
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi DAL - CapNhatThongTin: " + ex.Message, ex);
+            }
+        }
+
+
         private string HashMatKhau(string matKhau)
         {
             using (SHA256 sha = SHA256.Create())
@@ -96,6 +173,22 @@ namespace QLBTS_DAL
                 return true;
             }
         }
+        public bool EmailTonTai_koTK(string email, int maTK)
+        {
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(*) FROM TaiKhoan WHERE Email = @e AND MaTK <> @MaTK";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@e", email);
+                    cmd.Parameters.AddWithValue("@MaTK", maTK);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
 
         public bool InsertTaiKhoan(TaiKhoanDTO tk)
         {

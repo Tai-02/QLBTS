@@ -20,7 +20,7 @@ namespace QLBTS_GUI
 
         private void NVQUAY_Load(object sender, EventArgs e)
         {
-
+            doimaulb(NVQ_lb_sp);
             NVQ_lb_sp_Click(sender, e);
         }
 
@@ -45,6 +45,7 @@ namespace QLBTS_GUI
         private void NVQ_lb_qldh_Click(object sender, EventArgs e)
         {
             doimaulb(NVQ_lb_qldh);
+            ui.OpenChildForm(new QuanLiDonHang(), NVQ_pn_tab);
         }
 
         private void NVQ_lb_ls_Click(object sender, EventArgs e)

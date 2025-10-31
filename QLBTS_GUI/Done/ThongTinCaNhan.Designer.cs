@@ -1,6 +1,6 @@
 ﻿namespace QLBTS_GUI
 {
-    partial class frmThongTinCaNhan
+    partial class ThongTinCaNhan
     {
         /// <summary>
         /// Required designer variable.
@@ -271,7 +271,7 @@
             TTCN_btnCapnhat.ForeColor = Color.White;
             TTCN_btnCapnhat.HoverState.FillColor = Color.LightGray;
             TTCN_btnCapnhat.HoverState.ForeColor = Color.Black;
-            TTCN_btnCapnhat.Location = new Point(353, 377);
+            TTCN_btnCapnhat.Location = new Point(313, 377);
             TTCN_btnCapnhat.Name = "TTCN_btnCapnhat";
             TTCN_btnCapnhat.ShadowDecoration.CustomizableEdges = customizableEdges17;
             TTCN_btnCapnhat.Size = new Size(144, 40);
@@ -360,7 +360,7 @@
             Controls.Add(guna2Panel2);
             Name = "frmThongTinCaNhan";
             Text = "frmThongTinCaNhan";
-            Load += frmThongTinCaNhan_Load;
+            Load += ThongTinCaNhan_Load;
             ((System.ComponentModel.ISupportInitialize)TTCN_pc_iconUser).EndInit();
             ((System.ComponentModel.ISupportInitialize)TTCN_pc_Anhdaidien).EndInit();
             TTCN_pnAnhdaidien.ResumeLayout(false);

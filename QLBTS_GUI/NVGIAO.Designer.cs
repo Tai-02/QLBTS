@@ -30,25 +30,25 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            KH_pn_tab = new Panel();
+            NVG_pn_tab = new Panel();
             pictureBox2 = new PictureBox();
-            KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
+            NVG_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
-            label6 = new Label();
-            label4 = new Label();
-            label2 = new Label();
+            NVG_lb_dagiao = new Label();
+            NVG_lb_danhan = new Label();
+            NVG_lb_choxacnhan = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            KH_pn_menu.SuspendLayout();
+            NVG_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // KH_pn_tab
+            // NVG_pn_tab
             // 
-            KH_pn_tab.BackColor = SystemColors.Control;
-            KH_pn_tab.Location = new Point(1, 143);
-            KH_pn_tab.Name = "KH_pn_tab";
-            KH_pn_tab.Size = new Size(980, 508);
-            KH_pn_tab.TabIndex = 3;
+            NVG_pn_tab.BackColor = SystemColors.Control;
+            NVG_pn_tab.Location = new Point(1, 143);
+            NVG_pn_tab.Name = "NVG_pn_tab";
+            NVG_pn_tab.Size = new Size(980, 508);
+            NVG_pn_tab.TabIndex = 3;
             // 
             // pictureBox2
             // 
@@ -61,21 +61,21 @@
             pictureBox2.TabIndex = 8;
             pictureBox2.TabStop = false;
             // 
-            // KH_pn_menu
+            // NVG_pn_menu
             // 
-            KH_pn_menu.BackColor = Color.Transparent;
-            KH_pn_menu.BorderRadius = 30;
-            KH_pn_menu.Controls.Add(pictureBox1);
-            KH_pn_menu.Controls.Add(label6);
-            KH_pn_menu.Controls.Add(label4);
-            KH_pn_menu.Controls.Add(label2);
-            KH_pn_menu.CustomizableEdges = customizableEdges1;
-            KH_pn_menu.FillColor = Color.Black;
-            KH_pn_menu.Location = new Point(12, 34);
-            KH_pn_menu.Name = "KH_pn_menu";
-            KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            KH_pn_menu.Size = new Size(942, 68);
-            KH_pn_menu.TabIndex = 4;
+            NVG_pn_menu.BackColor = Color.Transparent;
+            NVG_pn_menu.BorderRadius = 30;
+            NVG_pn_menu.Controls.Add(pictureBox1);
+            NVG_pn_menu.Controls.Add(NVG_lb_dagiao);
+            NVG_pn_menu.Controls.Add(NVG_lb_danhan);
+            NVG_pn_menu.Controls.Add(NVG_lb_choxacnhan);
+            NVG_pn_menu.CustomizableEdges = customizableEdges1;
+            NVG_pn_menu.FillColor = Color.Black;
+            NVG_pn_menu.Location = new Point(12, 34);
+            NVG_pn_menu.Name = "NVG_pn_menu";
+            NVG_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            NVG_pn_menu.Size = new Size(942, 68);
+            NVG_pn_menu.TabIndex = 4;
             // 
             // pictureBox1
             // 
@@ -88,67 +88,70 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // label6
+            // NVG_lb_dagiao
             // 
-            label6.AutoSize = true;
-            label6.BackColor = Color.Black;
-            label6.Font = new Font("Segoe UI", 9F);
-            label6.ForeColor = Color.White;
-            label6.Location = new Point(802, 22);
-            label6.Name = "label6";
-            label6.Size = new Size(62, 20);
-            label6.TabIndex = 6;
-            label6.Text = "Đã giao";
+            NVG_lb_dagiao.AutoSize = true;
+            NVG_lb_dagiao.BackColor = Color.Black;
+            NVG_lb_dagiao.Font = new Font("Segoe UI", 9F);
+            NVG_lb_dagiao.ForeColor = Color.White;
+            NVG_lb_dagiao.Location = new Point(802, 22);
+            NVG_lb_dagiao.Name = "NVG_lb_dagiao";
+            NVG_lb_dagiao.Size = new Size(62, 20);
+            NVG_lb_dagiao.TabIndex = 6;
+            NVG_lb_dagiao.Text = "Đã giao";
+            NVG_lb_dagiao.Click += NVG_lb_dagiao_Click;
             // 
-            // label4
+            // NVG_lb_danhan
             // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Black;
-            label4.Font = new Font("Segoe UI", 9F);
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(650, 22);
-            label4.Name = "label4";
-            label4.Size = new Size(64, 20);
-            label4.TabIndex = 4;
-            label4.Text = "Đã nhận";
+            NVG_lb_danhan.AutoSize = true;
+            NVG_lb_danhan.BackColor = Color.Black;
+            NVG_lb_danhan.Font = new Font("Segoe UI", 9F);
+            NVG_lb_danhan.ForeColor = Color.White;
+            NVG_lb_danhan.Location = new Point(650, 22);
+            NVG_lb_danhan.Name = "NVG_lb_danhan";
+            NVG_lb_danhan.Size = new Size(64, 20);
+            NVG_lb_danhan.TabIndex = 4;
+            NVG_lb_danhan.Text = "Đã nhận";
+            NVG_lb_danhan.Click += NVG_lb_danhan_Click;
             // 
-            // label2
+            // NVG_lb_choxacnhan
             // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.Black;
-            label2.Font = new Font("Segoe UI", 9F);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(157, 22);
-            label2.Name = "label2";
-            label2.Size = new Size(97, 20);
-            label2.TabIndex = 2;
-            label2.Text = "Chờ xác nhận";
+            NVG_lb_choxacnhan.AutoSize = true;
+            NVG_lb_choxacnhan.BackColor = Color.Black;
+            NVG_lb_choxacnhan.Font = new Font("Segoe UI", 9F);
+            NVG_lb_choxacnhan.ForeColor = Color.White;
+            NVG_lb_choxacnhan.Location = new Point(157, 22);
+            NVG_lb_choxacnhan.Name = "NVG_lb_choxacnhan";
+            NVG_lb_choxacnhan.Size = new Size(97, 20);
+            NVG_lb_choxacnhan.TabIndex = 2;
+            NVG_lb_choxacnhan.Text = "Chờ xác nhận";
+            NVG_lb_choxacnhan.Click += NVG_lb_choxacnhan_Click;
             // 
             // NVGIAO
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
-            Controls.Add(KH_pn_menu);
-            Controls.Add(KH_pn_tab);
+            Controls.Add(NVG_pn_menu);
+            Controls.Add(NVG_pn_tab);
             Controls.Add(pictureBox2);
             Name = "NVGIAO";
             Text = "NVGIAO";
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            KH_pn_menu.ResumeLayout(false);
-            KH_pn_menu.PerformLayout();
+            NVG_pn_menu.ResumeLayout(false);
+            NVG_pn_menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel KH_pn_tab;
-        private Guna.UI2.WinForms.Guna2Panel KH_pn_menu;
+        private Panel NVG_pn_tab;
+        private Guna.UI2.WinForms.Guna2Panel NVG_pn_menu;
         private PictureBox pictureBox1;
-        private Label label6;
-        private Label label4;
-        private Label label2;
+        private Label NVG_lb_dagiao;
+        private Label NVG_lb_danhan;
+        private Label NVG_lb_choxacnhan;
         private PictureBox pictureBox2;
     }
 }

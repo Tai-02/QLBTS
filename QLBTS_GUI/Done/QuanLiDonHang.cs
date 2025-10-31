@@ -1,4 +1,5 @@
 ﻿using QLBTS_BLL;
+using QLBTS_DTO;
 using System;
 using System.Data;
 using System.Drawing;
@@ -6,12 +7,14 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    public partial class QLDonHangForm : Form
+    public partial class QuanLiDonHang : Form
     {
-        private readonly FormDonHangBLL bll = new FormDonHangBLL();
+        private readonly DonHangBLL bll;
+        UI_Form ui = new UI_Form();
 
-        public QLDonHangForm()
+        public QuanLiDonHang()
         {
+            bll = new DonHangBLL();
             InitializeComponent();
             dgvOrders.CellContentClick -= dgvOrders_CellContentClick;
             dgvOrders.CellContentClick += dgvOrders_CellContentClick;
@@ -25,13 +28,13 @@ namespace QLBTS_GUI
 
         private void LoadDonHang()
         {
-            dgvOrders.Columns.Clear();
-            DataTable dt = bll.LayDanhSachDonHang();
-            dgvOrders.DataSource = dt;
+            dgvOrders.AutoGenerateColumns = false;
 
-            if (dgvOrders.Columns.Contains("MaDH")) dgvOrders.Columns["MaDH"].HeaderText = "Mã đơn hàng";
-            if (dgvOrders.Columns.Contains("Gia")) dgvOrders.Columns["Gia"].HeaderText = "Giá";
-            if (dgvOrders.Columns.Contains("TrangThai")) dgvOrders.Columns["TrangThai"].HeaderText = "Trạng thái đơn";
+            List<DonHangDTO> dsDonHang = new List<DonHangDTO>();
+
+            dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Chờ xác nhận"));
+            dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Đã nhận"));
+            dgvOrders.DataSource = dsDonHang.OrderByDescending(d => d.NgayDat).ToList();
 
             dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
             dgvOrders.RowsDefaultCellStyle.BackColor = Color.White;
@@ -78,13 +81,40 @@ namespace QLBTS_GUI
 
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            if (!dgvOrders.Columns[e.ColumnIndex].Name.StartsWith("btn")) return;
+            if (e.RowIndex < 0) return; // bỏ qua header
+            if (!dgvOrders.Columns[e.ColumnIndex].Name.StartsWith("btn")) return; // chỉ button
 
-            e.PaintBackground(e.CellBounds, true);
-            e.PaintContent(e.CellBounds);
-
+            // Lấy trạng thái của dòng hiện tại
+            string trangThai = dgvOrders.Rows[e.RowIndex].Cells["TrangThai"].Value?.ToString() ?? "";
             string col = dgvOrders.Columns[e.ColumnIndex].Name;
+
+            // Quyết định nút có hiển thị không
+            bool hienThi = col switch
+            {
+                "btnNhan" => trangThai == "Chờ xác nhận",
+                "btnHuy" => trangThai == "Chờ xác nhận" || trangThai == "Đã nhận",
+                "btnChuyen" => trangThai == "Đã nhận",
+                "btnChiTiet" => true,
+                _ => false
+            };
+
+            if (!hienThi)
+            {
+                e.Handled = true; // không vẽ nút
+                return;
+            }
+
+            // Vẽ nền và nội dung ô
+            e.PaintBackground(e.CellBounds, true);
+
+            // Tạo nút nhỏ gọn ở giữa ô
+            Rectangle rect = new Rectangle(
+                e.CellBounds.X + 4,
+                e.CellBounds.Y + 4,
+                e.CellBounds.Width - 8,
+                e.CellBounds.Height - 8
+            );
+
             Color btnColor = col switch
             {
                 "btnNhan" => Color.LimeGreen,
@@ -95,16 +125,15 @@ namespace QLBTS_GUI
             };
 
             using (SolidBrush brush = new SolidBrush(btnColor))
-                e.Graphics.FillRectangle(brush, e.CellBounds);
+                e.Graphics.FillRectangle(brush, rect);
 
             TextRenderer.DrawText(e.Graphics, (string)e.FormattedValue,
                 new Font("Times New Roman", 11, FontStyle.Bold),
-                e.CellBounds, Color.White,
+                rect, Color.White,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
 
             e.Handled = true;
         }
-
         private void dgvOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
@@ -113,32 +142,30 @@ namespace QLBTS_GUI
             string col = dgvOrders.Columns[e.ColumnIndex].Name;
             string trangThai = dgvOrders.Rows[e.RowIndex].Cells["TrangThai"].Value?.ToString() ?? "";
 
-            try
+            bool buttonHienThi = col switch
             {
-                bool ok = false;
+                "btnNhan" => trangThai == "Chờ xác nhận",
+                "btnHuy" => trangThai == "Chờ xác nhận" || trangThai == "Đã nhận",
+                "btnChuyen" => trangThai == "Đã nhận",
+                "btnChiTiet" => true,
+                _ => false
+            };
 
-                if (col == "btnNhan")
-                    ok = bll.NhanDonHang(maDH, trangThai);
-                else if (col == "btnHuy")
-                    ok = bll.HuyDonHang(maDH);
-                else if (col == "btnChuyen")
-                    ok = bll.ChuyenDonHang(maDH);
-                else if (col == "btnChiTiet")
-                {
-                    string body = bll.TaoNoiDungChiTietDonHang(maDH);
-                    MessageBox.Show(body, $"Chi tiết đơn #{maDH}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+            if (!buttonHienThi) return;
 
-                if (ok)
-                {
-                    MessageBox.Show($"✅ Thao tác với đơn #{maDH} thành công!");
-                    LoadDonHang();
-                }
+            bool ok = false;
+            if (col == "btnNhan") ok = bll.DoiTrangThai(maDH, "Đã nhận");
+            else if (col == "btnHuy") ok = bll.HuyDonHang(maDH);
+            else if (col == "btnChuyen") ok = bll.DoiTrangThai(maDH, "Chờ giao");
+            else if (col == "btnChiTiet")
+            {
+                ui.OpenChildForm(new ChiTietDonHang(maDH), NVQUAY.NVQ_pn_tab);
+                return;
             }
-            catch (Exception ex)
+
+            if (ok)
             {
-                MessageBox.Show($"❌ Lỗi: {ex.Message}");
+                ui.OpenChildForm(new QuanLiDonHang(), NVQUAY.NVQ_pn_tab);
             }
         }
     }

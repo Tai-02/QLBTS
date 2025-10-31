@@ -229,5 +229,50 @@ namespace QLBTS_DAL
             }
         }
 
+        public List<DonHangDTO> LayDSDonHangTheoTrangThai(string trangThai)
+        {
+            List<DonHangDTO> danhSach = new List<DonHangDTO>();
+
+            string query = @"
+                SELECT MaDH, MaKhach, NgayDat, TongTien, TrangThai
+                FROM DonHang
+                WHERE TrangThai = @TrangThai
+                ORDER BY NgayDat DESC;
+            ";
+
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                DonHangDTO dh = new DonHangDTO
+                                {
+                                    MaDH = reader.GetInt32("MaDH"),
+                                    NgayDat = reader.GetDateTime("NgayDat"),
+                                    TongTien = reader.GetInt32("TongTien"),
+                                    TrangThai = reader.GetString("TrangThai")
+                                };
+                                danhSach.Add(dh);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - LayDSDonHangTheoTrangThai: {ex.Message}", ex);
+            }
+
+            return danhSach;
+        }
+
     }
 }

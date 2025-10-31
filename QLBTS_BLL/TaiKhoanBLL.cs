@@ -81,6 +81,21 @@ namespace QLBTS_BLL
         {
             return dal.LayMaTK(tenDangNhap);
         }
+
+        public TaiKhoanDTO LayThongTinTaiKhoanTheoMaTK(int maTK)
+        {
+            return dal.LayThongTinTaiKhoanTheoMaTK(maTK);
+        }
+
+        public bool CapNhatThongTin(TaiKhoanDTO tk)
+        {
+            if (string.IsNullOrWhiteSpace(tk.HoTen) ||
+                string.IsNullOrWhiteSpace(tk.Email))
+                throw new ArgumentException("Tên đăng nhập và email không được để trống.");
+
+            return dal.CapNhatThongTin(tk);
+        }
+
     }
 }
 

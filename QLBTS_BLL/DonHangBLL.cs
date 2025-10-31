@@ -58,5 +58,17 @@ namespace QLBTS_BLL
                 throw new Exception($"Lỗi BLL - HuyDonHang: {ex.Message}", ex);
             }
         }
+
+        public List<DonHangDTO> LayDSDonHangTheoTrangThai(string trangThai)
+        {
+            try
+            {
+                return dal.LayDSDonHangTheoTrangThai(trangThai);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BLL - LayDSDonHangTheoTrangThai: " + ex.Message, ex);
+            }
+        }
     }
 }
