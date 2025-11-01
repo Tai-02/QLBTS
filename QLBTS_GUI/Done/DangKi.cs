@@ -68,7 +68,7 @@ namespace QLBTS_GUI
                     MessageBox.Show("Đăng ký thành công! Vui lòng kiểm tra email để nhận mã OTP.",
                                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     UI_Form ui = new UI_Form();
-                    ui.OpenChildForm(new NhapOTP(ParentPanel, email), ParentPanel);
+                    ui.OpenChildForm(new NhapOTP(ParentPanel, email, 0), ParentPanel);
                 }
             }
             catch (Exception ex)

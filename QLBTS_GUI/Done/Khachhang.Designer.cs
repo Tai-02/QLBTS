@@ -224,6 +224,6 @@
         private Label KH_lb_sp;
         private Label KH_lb_Trangchu;
         private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
-        public Panel KH_pn_tab;
+        public static Panel KH_pn_tab;
     }
 }

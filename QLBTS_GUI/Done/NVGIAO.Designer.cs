@@ -175,6 +175,6 @@
         private Label NVG_lb_choxacnhan;
         private PictureBox pictureBox2;
         private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
-        public Panel NVG_pn_tab;
+        public static Panel NVG_pn_tab;
     }
 }

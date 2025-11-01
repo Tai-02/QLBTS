@@ -172,7 +172,7 @@
         private PictureBox pictureBox1;
         private Label ADMIN_lb_qltknv;
         private PictureBox pictureBox2;
-        public Panel ADMIN_pn_tab;
+        public static Panel ADMIN_pn_tab;
         private Label ADMIN_lb_hieusuat;
         private Label ADMIN_lb_doanhthu;
         private Guna.UI2.WinForms.Guna2Button btn_dangxuat;

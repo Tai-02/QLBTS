@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QLBTS_BLL
@@ -96,9 +97,9 @@ namespace QLBTS_BLL
             }
         }
 
-        public bool KiemTraOTP(string email, string otp)
+        public bool KiemTraOTP(string email, string otp, int lenh)
         {
-            return dal.KiemTraOTP(email, otp);
+            return dal.KiemTraOTP(email, otp, lenh);
         }
 
         public int LayLevelID(string tenDangNhap)
@@ -227,6 +228,15 @@ namespace QLBTS_BLL
             }
         }
 
+        public bool EmailTonTai(string email)
+        {
+            return dal.EmailTonTai(email);
+        }
+
+        public bool QuenThongTin(string email, string tenDangNhapMoi, string matKhauMoi)
+        {
+            return dal.QuenThongTin(email, tenDangNhapMoi, matKhauMoi);
+        }
     }
 }
 

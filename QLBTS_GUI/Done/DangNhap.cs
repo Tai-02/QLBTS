@@ -97,7 +97,7 @@ namespace QLBTS_GUI
                         {
                             MessageBox.Show("Vui lòng kiểm tra email để nhận mã OTP.",
                                     "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            ui.OpenChildForm(new NhapOTP(ParentPanel, email), ParentPanel);
+                            ui.OpenChildForm(new NhapOTP(ParentPanel, email, 0), ParentPanel);
                         }
 
                         return;
@@ -185,7 +185,7 @@ namespace QLBTS_GUI
                                 {
                                     MessageBox.Show("Vui lòng kiểm tra email để nhận mã OTP.",
                                             "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    ui.OpenChildForm(new NhapOTP(ParentPanel, email), ParentPanel);
+                                    ui.OpenChildForm(new NhapOTP(ParentPanel, email, 0), ParentPanel);
                                 }
 
                                 return;
@@ -207,5 +207,31 @@ namespace QLBTS_GUI
 
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            string email = ui.ShowInputForm("Nhập Email", "Vui lòng nhập email của bạn:");
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                bool tonTai = bll.EmailTonTai(email);
+
+                if (tonTai)
+                {
+                    Random rd = new Random();
+                    string Otp = rd.Next(0, 999999).ToString();
+                    string message = $"Xin chào,\n\nMã OTP kích hoạt của bạn là: {Otp}\n\nVui lòng nhập mã này trong ứng dụng để kích hoạt tài khoản.";
+                    bll.CapNhatOTPVaNgayTao(email, Otp, message);
+                    MessageBox.Show("Kiểm tra mail để nhận OTP");
+                    ui.OpenChildForm(new NhapOTP(Khung.Khung_pn, email, 1), Khung.Khung_pn);
+                }
+                else
+                {
+                    MessageBox.Show("Email chưa được đăng ký.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+        }        
+
     }
 }

@@ -318,7 +318,7 @@ namespace QLBTS_DAL
             }
         }
 
-        public bool KiemTraOTP(string email, string otp)
+        public bool KiemTraOTP(string email, string otp, int lenh)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
@@ -328,6 +328,10 @@ namespace QLBTS_DAL
                        FROM TaiKhoan 
                        WHERE Email = @e";
 
+                string otpDb;
+                DateTime ngayTao;
+                bool daActive;
+
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@e", email);
@@ -336,12 +340,9 @@ namespace QLBTS_DAL
                         if (!reader.Read())
                             throw new Exception("Email không tồn tại.");
 
-                        string otpDb = reader["Otp"]?.ToString();
-                        DateTime ngayTao = Convert.ToDateTime(reader["NgayTao"]);
-                        bool daActive = Convert.ToBoolean(reader["Active"]);
-
-                        if (daActive)
-                            throw new Exception("Tài khoản đã được kích hoạt.");
+                        otpDb = reader["Otp"]?.ToString();
+                        ngayTao = Convert.ToDateTime(reader["NgayTao"]);
+                        daActive = Convert.ToBoolean(reader["Active"]);
 
                         if (otp != otpDb)
                             throw new Exception("Mã OTP không chính xác.");
@@ -353,17 +354,25 @@ namespace QLBTS_DAL
                     }
                 }
 
-                // Nếu hợp lệ -> cập nhật active
-                string update = "UPDATE TaiKhoan SET Active = 1, NgayKichHoat = NOW() WHERE Email = @e";
-                using (var up = new MySqlCommand(update, conn))
+                // Nếu lenh = 0 thì cập nhật Active
+                if (lenh == 0)
                 {
-                    up.Parameters.AddWithValue("@e", email);
-                    up.ExecuteNonQuery();
+                    if (daActive)
+                        throw new Exception("Tài khoản đã được kích hoạt.");
+
+                    string update = "UPDATE TaiKhoan SET Active = 1, NgayKichHoat = NOW() WHERE Email = @e";
+                    using (var up = new MySqlCommand(update, conn))
+                    {
+                        up.Parameters.AddWithValue("@e", email);
+                        up.ExecuteNonQuery();
+                    }
                 }
 
                 return true;
             }
         }
+
+
 
 
         public int LayLevelID(string tenDangNhap)
@@ -767,5 +776,67 @@ namespace QLBTS_DAL
                 throw new Exception($"Lỗi DAL - LayDiaChiTheoMaTK: {ex.Message}", ex);
             }
         }
+
+        public bool QuenThongTin(string email, string tenDangNhapMoi, string matKhauMoi)
+        {
+            // 1️⃣ Kiểm tra tên đăng nhập
+            if (string.IsNullOrWhiteSpace(tenDangNhapMoi) || tenDangNhapMoi.Length < 6)
+                throw new Exception("Tên đăng nhập phải có ít nhất 6 ký tự.");
+
+            if (!Regex.IsMatch(tenDangNhapMoi, @"^[a-zA-Z0-9_]+$"))
+                throw new Exception("Tên đăng nhập chỉ được chứa chữ cái, số hoặc dấu gạch dưới (_).");
+
+            // 2️⃣ Kiểm tra mật khẩu
+            if (string.IsNullOrWhiteSpace(matKhauMoi) || matKhauMoi.Length < 6)
+                throw new Exception("Mật khẩu phải có ít nhất 6 ký tự.");
+
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    // Lấy MaTK từ email
+                    string sqlGet = "SELECT MaTK FROM TaiKhoan WHERE Email = @Email";
+                    int maTK = -1;
+                    using (var cmd = new MySqlCommand(sqlGet, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        object result = cmd.ExecuteScalar();
+                        if (result == null || result == DBNull.Value)
+                            throw new Exception("Email không tồn tại trong hệ thống.");
+                        maTK = Convert.ToInt32(result);
+                    }
+
+                    // Kiểm tra tên đăng nhập đã tồn tại (ngoại trừ tài khoản này)
+                    string sqlCheck = "SELECT COUNT(*) FROM TaiKhoan WHERE TenDangNhap = @TenDangNhap AND MaTK <> @MaTK";
+                    using (var cmd = new MySqlCommand(sqlCheck, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhapMoi);
+                        cmd.Parameters.AddWithValue("@MaTK", maTK);
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        if (count > 0)
+                            throw new Exception("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.");
+                    }
+
+                    // Cập nhật tên đăng nhập và mật khẩu
+                    string sqlUpdate = "UPDATE TaiKhoan SET TenDangNhap = @TenDangNhap, MatKhau = @MatKhau WHERE MaTK = @MaTK";
+                    using (var cmd = new MySqlCommand(sqlUpdate, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhapMoi);
+                        cmd.Parameters.AddWithValue("@MatKhau", HashMatKhau(matKhauMoi));
+                        cmd.Parameters.AddWithValue("@MaTK", maTK);
+
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi DAL - QuenThongTin: " + ex.Message, ex);
+            }
+        }
+
+
     }
 }

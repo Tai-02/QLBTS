@@ -208,6 +208,6 @@ namespace QLBTS_GUI
         private Label NVQ_lb_sp;
         private PictureBox pictureBox2;
         private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
-        public Panel NVQ_pn_tab;
+        public static Panel NVQ_pn_tab;
     }
 }
