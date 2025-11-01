@@ -189,7 +189,7 @@ namespace QLBTS_GUI
 
             else if (col == "btnChiTiet")
             {
-                ui.OpenChildForm(new ChoXacNhan_NVG(), NVGIAO.NVG_pn_tab);
+                ui.OpenChildForm(new ChiTietDonHang(maDH), NVGIAO.NVG_pn_tab);
                 return;
             }
 

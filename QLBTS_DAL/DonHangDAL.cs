@@ -312,8 +312,8 @@ namespace QLBTS_DAL
         {
             string query = @"
         UPDATE DonHang
-        SET MaNVG = @MaNVG,
-            MaNVQ = @MaNVQ
+        SET MaNVGiao = @MaNVG,
+            MaNVQuay = @MaNVQ
         WHERE MaDH = @MaDH;
     ";
 

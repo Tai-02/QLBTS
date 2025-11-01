@@ -188,7 +188,7 @@ namespace QLBTS_GUI
             {
                 if (NVGIAO.NVG_pn_tab != null)
                 {
-                    ui.OpenChildForm(new DaNhan_NVG(), NVGIAO.NVG_pn_tab);
+                    ui.OpenChildForm(new ChiTietDonHang(maDH), NVGIAO.NVG_pn_tab);
                 }
                 else
                 {
