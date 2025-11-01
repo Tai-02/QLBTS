@@ -23,6 +23,7 @@ namespace QLBTS_GUI
             dgvOrders.CellContentClick -= dgvOrders_CellContentClick;
             dgvOrders.CellContentClick += dgvOrders_CellContentClick;
             dgvOrders.CellPainting += dgvOrders_CellPainting;
+            dgvOrders.CellFormatting += dgvOrders_CellFormatting;
         }
 
         private void QLDonHangForm_Load(object sender, EventArgs e)
@@ -58,19 +59,6 @@ namespace QLBTS_GUI
                 dgvOrders.Columns["Gia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             }
 
-            TaiKhoanBLL tkBLL = new TaiKhoanBLL();
-            foreach (DataGridViewRow row in dgvOrders.Rows)
-            {
-                if (row.DataBoundItem is DonHangDTO dh)
-                {
-                    string sdt = tkBLL.LaySDT(dh.MaKhach);
-                    string diachi = tkBLL.LayDiaChi(dh.MaKhach);
-
-                    row.Cells["SDT"].Value = sdt;
-                    row.Cells["DiaChi"].Value = diachi;
-                }
-            }
-
             dgvOrders.Refresh();
         }
 
@@ -91,6 +79,17 @@ namespace QLBTS_GUI
             btn.DefaultCellStyle.ForeColor = Color.White;
             btn.DefaultCellStyle.Font = new Font("Times New Roman", 11, FontStyle.Bold);
             dgvOrders.Columns.Add(btn);
+        }
+        private void dgvOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvOrders.Columns[e.ColumnIndex].Name == "SDT" && dgvOrders.Rows[e.RowIndex].DataBoundItem is DonHangDTO dh)
+            {
+                e.Value = new TaiKhoanBLL().LaySDT(dh.MaKhach);
+            }
+            if (dgvOrders.Columns[e.ColumnIndex].Name == "DiaChi" && dgvOrders.Rows[e.RowIndex].DataBoundItem is DonHangDTO dh2)
+            {
+                e.Value = new TaiKhoanBLL().LayDiaChi(dh2.MaKhach);
+            }
         }
 
         private void dgvOrders_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

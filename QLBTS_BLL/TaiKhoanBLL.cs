@@ -206,11 +206,7 @@ namespace QLBTS_BLL
             try
             {
                 string sdt = dal.LaySDTTheoMaTK(maTK);
-
-                if (string.IsNullOrEmpty(sdt))
-                    throw new Exception("Không tìm thấy số điện thoại cho tài khoản này.");
-
-                return sdt;
+                return sdt ?? ""; // nếu null thì trả về chuỗi rỗng, không ném lỗi
             }
             catch (Exception ex)
             {
@@ -223,17 +219,14 @@ namespace QLBTS_BLL
             try
             {
                 string diaChi = dal.LayDiaChiTheoMaTK(maTK);
-
-                if (string.IsNullOrEmpty(diaChi))
-                    throw new Exception("Không tìm thấy địa chỉ cho tài khoản này.");
-
-                return diaChi;
+                return diaChi ?? ""; // nếu null thì trả về chuỗi rỗng, không ném lỗi
             }
             catch (Exception ex)
             {
                 throw new Exception("Lỗi BLL - LayDiaChi: " + ex.Message, ex);
             }
         }
+
     }
 }
 

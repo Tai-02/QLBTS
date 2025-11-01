@@ -256,6 +256,7 @@ namespace QLBTS_DAL
                                 DonHangDTO dh = new DonHangDTO
                                 {
                                     MaDH = reader.GetInt32("MaDH"),
+                                    MaKhach = reader.GetInt32("MaKhach"),
                                     NgayDat = reader.GetDateTime("NgayDat"),
                                     TongTien = reader.GetInt32("TongTien"),
                                     TrangThai = reader.GetString("TrangThai")

@@ -184,25 +184,58 @@ namespace QLBTS_GUI
                 TextAlign = ContentAlignment.TopCenter
             };
 
-            int giaHienTai = 0;
+            TinhToanBLL ttBLL = new TinhToanBLL();
+            decimal giaSauKhuyenMai =  ttBLL.RoundToThousand(sp.GiaHienTai- (sp.GiaHienTai * sp.KhuyenMaiHienTai / 100));
+            giaSauKhuyenMai = (int)giaSauKhuyenMai;
 
-            if (sp.Size == "M")
-                giaHienTai = sp.GiaM;
-            else if (sp.Size == "L")
-                giaHienTai = sp.GiaL;
+            int baseY = 185;
 
-            Label lblPrice = new Label
+            if (giaSauKhuyenMai > 0 && giaSauKhuyenMai < sp.GiaHienTai)
             {
-                Text = $"Giá: {giaHienTai:N0}đ",
-                Font = new Font("Arial", 9, FontStyle.Regular),
-                ForeColor = Color.Red,
-                Location = new Point(60, 185),
-                AutoSize = true
-            };
+                // Giá gốc (bị gạch ngang)
+                Label lblGiaGoc = new Label
+                {
+                    Text = $"{sp.GiaHienTai:N0}đ",
+                    Font = new Font("Arial", 9, FontStyle.Strikeout),
+                    ForeColor = Color.Gray,
+                    Location = new Point(35, baseY),
+                    AutoSize = true
+                };
+
+                // Giá sau khuyến mãi (màu đỏ) đặt lệch sang phải 5px
+                Label lblGiaKM = new Label
+                {
+                    Text = $"{giaSauKhuyenMai:N0}đ",
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    ForeColor = Color.Red,
+                    Location = new Point(lblGiaGoc.Location.X + lblGiaGoc.PreferredWidth + 5, baseY - 2),
+                    AutoSize = true
+                };
+
+                productPanel.Controls.Add(lblGiaGoc);
+                productPanel.Controls.Add(lblGiaKM);
+                lblGiaGoc.Click += ProductPanel_Click;
+                lblGiaKM.Click += ProductPanel_Click;
+            }
+            else
+            {
+                // Chỉ có giá hiện tại
+                Label lblPrice = new Label
+                {
+                    Text = $"{sp.GiaHienTai:N0}đ",
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    ForeColor = Color.Black,
+                    Location = new Point(70, baseY),
+                    AutoSize = true
+                };
+
+                productPanel.Controls.Add(lblPrice);
+                lblPrice.Click += ProductPanel_Click;
+            }
+
 
             productPanel.Controls.Add(picImage);
             productPanel.Controls.Add(lblName);
-            productPanel.Controls.Add(lblPrice);
             productPanel.Controls.Add(picBestSeller);
             picBestSeller.BringToFront();
 
@@ -211,7 +244,6 @@ namespace QLBTS_GUI
             picImage.Click += ProductPanel_Click;
             picBestSeller.Click += ProductPanel_Click;
             lblName.Click += ProductPanel_Click;
-            lblPrice.Click += ProductPanel_Click;
 
             return productPanel;
         }

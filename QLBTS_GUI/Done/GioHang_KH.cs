@@ -223,7 +223,7 @@ namespace QLBTS_GUI
 
             int maDon = gioHangBLL.DatHangKH(maTK, gioHangBLL.LayGioHangTheoMaTK(maTK));
 
-            lshdBLL.ThemLichSu(maTK, maDon, "Bạn đã đặt hàng", Convert.ToInt32(dhBLL.TinhTongTienDonHang(maDon)), "Muahang");
+            lshdBLL.ThemLichSu(maTK, maDon, "Bạn đã đặt hàng", Convert.ToInt32(dhBLL.TinhTongTienDonHang(maDon)[1]), "Muahang");
             
             // Xóa toàn bộ giỏ hàng
             gioHangBLL.XoaToanBoGio(maTK);
