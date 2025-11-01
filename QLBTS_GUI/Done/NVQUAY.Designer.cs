@@ -30,6 +30,8 @@ namespace QLBTS_GUI
         /// </summary>
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             NVQ_pn_tab = new Panel();
@@ -41,6 +43,7 @@ namespace QLBTS_GUI
             NVQ_lb_gh = new Label();
             NVQ_lb_sp = new Label();
             pictureBox2 = new PictureBox();
+            btn_dangxuat = new Guna.UI2.WinForms.Guna2Button();
             NVQ_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -64,12 +67,12 @@ namespace QLBTS_GUI
             NVQ_pn_menu.Controls.Add(NVQ_lb_qlsp);
             NVQ_pn_menu.Controls.Add(NVQ_lb_gh);
             NVQ_pn_menu.Controls.Add(NVQ_lb_sp);
-            NVQ_pn_menu.CustomizableEdges = customizableEdges3;
+            NVQ_pn_menu.CustomizableEdges = customizableEdges1;
             NVQ_pn_menu.FillColor = Color.Black;
             NVQ_pn_menu.Location = new Point(13, 31);
             NVQ_pn_menu.Name = "NVQ_pn_menu";
-            NVQ_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            NVQ_pn_menu.Size = new Size(942, 68);
+            NVQ_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            NVQ_pn_menu.Size = new Size(945, 68);
             NVQ_pn_menu.TabIndex = 3;
             // 
             // pictureBox1
@@ -159,11 +162,30 @@ namespace QLBTS_GUI
             pictureBox2.TabIndex = 7;
             pictureBox2.TabStop = false;
             // 
+            // btn_dangxuat
+            // 
+            btn_dangxuat.CustomizableEdges = customizableEdges3;
+            btn_dangxuat.DisabledState.BorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_dangxuat.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_dangxuat.FillColor = Color.Silver;
+            btn_dangxuat.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btn_dangxuat.ForeColor = Color.White;
+            btn_dangxuat.Location = new Point(1, 105);
+            btn_dangxuat.Name = "btn_dangxuat";
+            btn_dangxuat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btn_dangxuat.Size = new Size(50, 33);
+            btn_dangxuat.TabIndex = 8;
+            btn_dangxuat.Text = " 🔙";
+            btn_dangxuat.Click += btn_dangxuat_Click;
+            // 
             // NVQUAY
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
+            Controls.Add(btn_dangxuat);
             Controls.Add(NVQ_pn_tab);
             Controls.Add(NVQ_pn_menu);
             Controls.Add(pictureBox2);
@@ -185,6 +207,7 @@ namespace QLBTS_GUI
         private Label NVQ_lb_gh;
         private Label NVQ_lb_sp;
         private PictureBox pictureBox2;
-        public static Panel NVQ_pn_tab;
+        private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
+        public Panel NVQ_pn_tab;
     }
 }

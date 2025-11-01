@@ -61,7 +61,7 @@
 
         #endregion
 
-        private Panel Khung_pn;
+        public static Panel Khung_pn;
         private System.Windows.Forms.Timer timer1;
     }
 }

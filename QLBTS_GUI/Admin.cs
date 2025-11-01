@@ -50,5 +50,10 @@ namespace QLBTS_GUI
         {
             doimaulb(ADMIN_lb_hieusuat);
         }
+
+        private void btn_dangxuat_Click(object sender, EventArgs e)
+        {
+            ui.OpenChildForm(new DangNhap(Khung.Khung_pn), Khung.Khung_pn);
+        }
     }
 }

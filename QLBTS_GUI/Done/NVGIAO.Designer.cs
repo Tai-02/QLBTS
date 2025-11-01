@@ -30,6 +30,8 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             NVG_pn_tab = new Panel();
             pictureBox2 = new PictureBox();
             NVG_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
@@ -37,6 +39,7 @@
             NVG_lb_dagiao = new Label();
             NVG_lb_danhan = new Label();
             NVG_lb_choxacnhan = new Label();
+            btn_dangxuat = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             NVG_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -74,7 +77,7 @@
             NVG_pn_menu.Location = new Point(12, 34);
             NVG_pn_menu.Name = "NVG_pn_menu";
             NVG_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            NVG_pn_menu.Size = new Size(942, 68);
+            NVG_pn_menu.Size = new Size(958, 68);
             NVG_pn_menu.TabIndex = 4;
             // 
             // pictureBox1
@@ -127,11 +130,30 @@
             NVG_lb_choxacnhan.Text = "Chờ xác nhận";
             NVG_lb_choxacnhan.Click += NVG_lb_choxacnhan_Click;
             // 
+            // btn_dangxuat
+            // 
+            btn_dangxuat.CustomizableEdges = customizableEdges3;
+            btn_dangxuat.DisabledState.BorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_dangxuat.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_dangxuat.FillColor = Color.Silver;
+            btn_dangxuat.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btn_dangxuat.ForeColor = Color.White;
+            btn_dangxuat.Location = new Point(1, 108);
+            btn_dangxuat.Name = "btn_dangxuat";
+            btn_dangxuat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btn_dangxuat.Size = new Size(50, 33);
+            btn_dangxuat.TabIndex = 9;
+            btn_dangxuat.Text = " 🔙";
+            btn_dangxuat.Click += btn_dangxuat_Click;
+            // 
             // NVGIAO
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
+            Controls.Add(btn_dangxuat);
             Controls.Add(NVG_pn_menu);
             Controls.Add(NVG_pn_tab);
             Controls.Add(pictureBox2);
@@ -152,6 +174,7 @@
         private Label NVG_lb_danhan;
         private Label NVG_lb_choxacnhan;
         private PictureBox pictureBox2;
-        public static Panel NVG_pn_tab;
+        private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
+        public Panel NVG_pn_tab;
     }
 }

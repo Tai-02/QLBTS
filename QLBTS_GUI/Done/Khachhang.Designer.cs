@@ -30,6 +30,8 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
             KH_lb_ls = new Label();
@@ -40,6 +42,7 @@
             KH_lb_Trangchu = new Label();
             pictureBox2 = new PictureBox();
             KH_pn_tab = new Panel();
+            btn_dangxuat = new Guna.UI2.WinForms.Guna2Button();
             KH_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -172,11 +175,30 @@
             KH_pn_tab.Size = new Size(980, 508);
             KH_pn_tab.TabIndex = 1;
             // 
+            // btn_dangxuat
+            // 
+            btn_dangxuat.CustomizableEdges = customizableEdges3;
+            btn_dangxuat.DisabledState.BorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_dangxuat.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_dangxuat.FillColor = Color.Silver;
+            btn_dangxuat.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btn_dangxuat.ForeColor = Color.White;
+            btn_dangxuat.Location = new Point(1, 109);
+            btn_dangxuat.Name = "btn_dangxuat";
+            btn_dangxuat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btn_dangxuat.Size = new Size(50, 33);
+            btn_dangxuat.TabIndex = 0;
+            btn_dangxuat.Text = " 🔙";
+            btn_dangxuat.Click += btn_dangxuat_Click;
+            // 
             // Khachhang
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
+            Controls.Add(btn_dangxuat);
             Controls.Add(KH_pn_tab);
             Controls.Add(KH_pn_menu);
             Controls.Add(pictureBox2);
@@ -201,6 +223,7 @@
         private Label KH_lb_gh;
         private Label KH_lb_sp;
         private Label KH_lb_Trangchu;
-        public static Panel KH_pn_tab;
+        private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
+        public Panel KH_pn_tab;
     }
 }

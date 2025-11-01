@@ -110,7 +110,7 @@
             pnBestSeller3.BackColor = Color.Transparent;
             pnBestSeller3.Controls.Add(guna2CirclePictureBox3);
             pnBestSeller3.Controls.Add(pcBest3);
-            pnBestSeller3.Location = new Point(418, 336);
+            pnBestSeller3.Location = new Point(418, 330);
             pnBestSeller3.Name = "pnBestSeller3";
             pnBestSeller3.Size = new Size(160, 179);
             pnBestSeller3.TabIndex = 5;
@@ -145,7 +145,7 @@
             pnBestSeller5.BackColor = Color.Transparent;
             pnBestSeller5.Controls.Add(guna2CirclePictureBox5);
             pnBestSeller5.Controls.Add(pcBest5);
-            pnBestSeller5.Location = new Point(37, 336);
+            pnBestSeller5.Location = new Point(37, 330);
             pnBestSeller5.Name = "pnBestSeller5";
             pnBestSeller5.Size = new Size(160, 179);
             pnBestSeller5.TabIndex = 4;
@@ -301,7 +301,7 @@
             guna2CirclePictureBox40.FillColor = Color.Transparent;
             guna2CirclePictureBox40.Image = Properties.Resources.Bestseller;
             guna2CirclePictureBox40.ImageRotate = 0F;
-            guna2CirclePictureBox40.Location = new Point(548, 308);
+            guna2CirclePictureBox40.Location = new Point(548, 302);
             guna2CirclePictureBox40.Name = "guna2CirclePictureBox40";
             guna2CirclePictureBox40.ShadowDecoration.CustomizableEdges = customizableEdges7;
             guna2CirclePictureBox40.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
@@ -316,7 +316,7 @@
             guna2CirclePictureBox20.FillColor = Color.Transparent;
             guna2CirclePictureBox20.Image = Properties.Resources.Bestseller;
             guna2CirclePictureBox20.ImageRotate = 0F;
-            guna2CirclePictureBox20.Location = new Point(162, 308);
+            guna2CirclePictureBox20.Location = new Point(162, 302);
             guna2CirclePictureBox20.Name = "guna2CirclePictureBox20";
             guna2CirclePictureBox20.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2CirclePictureBox20.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;

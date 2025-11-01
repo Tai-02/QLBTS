@@ -30,6 +30,8 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             ADMIN_pn_tab = new Panel();
             pictureBox2 = new PictureBox();
             ADMIN_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
@@ -37,6 +39,7 @@
             ADMIN_lb_hieusuat = new Label();
             ADMIN_lb_doanhthu = new Label();
             ADMIN_lb_qltknv = new Label();
+            btn_dangxuat = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ADMIN_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -127,11 +130,30 @@
             ADMIN_lb_qltknv.Text = "Quản lí tài khoản nhân viên";
             ADMIN_lb_qltknv.Click += ADMIN_lb_qltknv_Click;
             // 
+            // btn_dangxuat
+            // 
+            btn_dangxuat.CustomizableEdges = customizableEdges3;
+            btn_dangxuat.DisabledState.BorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_dangxuat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_dangxuat.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_dangxuat.FillColor = Color.Silver;
+            btn_dangxuat.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btn_dangxuat.ForeColor = Color.White;
+            btn_dangxuat.Location = new Point(1, 108);
+            btn_dangxuat.Name = "btn_dangxuat";
+            btn_dangxuat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btn_dangxuat.Size = new Size(50, 33);
+            btn_dangxuat.TabIndex = 1;
+            btn_dangxuat.Text = " 🔙";
+            btn_dangxuat.Click += btn_dangxuat_Click;
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
+            Controls.Add(btn_dangxuat);
             Controls.Add(ADMIN_pn_menu);
             Controls.Add(ADMIN_pn_tab);
             Controls.Add(pictureBox2);
@@ -153,5 +175,6 @@
         public Panel ADMIN_pn_tab;
         private Label ADMIN_lb_hieusuat;
         private Label ADMIN_lb_doanhthu;
+        private Guna.UI2.WinForms.Guna2Button btn_dangxuat;
     }
 }

@@ -50,5 +50,10 @@ namespace QLBTS_GUI
             ui.OpenChildForm(new ChoXacNhan_NVG(), NVG_pn_tab);
             doimaulb(NVG_lb_choxacnhan);
         }
+
+        private void btn_dangxuat_Click(object sender, EventArgs e)
+        {
+            ui.OpenChildForm(new DangNhap(Khung.Khung_pn), Khung.Khung_pn);
+        }
     }
 }

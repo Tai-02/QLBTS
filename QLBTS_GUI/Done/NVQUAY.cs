@@ -63,5 +63,10 @@ namespace QLBTS_GUI
             NVQ_lb_sp.ForeColor = Color.White;
             lb.ForeColor = Color.Yellow;
         }
+
+        private void btn_dangxuat_Click(object sender, EventArgs e)
+        {
+            ui.OpenChildForm(new DangNhap(Khung.Khung_pn), Khung.Khung_pn);
+        }
     }
 }
