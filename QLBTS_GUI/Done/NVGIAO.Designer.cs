@@ -137,6 +137,7 @@
             Controls.Add(pictureBox2);
             Name = "NVGIAO";
             Text = "NVGIAO";
+            Load += NVGIAO_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             NVG_pn_menu.ResumeLayout(false);
             NVG_pn_menu.PerformLayout();
@@ -145,13 +146,12 @@
         }
 
         #endregion
-
-        private Panel NVG_pn_tab;
         private Guna.UI2.WinForms.Guna2Panel NVG_pn_menu;
         private PictureBox pictureBox1;
         private Label NVG_lb_dagiao;
         private Label NVG_lb_danhan;
         private Label NVG_lb_choxacnhan;
         private PictureBox pictureBox2;
+        public static Panel NVG_pn_tab;
     }
 }

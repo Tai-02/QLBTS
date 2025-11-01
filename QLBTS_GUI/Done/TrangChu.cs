@@ -19,6 +19,7 @@ namespace QLBTS_GUI
     public partial class TrangChu : Form
     {
         private DanhMucSanPhamBLL sanPhamBLL = new DanhMucSanPhamBLL();
+        UI_Form ui = new UI_Form();
 
         public TrangChu()
         {
@@ -50,6 +51,7 @@ namespace QLBTS_GUI
                 {
                     SanPhamDTO sp = ds[i];
                     Panel pn = panels[i];
+                    pn.Tag = sp;
 
                     // Ảnh sản phẩm
                     PictureBox pic = pics[i];
@@ -69,8 +71,10 @@ namespace QLBTS_GUI
                     pi.SizeMode = PictureBoxSizeMode.StretchImage;
                     pi.Image = Properties.Resources.Bestseller;
                     pic.Controls.Add(pi);
+                    pic.Click -= Panel_Click;
+                    pic.Click += Panel_Click;
                     pi.BringToFront();
-                    
+
                     // Tên sản phẩm (in đậm)
                     Label lbTen = new Label();
                     lbTen.Text = sp.TenSP;
@@ -113,5 +117,30 @@ namespace QLBTS_GUI
             }
         }
 
+        private void Panel_Click(object sender, EventArgs e)
+        {
+            Control clickedControl = sender as Control;
+            Panel parentPanel = clickedControl as Panel ?? clickedControl.Parent as Panel;
+
+            if (parentPanel != null && parentPanel.Tag != null)
+            {
+                SanPhamDTO sp = parentPanel.Tag as SanPhamDTO;
+                if (sp != null)
+                {
+                    try
+                    {
+                        ui.OpenChildForm(new ChiTietSanPham(sp), Khachhang.KH_pn_tab);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi mở chi tiết sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi: Dữ liệu sản phẩm không hợp lệ (Tag bị null hoặc sai kiểu).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
     }
 }

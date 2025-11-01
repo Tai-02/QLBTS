@@ -3,10 +3,9 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    partial class QuanLiDonHang 
+    partial class ChoXacNhan_NVG
     {
         private System.ComponentModel.IContainer components = null;
-        private Label lblTitle;
         private DataGridView dgvOrders;
 
         protected override void Dispose(bool disposing)
@@ -22,7 +21,6 @@ namespace QLBTS_GUI
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             dgvOrders = new DataGridView();
-            lblTitle = new Label();
             MaDH = new DataGridViewTextBoxColumn();
             NgayDat = new DataGridViewTextBoxColumn();
             TongTien = new DataGridViewTextBoxColumn();
@@ -60,27 +58,16 @@ namespace QLBTS_GUI
             dgvOrders.DefaultCellStyle = dataGridViewCellStyle3;
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.Gray;
-            dgvOrders.Location = new Point(60, 100);
+            dgvOrders.Location = new Point(60, 29);
             dgvOrders.Name = "dgvOrders";
             dgvOrders.ReadOnly = true;
             dgvOrders.RowHeadersVisible = false;
             dgvOrders.RowHeadersWidth = 51;
             dgvOrders.RowTemplate.Height = 45;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrders.Size = new Size(780, 400);
+            dgvOrders.Size = new Size(780, 471);
             dgvOrders.TabIndex = 1;
             dgvOrders.CellContentClick += dgvOrders_CellContentClick;
-            // 
-            // lblTitle
-            // 
-            lblTitle.Font = new Font("Cambria", 20F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.Black;
-            lblTitle.Location = new Point(0, 30);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(900, 50);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "Quản lý đơn hàng";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MaDH
             // 
@@ -114,19 +101,18 @@ namespace QLBTS_GUI
             TrangThai.Name = "TrangThai";
             TrangThai.ReadOnly = true;
             // 
-            // QLDonHangForm
+            // ChoXacNhan_NVG
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(900, 550);
             Controls.Add(dgvOrders);
-            Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "QLDonHangForm";
+            Name = "ChoXacNhan_NVG";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Quản lý đơn hàng";
+            Text = "Chờ xác nhận";
             Load += QLDonHangForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvOrders).EndInit();
             ResumeLayout(false);

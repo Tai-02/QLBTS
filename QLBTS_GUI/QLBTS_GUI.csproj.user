@@ -25,7 +25,7 @@
     <Compile Update="Done\LichSu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="NVGIAO.cs">
+    <Compile Update="Done\NVGIAO.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\NVQUAY.cs">

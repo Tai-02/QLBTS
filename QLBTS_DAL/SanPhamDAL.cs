@@ -282,7 +282,30 @@ namespace QLBTS_DAL
             }
         }
 
+        public string GetTenSanPham(int maSP)
+        {
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    string query = "SELECT TenSP FROM SanPham WHERE MaSP = @MaSP";
 
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaSP", maSP);
+                        conn.Open();
+                        object result = cmd.ExecuteScalar();
+                        if (result == null || result == DBNull.Value)
+                            return string.Empty;
+                        return result.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - GetTenSanPham: {ex.Message}", ex);
+            }
+        }
     }
 }
 

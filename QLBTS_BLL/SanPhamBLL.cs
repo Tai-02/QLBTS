@@ -77,5 +77,10 @@ namespace QLBTS_BLL
         {
             return dal.GetSoLuongTon(maSP);
         }
+
+        public string GetTenSanPham(int maSP)
+        {
+            return dal.GetTenSanPham(maSP);
+        }
     }
 }

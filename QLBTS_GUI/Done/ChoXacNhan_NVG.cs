@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace QLBTS_GUI
 {
-    public partial class QuanLiDonHang : Form
+    public partial class ChoXacNhan_NVG : Form
     {
         private readonly DonHangBLL bll;
         private readonly ChiTietDonHangBLL ctdh;
         UI_Form ui = new UI_Form();
 
-        public QuanLiDonHang()
+        public ChoXacNhan_NVG()
         {
             bll = new DonHangBLL();
             ctdh = new ChiTietDonHangBLL();
@@ -36,8 +36,7 @@ namespace QLBTS_GUI
 
             List<DonHangDTO> dsDonHang = new List<DonHangDTO>();
 
-            dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Chờ xác nhận"));
-            dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Đã nhận"));
+            dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Chờ giao"));
             dgvOrders.DataSource = dsDonHang.OrderByDescending(d => d.NgayDat).ToList();
 
             dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
@@ -45,9 +44,7 @@ namespace QLBTS_GUI
             dgvOrders.DefaultCellStyle.SelectionBackColor = Color.White;
             dgvOrders.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            AddButtonColumn("btnNhan", "Nhận đơn", "Nhận", Color.LimeGreen);
-            AddButtonColumn("btnHuy", "Hủy đơn", "Hủy", Color.Red);
-            AddButtonColumn("btnChuyen", "Chuyển hàng", "Chuyển", Color.RoyalBlue);
+            AddButtonColumn("btnNhan", "Nhận đơn", "Nhận giao", Color.LimeGreen);
             AddButtonColumn("btnChiTiet", "Chi tiết", "Xem chi tiết", Color.Black);
 
             dgvOrders.EnableHeadersVisualStyles = false;
@@ -93,25 +90,22 @@ namespace QLBTS_GUI
             string col = dgvOrders.Columns[e.ColumnIndex].Name;
 
             // Quyết định nút có hiển thị không
-            bool hienThi = col switch
+            bool buttonHienThi = col switch
             {
-                "btnNhan" => trangThai == "Chờ xác nhận",
-                "btnHuy" => trangThai == "Chờ xác nhận" || trangThai == "Đã nhận",
-                "btnChuyen" => trangThai == "Đã nhận",
+                "btnNhan" => trangThai == "Chờ giao",
                 "btnChiTiet" => true,
                 _ => false
             };
 
-            if (!hienThi)
+            if (!buttonHienThi)
             {
                 e.Handled = true; // không vẽ nút
                 return;
             }
 
-            // Vẽ nền và nội dung ô
+            // Phần vẽ nút (Giữ nguyên)
             e.PaintBackground(e.CellBounds, true);
 
-            // Tạo nút nhỏ gọn ở giữa ô
             Rectangle rect = new Rectangle(
                 e.CellBounds.X + 4,
                 e.CellBounds.Y + 4,
@@ -122,8 +116,6 @@ namespace QLBTS_GUI
             Color btnColor = col switch
             {
                 "btnNhan" => Color.LimeGreen,
-                "btnHuy" => Color.Red,
-                "btnChuyen" => Color.RoyalBlue,
                 "btnChiTiet" => Color.Black,
                 _ => Color.Black
             };
@@ -138,6 +130,7 @@ namespace QLBTS_GUI
 
             e.Handled = true;
         }
+
         private void dgvOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
@@ -146,11 +139,10 @@ namespace QLBTS_GUI
             string col = dgvOrders.Columns[e.ColumnIndex].Name;
             string trangThai = dgvOrders.Rows[e.RowIndex].Cells["TrangThai"].Value?.ToString() ?? "";
 
+            // Cập nhật logic hiển thị (Giống như CellPainting)
             bool buttonHienThi = col switch
             {
-                "btnNhan" => trangThai == "Chờ xác nhận",
-                "btnHuy" => trangThai == "Chờ xác nhận" || trangThai == "Đã nhận",
-                "btnChuyen" => trangThai == "Đã nhận",
+                "btnNhan" => trangThai == "Chờ giao",
                 "btnChiTiet" => true,
                 _ => false
             };
@@ -161,104 +153,37 @@ namespace QLBTS_GUI
             DialogResult result = DialogResult.None;
             string actionText = "";
 
+            // --- BẮT ĐẦU LOGIC XỬ LÝ NÚT ---
+
             if (col == "btnNhan")
             {
-                actionText = "Đánh dấu đơn hàng này là 'Đã nhận'";
-            }
-            else if (col == "btnHuy")
-            {
-                actionText = "HỦY đơn hàng này vĩnh viễn";
-            }
-            else if (col == "btnChuyen")
-            {
-                // Logic cho nút "Chờ giao" cần xác nhận và tùy chọn In bill
+                actionText = "Đánh dấu đơn hàng này là 'Đã nhận giao'";
 
-                // BƯỚC 1: Hộp thoại xác nhận chuyển trạng thái VÀ In bill
-                result = MessageBox.Show(
-                    "Xác nhận chuyển đơn hàng sang trạng thái 'Chờ giao'?\n\nChọn 'Yes' để chuyển và In hóa đơn.\nChọn 'No' để chỉ chuyển trạng thái.",
-                    "Xác nhận & In hóa đơn",
-                    MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question
-                );
-
-                if (result == DialogResult.Cancel)
-                {
-                    return; // Hủy bỏ toàn bộ thao tác
-                }
-
-                // BƯỚC 2: Cập nhật trạng thái đơn hàng (luôn thực hiện nếu không phải Cancel)
-                ok = bll.DoiTrangThai(maDH, "Chờ giao");
-
-                // BƯỚC 3: Nếu cập nhật thành công và người dùng chọn Yes, In hóa đơn
-                if (ok && result == DialogResult.Yes)
-                {
-                    List<SanPhamDTO> dsSanPham = ctdh.LayChiTietDonHangTheoMaDH(maDH);
-                    string tenCuaHang = "Cửa hàng Momocha";
-
-                    var hoaDonPdf = new HoaDonDocument(maDH, tenCuaHang, dsSanPham);
-
-                    // Sinh PDF vào MemoryStream
-                    using (var stream = new MemoryStream())
-                    {
-                        hoaDonPdf.GeneratePdf(stream);
-                        stream.Position = 0;
-
-                        // Tạo file tạm trong temp folder
-                        var tempFile = Path.Combine(Path.GetTempPath(), $"HoaDon_{maDH}.pdf");
-                        // Giả định bạn đã thêm 'using System.IO;'
-                        File.WriteAllBytes(tempFile, stream.ToArray());
-
-                        // Mở PDF bằng trình xem mặc định
-                        // Giả định bạn đã thêm 'using System.Diagnostics;'
-                        System.Diagnostics.Process.Start(new ProcessStartInfo
-                        {
-                            FileName = tempFile,
-                            UseShellExecute = true
-                        });
-                    }
-                }
-            }
-            else if (col == "btnChiTiet")
-            {
-                ui.OpenChildForm(new ChiTietDonHang(maDH), NVQUAY.NVQ_pn_tab);
-                return;
-            }
-
-            // Xử lý xác nhận cho btnNhan và btnHuy (Chỉ áp dụng nếu không phải btnChuyen hoặc btnChiTiet)
-            if (col == "btnNhan" || col == "btnHuy")
-            {
+                // Hộp thoại xác nhận cho 'Nhận đơn'
                 result = MessageBox.Show(
                     $"Bạn có chắc chắn muốn {actionText} không?",
                     "Xác nhận hành động",
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning // Dùng Warning cho Hủy, Information cho Nhận nếu cần phân biệt
+                    MessageBoxIcon.Question
                 );
 
                 if (result == DialogResult.Yes)
                 {
-                    if (col == "btnNhan")
-                    {
-                        ok = bll.DoiTrangThai(maDH, "Đã nhận");
-                    }
-                    else if (col == "btnHuy")
-                    {
-                        ok = bll.HuyDonHang(maDH);
-                    }
+                    ok = bll.DoiTrangThai(maDH, "Đang giao");
                 }
+            }
+            // BỎ CÁC ĐOẠN ELSE IF CỦA btnHuy, btnChuyen
+
+            else if (col == "btnChiTiet")
+            {
+                ui.OpenChildForm(new ChoXacNhan_NVG(), NVGIAO.NVG_pn_tab);
+                return;
             }
 
             if (ok)
             {
-                // Thông báo thành công (tùy chọn)
-                MessageBox.Show("Thao tác thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Tải lại form quản lý đơn hàng
-                ui.OpenChildForm(new QuanLiDonHang(), NVQUAY.NVQ_pn_tab);
-            }
-            else if ((col == "btnNhan" || col == "btnHuy" || col == "btnChuyen") && result != DialogResult.No && result != DialogResult.Cancel)
-            {
-                // Chỉ hiển thị lỗi nếu không phải do người dùng tự hủy/chọn No
-                // (Thực tế, bll.DoiTrangThai/HuyDonHang cần trả về false khi có lỗi)
-                // MessageBox.Show("Thao tác thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Đã nhận đơn hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadDonHang();
             }
         }
     }

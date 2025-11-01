@@ -1,7 +1,10 @@
 ﻿using QLBTS_BLL;
+using QLBTS_DAL;
 using QLBTS_DTO;
+using QuestPDF.Fluent;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -15,6 +18,8 @@ namespace QLBTS_GUI
         private List<SanPhamDTO> danhSachSP = new();
         private GioHangBLL gioHangBLL;
         private TinhToanBLL tinhToanBLL;
+        private DonHangBLL donHangBLL;
+        private ChiTietDonHangBLL ctdh;
 
         public GioHang_NVQ()
         {
@@ -22,6 +27,8 @@ namespace QLBTS_GUI
             maTK = Khung.MaTK_temp;
             gioHangBLL = new GioHangBLL(); 
             tinhToanBLL = new TinhToanBLL();
+            donHangBLL = new DonHangBLL();
+            ctdh = new ChiTietDonHangBLL();
         }
 
         private void GioHang_NVQ_Load(object sender, EventArgs e)
@@ -210,18 +217,71 @@ namespace QLBTS_GUI
 
         private void BtnXacNhan_Click(object sender, EventArgs e)
         {
+            // BƯỚC 1: KIỂM TRA GIỎ HÀNG TRỐNG
             if (danhSachSP.Count == 0)
             {
                 MessageBox.Show("Giỏ hàng trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            gioHangBLL.BanHangNVQ(gioHangBLL.LayGioHangTheoMaTK(maTK));
-            
+
+            // BƯỚC 2: THÊM HỘP THOẠI XÁC NHẬN
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn xác nhận đơn hàng này và in hóa đơn không?",
+                "Xác nhận đơn hàng",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            // Nếu người dùng chọn KHÔNG (No), hủy thao tác và thoát
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            // Tiến hành tạo đơn hàng
+            int maDH = gioHangBLL.BanHangNVQ(gioHangBLL.LayGioHangTheoMaTK(maTK));
+
+            try
+            {
+                List<SanPhamDTO> dsSanPham = ctdh.LayChiTietDonHangTheoMaDH(maDH);
+                string tenCuaHang = "Cửa hàng Momocha";
+
+                var hoaDonPdf = new HoaDonDocument(maDH, tenCuaHang, dsSanPham);
+
+                // Sinh PDF vào MemoryStream
+                using (var stream = new MemoryStream())
+                {
+                    hoaDonPdf.GeneratePdf(stream);
+                    stream.Position = 0;
+
+                    // Tạo file tạm trong temp folder
+                    var tempFile = Path.Combine(Path.GetTempPath(), $"HoaDon_{maDH}.pdf");
+                    // Giả định bạn đã thêm 'using System.IO;'
+                    File.WriteAllBytes(tempFile, stream.ToArray());
+
+                    // Mở PDF bằng trình xem mặc định
+                    // Giả định bạn đã thêm 'using System.Diagnostics;'
+                    System.Diagnostics.Process.Start(new ProcessStartInfo
+                    {
+                        FileName = tempFile,
+                        UseShellExecute = true
+                    });
+                }
+
+                MessageBox.Show($"Đơn hàng #{maDH} đã được xác nhận thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi in hóa đơn
+                MessageBox.Show("Lỗi khi in hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             // Xóa toàn bộ giỏ hàng
             gioHangBLL.XoaToanBoGio(maTK);
 
             // Reload giỏ hàng
             LoadGioHang();
         }
+
     }
 }
