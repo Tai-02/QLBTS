@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Khung_pn = new Panel();
+            timer1 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // Khung_pn
@@ -37,6 +39,11 @@
             Khung_pn.Name = "Khung_pn";
             Khung_pn.Size = new Size(958, 659);
             Khung_pn.TabIndex = 0;
+            // 
+            // timer1
+            // 
+            timer1.Interval = 1000;
+            timer1.Tick += timer1_Tick;
             // 
             // Khung
             // 
@@ -55,5 +62,6 @@
         #endregion
 
         private Panel Khung_pn;
+        private System.Windows.Forms.Timer timer1;
     }
 }

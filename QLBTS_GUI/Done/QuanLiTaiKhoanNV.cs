@@ -196,7 +196,6 @@ namespace QLBTS_GUI
             // Lấy hàng đầu tiên được chọn
             DataGridViewRow row = dgvQLTK.SelectedRows[0];
 
-
             string email = row.Cells["Email"].Value.ToString();
             int _matk = taikhoanBLL.LayMaTK_TheoEmail(email);
             string tenDangNhap = row.Cells["TenDangNhap"].Value?.ToString() ?? "N/A";
@@ -257,24 +256,21 @@ namespace QLBTS_GUI
             try
             {
                 // 2. Tạo đối tượng TaiKhoanDTO và gán dữ liệu từ Form
-                TaiKhoanDTO tk = new TaiKhoanDTO();
+                TaiKhoanDTO tk = new TaiKhoanDTO()
+                {
+                    MaTK = maTK,
+                    TenDangNhap = txt_tendangnhap.Text.Trim(),
+                    Email = txt_email.Text.Trim(),
+                    SDT = string.IsNullOrWhiteSpace(txt_sdt.Text) ? null : txt_sdt.Text.Trim(),
+                    DiaChi = string.IsNullOrWhiteSpace(txt_diachi.Text) ? null : txt_diachi.Text.Trim(),
+                    HoTen = string.IsNullOrWhiteSpace(txt_hoten.Text) ? null : txt_hoten.Text.Trim(),                        
+                    LevelID = int.Parse(txt_lvID.Text.Trim()),
+                    VaiTro = int.Parse(txt_lvID.Text.Trim()) == 2 ? "NhanVienQuay" : "NhanVienGiao",
+                    TrangThai = cbb_trangthai.SelectedItem?.ToString() ?? "",
+                    Active = (cbb_trangthai.SelectedItem.ToString() == "Hoạt Động") ? true : false
+                };
+                
 
-                tk.MaTK = maTK;
-
-                // Lấy dữ liệu từ các controls trên Form
-                tk.TenDangNhap = txt_tendangnhap.Text.Trim();
-                tk.HoTen = txt_hoten.Text.Trim();
-                tk.Email = txt_email.Text.Trim();
-                tk.SDT = txt_sdt.Text.Trim();
-                tk.DiaChi = txt_diachi.Text.Trim();
-
-                tk.LevelID = int.Parse(txt_lvID.Text.Trim());
-                tk.VaiTro = tk.LevelID == 2 ? "NhanVienQuay" : "NhanVienGiao";
-                tk.TrangThai = cbb_trangthai.SelectedItem?.ToString() ?? "";
-
-                tk.Active = tk.TrangThai.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase);
-
-                // 3. Gọi BLL để cập nhật và xử lý kiểm tra nghiệp vụ
                 if (taikhoanBLL.CapNhatTaiKhoan_QuanLy(tk))
                 {
                     MessageBox.Show("Cập nhật thông tin tài khoản thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);

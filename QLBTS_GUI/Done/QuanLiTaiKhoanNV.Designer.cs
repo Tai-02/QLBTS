@@ -56,14 +56,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             dgvQLTK = new DataGridView();
-            HoTen = new DataGridViewTextBoxColumn();
-            TenDangNhap = new DataGridViewTextBoxColumn();
-            Email = new DataGridViewTextBoxColumn();
-            Sdt = new DataGridViewTextBoxColumn();
-            Diachi = new DataGridViewTextBoxColumn();
-            VaiTro = new DataGridViewTextBoxColumn();
-            LvID = new DataGridViewTextBoxColumn();
-            TrangThai = new DataGridViewTextBoxColumn();
             guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             cbb_trangthai = new Guna.UI2.WinForms.Guna2ComboBox();
             label1 = new Label();
@@ -85,6 +77,15 @@
             QLTKNV_btn_Them = new Guna.UI2.WinForms.Guna2Button();
             QLTKNV_btn_Capnhat = new Guna.UI2.WinForms.Guna2Button();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            MaTK = new DataGridViewTextBoxColumn();
+            HoTen = new DataGridViewTextBoxColumn();
+            TenDangNhap = new DataGridViewTextBoxColumn();
+            Email = new DataGridViewTextBoxColumn();
+            Sdt = new DataGridViewTextBoxColumn();
+            Diachi = new DataGridViewTextBoxColumn();
+            VaiTro = new DataGridViewTextBoxColumn();
+            LvID = new DataGridViewTextBoxColumn();
+            TrangThai = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvQLTK).BeginInit();
             guna2Panel2.SuspendLayout();
             SuspendLayout();
@@ -107,7 +108,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvQLTK.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvQLTK.ColumnHeadersHeight = 40;
-            dgvQLTK.Columns.AddRange(new DataGridViewColumn[] { HoTen, TenDangNhap, Email, Sdt, Diachi, VaiTro, LvID, TrangThai });
+            dgvQLTK.Columns.AddRange(new DataGridViewColumn[] { MaTK, HoTen, TenDangNhap, Email, Sdt, Diachi, VaiTro, LvID, TrangThai });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -128,84 +129,6 @@
             dgvQLTK.Size = new Size(395, 486);
             dgvQLTK.TabIndex = 2;
             dgvQLTK.CellClick += dtgvQLTK_CellClick;
-            // 
-            // HoTen
-            // 
-            HoTen.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            HoTen.DataPropertyName = "HoTen";
-            HoTen.HeaderText = "Họ tên";
-            HoTen.MinimumWidth = 6;
-            HoTen.Name = "HoTen";
-            HoTen.ReadOnly = true;
-            HoTen.Width = 95;
-            // 
-            // TenDangNhap
-            // 
-            TenDangNhap.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            TenDangNhap.DataPropertyName = "TenDangNhap";
-            TenDangNhap.HeaderText = "Tên đăng nhập";
-            TenDangNhap.MinimumWidth = 6;
-            TenDangNhap.Name = "TenDangNhap";
-            TenDangNhap.ReadOnly = true;
-            TenDangNhap.Width = 161;
-            // 
-            // Email
-            // 
-            Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Email.DataPropertyName = "Email";
-            Email.HeaderText = "Email";
-            Email.MinimumWidth = 6;
-            Email.Name = "Email";
-            Email.ReadOnly = true;
-            Email.Width = 87;
-            // 
-            // Sdt
-            // 
-            Sdt.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Sdt.DataPropertyName = "SDT";
-            Sdt.HeaderText = "Sđt";
-            Sdt.MinimumWidth = 6;
-            Sdt.Name = "Sdt";
-            Sdt.ReadOnly = true;
-            Sdt.Width = 67;
-            // 
-            // Diachi
-            // 
-            Diachi.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Diachi.DataPropertyName = "DiaChi";
-            Diachi.HeaderText = "Địa chỉ";
-            Diachi.MinimumWidth = 6;
-            Diachi.Name = "Diachi";
-            Diachi.ReadOnly = true;
-            Diachi.Width = 97;
-            // 
-            // VaiTro
-            // 
-            VaiTro.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            VaiTro.DataPropertyName = "VaiTro";
-            VaiTro.HeaderText = "Vai trò";
-            VaiTro.MinimumWidth = 6;
-            VaiTro.Name = "VaiTro";
-            VaiTro.ReadOnly = true;
-            VaiTro.Width = 96;
-            // 
-            // LvID
-            // 
-            LvID.DataPropertyName = "LevelID";
-            LvID.HeaderText = "Level ID";
-            LvID.MinimumWidth = 6;
-            LvID.Name = "LvID";
-            LvID.ReadOnly = true;
-            LvID.Width = 125;
-            // 
-            // TrangThai
-            // 
-            TrangThai.DataPropertyName = "TrangThai";
-            TrangThai.HeaderText = "Trạng Thái";
-            TrangThai.MinimumWidth = 6;
-            TrangThai.Name = "TrangThai";
-            TrangThai.ReadOnly = true;
-            TrangThai.Width = 125;
             // 
             // guna2Panel2
             // 
@@ -556,6 +479,93 @@
             guna2HtmlLabel1.TabIndex = 0;
             guna2HtmlLabel1.Text = "Thông tin nhân viên";
             // 
+            // MaTK
+            // 
+            MaTK.DataPropertyName = "MaTK";
+            MaTK.HeaderText = "Mã TK";
+            MaTK.MinimumWidth = 6;
+            MaTK.Name = "MaTK";
+            MaTK.ReadOnly = true;
+            MaTK.Width = 125;
+            // 
+            // HoTen
+            // 
+            HoTen.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            HoTen.DataPropertyName = "HoTen";
+            HoTen.HeaderText = "Họ tên";
+            HoTen.MinimumWidth = 6;
+            HoTen.Name = "HoTen";
+            HoTen.ReadOnly = true;
+            HoTen.Width = 95;
+            // 
+            // TenDangNhap
+            // 
+            TenDangNhap.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            TenDangNhap.DataPropertyName = "TenDangNhap";
+            TenDangNhap.HeaderText = "Tên đăng nhập";
+            TenDangNhap.MinimumWidth = 6;
+            TenDangNhap.Name = "TenDangNhap";
+            TenDangNhap.ReadOnly = true;
+            TenDangNhap.Width = 161;
+            // 
+            // Email
+            // 
+            Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Email.DataPropertyName = "Email";
+            Email.HeaderText = "Email";
+            Email.MinimumWidth = 6;
+            Email.Name = "Email";
+            Email.ReadOnly = true;
+            Email.Width = 87;
+            // 
+            // Sdt
+            // 
+            Sdt.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Sdt.DataPropertyName = "SDT";
+            Sdt.HeaderText = "Sđt";
+            Sdt.MinimumWidth = 6;
+            Sdt.Name = "Sdt";
+            Sdt.ReadOnly = true;
+            Sdt.Width = 67;
+            // 
+            // Diachi
+            // 
+            Diachi.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Diachi.DataPropertyName = "DiaChi";
+            Diachi.HeaderText = "Địa chỉ";
+            Diachi.MinimumWidth = 6;
+            Diachi.Name = "Diachi";
+            Diachi.ReadOnly = true;
+            Diachi.Width = 97;
+            // 
+            // VaiTro
+            // 
+            VaiTro.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            VaiTro.DataPropertyName = "VaiTro";
+            VaiTro.HeaderText = "Vai trò";
+            VaiTro.MinimumWidth = 6;
+            VaiTro.Name = "VaiTro";
+            VaiTro.ReadOnly = true;
+            VaiTro.Width = 96;
+            // 
+            // LvID
+            // 
+            LvID.DataPropertyName = "LevelID";
+            LvID.HeaderText = "Level ID";
+            LvID.MinimumWidth = 6;
+            LvID.Name = "LvID";
+            LvID.ReadOnly = true;
+            LvID.Width = 125;
+            // 
+            // TrangThai
+            // 
+            TrangThai.DataPropertyName = "TrangThai";
+            TrangThai.HeaderText = "Trạng Thái";
+            TrangThai.MinimumWidth = 6;
+            TrangThai.Name = "TrangThai";
+            TrangThai.ReadOnly = true;
+            TrangThai.Width = 125;
+            // 
             // QuanLiTaiKhoanNV
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -596,6 +606,7 @@
         private Guna.UI2.WinForms.Guna2Button QLTKNV_btn_Xoa;
         private Label label1;
         private Guna.UI2.WinForms.Guna2ComboBox cbb_trangthai;
+        private DataGridViewTextBoxColumn MaTK;
         private DataGridViewTextBoxColumn HoTen;
         private DataGridViewTextBoxColumn TenDangNhap;
         private DataGridViewTextBoxColumn Email;

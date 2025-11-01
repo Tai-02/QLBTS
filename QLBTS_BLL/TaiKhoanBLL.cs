@@ -195,6 +195,11 @@ namespace QLBTS_BLL
             }
             return dal.LayEmailTheoTenDangNhap(tenDangNhap);
         }
+
+        public bool kttk(TaiKhoanDTO tk)
+        {
+            return dal.Kiemtra(tk);
+        }
     }
 }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QLBTS_BLL;
+using QLBTS_DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,6 +26,16 @@ namespace QLBTS_GUI
         private void Khung_Load(object sender, EventArgs e)
         {
             ui.OpenChildForm(new DangNhap(Khung_pn), Khung_pn);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TaiKhoanBLL tkBLL = new TaiKhoanBLL();
+            TaiKhoanDTO tk = tkBLL.LayThongTinTaiKhoanTheoMaTK(MaTK_temp);
+            if (!tkBLL.kttk(tk))
+            {
+                ui.OpenChildForm(new DangNhap(Khung_pn), Khung_pn);
+            }
         }
     }
 }

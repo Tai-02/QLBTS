@@ -43,7 +43,6 @@ namespace QLBTS_DAL
 
         public bool CapNhatThongTin(TaiKhoanDTO tk)
         {
-            // Kiểm tra email đã tồn tại (trừ email của chính tài khoản này)
             if (EmailTonTai_koTK(tk.Email, tk.MaTK))
                 throw new Exception("Email đã tồn tại, vui lòng chọn email khác.");
 
@@ -227,8 +226,6 @@ namespace QLBTS_DAL
             }
         }
 
-
-        // TaiKhoanDAL.cs - SỬA LẠI HÀM InsertTaiKhoan
 
         public bool InsertTaiKhoan(TaiKhoanDTO tk)
         {
@@ -505,9 +502,7 @@ namespace QLBTS_DAL
 
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
-                        // Thêm tham số TenDangNhap
-                        cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap); // THÊM DÒNG NÀY
-
+                        cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap); 
                         cmd.Parameters.AddWithValue("@HoTen", tk.HoTen);
                         cmd.Parameters.AddWithValue("@Email", tk.Email);
                         cmd.Parameters.AddWithValue("@SDT", tk.SDT);

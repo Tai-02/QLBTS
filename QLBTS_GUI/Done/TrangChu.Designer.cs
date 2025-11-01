@@ -60,6 +60,7 @@
             guna2CirclePictureBox30 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             guna2CirclePictureBox50 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             pcGioithieu = new PictureBox();
+            label1 = new Label();
             pcNenSP.SuspendLayout();
             pnBestSeller3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox3).BeginInit();
@@ -82,6 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox30).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox50).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pcGioithieu).BeginInit();
+            pcGioithieu.SuspendLayout();
             SuspendLayout();
             // 
             // pcNenSP
@@ -108,7 +110,7 @@
             pnBestSeller3.BackColor = Color.Transparent;
             pnBestSeller3.Controls.Add(guna2CirclePictureBox3);
             pnBestSeller3.Controls.Add(pcBest3);
-            pnBestSeller3.Location = new Point(417, 348);
+            pnBestSeller3.Location = new Point(418, 336);
             pnBestSeller3.Name = "pnBestSeller3";
             pnBestSeller3.Size = new Size(160, 179);
             pnBestSeller3.TabIndex = 5;
@@ -143,7 +145,7 @@
             pnBestSeller5.BackColor = Color.Transparent;
             pnBestSeller5.Controls.Add(guna2CirclePictureBox5);
             pnBestSeller5.Controls.Add(pcBest5);
-            pnBestSeller5.Location = new Point(37, 348);
+            pnBestSeller5.Location = new Point(37, 336);
             pnBestSeller5.Name = "pnBestSeller5";
             pnBestSeller5.Size = new Size(160, 179);
             pnBestSeller5.TabIndex = 4;
@@ -299,7 +301,7 @@
             guna2CirclePictureBox40.FillColor = Color.Transparent;
             guna2CirclePictureBox40.Image = Properties.Resources.Bestseller;
             guna2CirclePictureBox40.ImageRotate = 0F;
-            guna2CirclePictureBox40.Location = new Point(547, 320);
+            guna2CirclePictureBox40.Location = new Point(548, 308);
             guna2CirclePictureBox40.Name = "guna2CirclePictureBox40";
             guna2CirclePictureBox40.ShadowDecoration.CustomizableEdges = customizableEdges7;
             guna2CirclePictureBox40.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
@@ -314,7 +316,7 @@
             guna2CirclePictureBox20.FillColor = Color.Transparent;
             guna2CirclePictureBox20.Image = Properties.Resources.Bestseller;
             guna2CirclePictureBox20.ImageRotate = 0F;
-            guna2CirclePictureBox20.Location = new Point(162, 320);
+            guna2CirclePictureBox20.Location = new Point(162, 308);
             guna2CirclePictureBox20.Name = "guna2CirclePictureBox20";
             guna2CirclePictureBox20.ShadowDecoration.CustomizableEdges = customizableEdges8;
             guna2CirclePictureBox20.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
@@ -355,6 +357,7 @@
             // 
             // pcGioithieu
             // 
+            pcGioithieu.Controls.Add(label1);
             pcGioithieu.Image = Properties.Resources.AnhGioiThieu;
             pcGioithieu.Location = new Point(-1, -2);
             pcGioithieu.Name = "pcGioithieu";
@@ -362,6 +365,19 @@
             pcGioithieu.SizeMode = PictureBoxSizeMode.StretchImage;
             pcGioithieu.TabIndex = 14;
             pcGioithieu.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Bahnschrift Condensed", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(128, 64, 64);
+            label1.Location = new Point(59, 153);
+            label1.Name = "label1";
+            label1.Size = new Size(198, 112);
+            label1.TabIndex = 15;
+            label1.Text = "Momocha mang lại\r\ncho quý khách cảm giác\r\nđắm chìm vào từng giọt\r\ntrà sữa thơm ngon";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // TrangChu
             // 
@@ -395,6 +411,8 @@
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox30).EndInit();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox50).EndInit();
             ((System.ComponentModel.ISupportInitialize)pcGioithieu).EndInit();
+            pcGioithieu.ResumeLayout(false);
+            pcGioithieu.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -421,5 +439,6 @@
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox5;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox4;
+        private Label label1;
     }
 }

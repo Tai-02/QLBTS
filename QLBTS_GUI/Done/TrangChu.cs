@@ -34,6 +34,7 @@ namespace QLBTS_GUI
         private void LoadBestSellers()
         {
             List<Panel> panels = new List<Panel> { pnBestSeller1, pnBestSeller2, pnBestSeller3, pnBestSeller4, pnBestSeller5 };
+            List<PictureBox> picmagiam = new List<PictureBox>() { guna2CirclePictureBox50, guna2CirclePictureBox11, guna2CirclePictureBox40, guna2CirclePictureBox30, guna2CirclePictureBox20 };
             List<PictureBox> pics = new List<PictureBox> { pcBest1, pcBest2, pcBest3, pcBest4, pcBest5 };
             List<PictureBox> pickm = new List<PictureBox> { guna2CirclePictureBox1, guna2CirclePictureBox2, guna2CirclePictureBox3, guna2CirclePictureBox4, guna2CirclePictureBox5 };
 
@@ -50,6 +51,11 @@ namespace QLBTS_GUI
                 for (int i = 0; i < ds.Count && i < panels.Count; i++)
                 {
                     SanPhamDTO sp = ds[i];
+                    if(sp==null)
+                    {
+                        picmagiam[i].Visible = false;
+                        continue;
+                    }
                     Panel pn = panels[i];
                     pn.Tag = sp;
 
@@ -77,7 +83,7 @@ namespace QLBTS_GUI
 
                     // Tên sản phẩm (in đậm)
                     Label lbTen = new Label();
-                    lbTen.Text = sp.TenSP;
+                    lbTen.Text = sp.TenSP + " (" + sp.Size + ")";
                     lbTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
                     lbTen.AutoSize = false;
                     lbTen.TextAlign = ContentAlignment.MiddleCenter;
@@ -85,10 +91,13 @@ namespace QLBTS_GUI
                     lbTen.Height = 25;
                     pn.Controls.Add(lbTen);
 
+
+                    int giaKM = (int)(Math.Round((sp.GiaHienTai - (sp.GiaHienTai * sp.KhuyenMaiM / 100.0)) / 1000.0) * 1000);
+
                     // Giá gốc (den, có gạch ngang)
                     Label lbGiaGoc = new Label();
-                    lbGiaGoc.Text = $"{sp.GiaM:N0} VNĐ";
-                    lbGiaGoc.Font = new Font("Segoe UI", 9, FontStyle.Strikeout);
+                    lbGiaGoc.Text = $"{sp.GiaHienTai:N0} VNĐ";
+                    lbGiaGoc.Font = (giaKM != sp.GiaHienTai)? new Font("Segoe UI", 9, FontStyle.Strikeout): new Font("Segoe UI", 10, FontStyle.Bold);
                     lbGiaGoc.ForeColor = Color.Black;
                     lbGiaGoc.AutoSize = false;
                     lbGiaGoc.TextAlign = ContentAlignment.MiddleCenter;
@@ -96,17 +105,19 @@ namespace QLBTS_GUI
                     lbGiaGoc.Height = 18;
                     pn.Controls.Add(lbGiaGoc);
 
-                    // Giá khuyến mãi (đỏ, dưới cùng)
-                    int giaKM = (int)(Math.Round((sp.GiaM - (sp.GiaM * sp.KhuyenMaiM / 100.0)) / 1000.0) * 1000);
-                    Label lbGiaKM = new Label();
-                    lbGiaKM.Text = $"{giaKM:N0} VNĐ (-{sp.KhuyenMaiM}%)";
-                    lbGiaKM.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                    lbGiaKM.ForeColor = Color.Red;
-                    lbGiaKM.AutoSize = false;
-                    lbGiaKM.TextAlign = ContentAlignment.MiddleCenter;
-                    lbGiaKM.Dock = DockStyle.Bottom;
-                    lbGiaKM.Height = 22;
-                    pn.Controls.Add(lbGiaKM);
+                    if (giaKM != sp.GiaHienTai)
+                    {
+                        // Giá khuyến mãi (đỏ, dưới cùng)
+                        Label lbGiaKM = new Label();
+                        lbGiaKM.Text = $"{giaKM:N0} VNĐ (-{sp.KhuyenMaiM}%)";
+                        lbGiaKM.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                        lbGiaKM.ForeColor = Color.Red;
+                        lbGiaKM.AutoSize = false;
+                        lbGiaKM.TextAlign = ContentAlignment.MiddleCenter;
+                        lbGiaKM.Dock = DockStyle.Bottom;
+                        lbGiaKM.Height = 22;
+                        pn.Controls.Add(lbGiaKM);
+                    }
 
                     pn.Visible = true;
                 }

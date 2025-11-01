@@ -42,6 +42,7 @@ namespace QLBTS_GUI
 
         private void ADMIN_lb_doanhthu_Click(object sender, EventArgs e)
         {
+            ui.OpenChildForm(new DoanhThu(), ADMIN_pn_tab);
             doimaulb(ADMIN_lb_doanhthu);
         }
 
