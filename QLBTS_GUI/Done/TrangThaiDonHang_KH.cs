@@ -336,7 +336,7 @@ namespace QLBTS_GUI
                             MessageBoxIcon.Information
                         );
                         LichSuHoatDongBBL ls = new LichSuHoatDongBBL();
-                        ls.ThemLichSu(Khung.MaTK_temp, maDH, donHangBLL.getNVG(maDH).ToString(), Convert.ToInt32(donHangBLL.TinhTongTienDonHang(maDH)), "Giao hàng");
+                        ls.ThemLichSu(Khung.MaTK_temp, maDH, donHangBLL.getNVG(maDH).ToString(), Convert.ToInt32(donHangBLL.TinhTongTienDonHang(maDH)), "Giaohang");
                         LoadOrders(); // Reload lại danh sách
                     }
                     else

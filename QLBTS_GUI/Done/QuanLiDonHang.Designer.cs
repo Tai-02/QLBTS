@@ -26,6 +26,8 @@ namespace QLBTS_GUI
             NgayDat = new DataGridViewTextBoxColumn();
             TongTien = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
+            SDT = new DataGridViewTextBoxColumn();
+            DiaChi = new DataGridViewTextBoxColumn();
             lblTitle = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
             SuspendLayout();
@@ -36,7 +38,6 @@ namespace QLBTS_GUI
             dgvOrders.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.LightGray;
             dgvOrders.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvOrders.BackgroundColor = Color.White;
             dgvOrders.BorderStyle = BorderStyle.None;
             dgvOrders.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -49,7 +50,7 @@ namespace QLBTS_GUI
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvOrders.ColumnHeadersHeight = 40;
-            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai });
+            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai, SDT, DiaChi });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -60,14 +61,14 @@ namespace QLBTS_GUI
             dgvOrders.DefaultCellStyle = dataGridViewCellStyle3;
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.Gray;
-            dgvOrders.Location = new Point(60, 100);
+            dgvOrders.Location = new Point(0, 94);
             dgvOrders.Name = "dgvOrders";
             dgvOrders.ReadOnly = true;
             dgvOrders.RowHeadersVisible = false;
             dgvOrders.RowHeadersWidth = 51;
             dgvOrders.RowTemplate.Height = 45;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrders.Size = new Size(780, 400);
+            dgvOrders.Size = new Size(944, 415);
             dgvOrders.TabIndex = 1;
             dgvOrders.CellContentClick += dgvOrders_CellContentClick;
             // 
@@ -78,6 +79,7 @@ namespace QLBTS_GUI
             MaDH.MinimumWidth = 6;
             MaDH.Name = "MaDH";
             MaDH.ReadOnly = true;
+            MaDH.Width = 146;
             // 
             // NgayDat
             // 
@@ -86,6 +88,7 @@ namespace QLBTS_GUI
             NgayDat.MinimumWidth = 6;
             NgayDat.Name = "NgayDat";
             NgayDat.ReadOnly = true;
+            NgayDat.Width = 146;
             // 
             // TongTien
             // 
@@ -94,6 +97,7 @@ namespace QLBTS_GUI
             TongTien.MinimumWidth = 6;
             TongTien.Name = "TongTien";
             TongTien.ReadOnly = true;
+            TongTien.Width = 146;
             // 
             // TrangThai
             // 
@@ -102,6 +106,23 @@ namespace QLBTS_GUI
             TrangThai.MinimumWidth = 6;
             TrangThai.Name = "TrangThai";
             TrangThai.ReadOnly = true;
+            TrangThai.Width = 146;
+            // 
+            // SDT
+            // 
+            SDT.HeaderText = "Số điện thoại";
+            SDT.MinimumWidth = 6;
+            SDT.Name = "SDT";
+            SDT.ReadOnly = true;
+            SDT.Width = 146;
+            // 
+            // DiaChi
+            // 
+            DiaChi.HeaderText = "Địa chỉ";
+            DiaChi.MinimumWidth = 6;
+            DiaChi.Name = "DiaChi";
+            DiaChi.ReadOnly = true;
+            DiaChi.Width = 146;
             // 
             // lblTitle
             // 
@@ -119,7 +140,7 @@ namespace QLBTS_GUI
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(900, 550);
+            ClientSize = new Size(948, 513);
             Controls.Add(dgvOrders);
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -135,5 +156,7 @@ namespace QLBTS_GUI
         private DataGridViewTextBoxColumn NgayDat;
         private DataGridViewTextBoxColumn TongTien;
         private DataGridViewTextBoxColumn TrangThai;
+        private DataGridViewTextBoxColumn SDT;
+        private DataGridViewTextBoxColumn DiaChi;
     }
 }

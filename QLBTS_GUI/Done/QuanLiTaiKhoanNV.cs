@@ -241,7 +241,7 @@ namespace QLBTS_GUI
 
         private void QLTKNV_btn_Capnhat_Click(object sender, EventArgs e)
         {
-            if (dgvQLTK.SelectedRows.Count == 0)
+            if (dgvQLTK.SelectedRows.Count < 1 )
             {
                 MessageBox.Show("Vui lòng chọn một tài khoản để cập nhật.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

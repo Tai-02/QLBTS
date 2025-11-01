@@ -49,22 +49,22 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartThongKe.Series.Add(series1);
-            chartThongKe.Size = new Size(776, 375);
+            chartThongKe.Size = new Size(933, 432);
             chartThongKe.TabIndex = 0;
             chartThongKe.Text = "chart1";
             // 
             // dtpNgayThangNam
             // 
-            dtpNgayThangNam.Location = new Point(12, 403);
+            dtpNgayThangNam.Location = new Point(469, 464);
             dtpNgayThangNam.Name = "dtpNgayThangNam";
-            dtpNgayThangNam.Size = new Size(250, 27);
+            dtpNgayThangNam.Size = new Size(246, 27);
             dtpNgayThangNam.TabIndex = 1;
             dtpNgayThangNam.ValueChanged += dtpNgayThangNam_ValueChanged;
             // 
             // cbbTieuChi
             // 
             cbbTieuChi.FormattingEnabled = true;
-            cbbTieuChi.Location = new Point(298, 403);
+            cbbTieuChi.Location = new Point(761, 464);
             cbbTieuChi.Name = "cbbTieuChi";
             cbbTieuChi.Size = new Size(151, 28);
             cbbTieuChi.TabIndex = 2;
@@ -74,7 +74,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(948, 513);
             Controls.Add(cbbTieuChi);
             Controls.Add(dtpNgayThangNam);
             Controls.Add(chartThongKe);

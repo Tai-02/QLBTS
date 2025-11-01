@@ -550,12 +550,13 @@
             // 
             // LvID
             // 
+            LvID.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             LvID.DataPropertyName = "LevelID";
             LvID.HeaderText = "Level ID";
             LvID.MinimumWidth = 6;
             LvID.Name = "LvID";
             LvID.ReadOnly = true;
-            LvID.Width = 125;
+            LvID.Width = 113;
             // 
             // TrangThai
             // 

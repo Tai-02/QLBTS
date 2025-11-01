@@ -200,6 +200,40 @@ namespace QLBTS_BLL
         {
             return dal.Kiemtra(tk);
         }
+
+        public string LaySDT(int maTK)
+        {
+            try
+            {
+                string sdt = dal.LaySDTTheoMaTK(maTK);
+
+                if (string.IsNullOrEmpty(sdt))
+                    throw new Exception("Không tìm thấy số điện thoại cho tài khoản này.");
+
+                return sdt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BLL - LaySDT: " + ex.Message, ex);
+            }
+        }
+
+        public string LayDiaChi(int maTK)
+        {
+            try
+            {
+                string diaChi = dal.LayDiaChiTheoMaTK(maTK);
+
+                if (string.IsNullOrEmpty(diaChi))
+                    throw new Exception("Không tìm thấy địa chỉ cho tài khoản này.");
+
+                return diaChi;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BLL - LayDiaChi: " + ex.Message, ex);
+            }
+        }
     }
 }
 

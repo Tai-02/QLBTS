@@ -3,6 +3,7 @@ using QLBTS_DTO;
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace QLBTS_DAL
 {
@@ -45,6 +46,16 @@ namespace QLBTS_DAL
         {
             if (EmailTonTai_koTK(tk.Email, tk.MaTK))
                 throw new Exception("Email đã tồn tại, vui lòng chọn email khác.");
+
+            if(string.IsNullOrWhiteSpace(tk.TenDangNhap) || tk.TenDangNhap.Length < 6)
+                throw new Exception("Tên đăng nhập phải có ít nhất 6 ký tự.");
+
+            if (!Regex.IsMatch(tk.TenDangNhap, @"^[a-zA-Z0-9_]+$"))
+                throw new Exception("Tên đăng nhập chỉ được chứa chữ cái, số hoặc dấu gạch dưới (_).");
+
+            // 3️⃣ Email: có chứa '@' và ít nhất 10 ký tự
+            if (string.IsNullOrWhiteSpace(tk.Email) || tk.Email.Length < 10 || !tk.Email.Contains("@"))
+                throw new Exception("Email không hợp lệ. Phải chứa '@' và có ít nhất 10 ký tự.");
 
             try
             {
@@ -229,22 +240,41 @@ namespace QLBTS_DAL
 
         public bool InsertTaiKhoan(TaiKhoanDTO tk)
         {
+            // 1️⃣ Tên đăng nhập: ít nhất 6 ký tự, chỉ chứa chữ, số, dấu gạch dưới
+            if (string.IsNullOrWhiteSpace(tk.TenDangNhap) || tk.TenDangNhap.Length < 6)
+                throw new Exception("Tên đăng nhập phải có ít nhất 6 ký tự.");
+
+            if (!Regex.IsMatch(tk.TenDangNhap, @"^[a-zA-Z0-9_]+$"))
+                throw new Exception("Tên đăng nhập chỉ được chứa chữ cái, số hoặc dấu gạch dưới (_).");
+
+            // 2️⃣ Mật khẩu: ít nhất 6 ký tự
+            if (string.IsNullOrWhiteSpace(tk.MatKhau) || tk.MatKhau.Length < 6)
+                throw new Exception("Mật khẩu phải có ít nhất 6 ký tự.");
+
+            // 3️⃣ Email: có chứa '@' và ít nhất 10 ký tự
+            if (string.IsNullOrWhiteSpace(tk.Email) || tk.Email.Length < 10 || !tk.Email.Contains("@"))
+                throw new Exception("Email không hợp lệ. Phải chứa '@' và có ít nhất 10 ký tự.");
+
+            // 4️⃣ LevelID: chỉ được phép là 2 hoặc 3
+            if (tk.LevelID != 2 && tk.LevelID != 3)
+                throw new Exception("LevelID không hợp lệ. Chỉ được phép là 2 hoặc 3.");
+
             try
             {
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
                     string sql = @"INSERT INTO TaiKhoan 
-                            (TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID)
-                            VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID)";
+                    (TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID)
+                    VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID)";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap);
 
                         if (tk.MatKhau == null)
                             throw new ArgumentNullException(nameof(tk.MatKhau));
-                        cmd.Parameters.AddWithValue("@MatKhau", HashMatKhau(tk.MatKhau));
 
+                        cmd.Parameters.AddWithValue("@MatKhau", HashMatKhau(tk.MatKhau));
                         cmd.Parameters.AddWithValue("@Email", tk.Email);
                         cmd.Parameters.AddWithValue("@Otp", tk.Otp);
                         cmd.Parameters.AddWithValue("@VaiTro", tk.VaiTro);
@@ -256,12 +286,13 @@ namespace QLBTS_DAL
                     }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Lỗi InsertTaiKhoan: " + ex.Message);
                 return false;
             }
         }
+
 
         public bool KichHoatTaiKhoan(string email, string otp)
         {
@@ -292,26 +323,48 @@ namespace QLBTS_DAL
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT COUNT(*) FROM TaiKhoan WHERE Email=@e AND Otp=@o";
+
+                string sql = @"SELECT Otp, NgayTao, Active 
+                       FROM TaiKhoan 
+                       WHERE Email = @e";
+
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@e", email);
-                    cmd.Parameters.AddWithValue("@o", otp);
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    if (count > 0)
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        string update = "UPDATE TaiKhoan SET Active=1, NgayKichHoat=NOW() WHERE Email=@e";
-                        using (var up = new MySqlCommand(update, conn))
-                        {
-                            up.Parameters.AddWithValue("@e", email);
-                            up.ExecuteNonQuery();
-                        }
-                        return true;
+                        if (!reader.Read())
+                            throw new Exception("Email không tồn tại.");
+
+                        string otpDb = reader["Otp"]?.ToString();
+                        DateTime ngayTao = Convert.ToDateTime(reader["NgayTao"]);
+                        bool daActive = Convert.ToBoolean(reader["Active"]);
+
+                        if (daActive)
+                            throw new Exception("Tài khoản đã được kích hoạt.");
+
+                        if (otp != otpDb)
+                            throw new Exception("Mã OTP không chính xác.");
+
+                        DateTime now = DateTime.Now;
+                        TimeSpan khoangCach = now - ngayTao;
+                        if (khoangCach.TotalMinutes > 5)
+                            throw new Exception("Mã OTP đã hết hạn (quá 5 phút).");
                     }
-                    return false;
                 }
+
+                // Nếu hợp lệ -> cập nhật active
+                string update = "UPDATE TaiKhoan SET Active = 1, NgayKichHoat = NOW() WHERE Email = @e";
+                using (var up = new MySqlCommand(update, conn))
+                {
+                    up.Parameters.AddWithValue("@e", email);
+                    up.ExecuteNonQuery();
+                }
+
+                return true;
             }
         }
+
 
         public int LayLevelID(string tenDangNhap)
         {
@@ -476,6 +529,20 @@ namespace QLBTS_DAL
 
         public bool CapNhatTaiKhoan_QuanLy(TaiKhoanDTO tk)
         {
+            if(string.IsNullOrWhiteSpace(tk.TenDangNhap) || tk.TenDangNhap.Length < 6)
+                throw new Exception("Tên đăng nhập phải có ít nhất 6 ký tự.");
+
+            if (!Regex.IsMatch(tk.TenDangNhap, @"^[a-zA-Z0-9_]+$"))
+                throw new Exception("Tên đăng nhập chỉ được chứa chữ cái, số hoặc dấu gạch dưới (_).");
+
+            // 3️⃣ Email: có chứa '@' và ít nhất 10 ký tự
+            if (string.IsNullOrWhiteSpace(tk.Email) || tk.Email.Length < 10 || !tk.Email.Contains("@"))
+                throw new Exception("Email không hợp lệ. Phải chứa '@' và có ít nhất 10 ký tự.");
+
+            // 3️⃣ Kiểm tra số điện thoại: bắt đầu bằng 0, dài 9 hoặc 10 số
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tk.SDT, @"^0\d{8,9}$"))
+                throw new Exception("Số điện thoại không hợp lệ (phải bắt đầu bằng 0 và có 9–10 chữ số).");
+
             // Kiểm tra tên đăng nhập đã tồn tại (trừ tài khoản này)
             if (TenDangNhapTonTai_koTK(tk.TenDangNhap, tk.MaTK)) // GỌI HÀM MỚI
                 throw new Exception("Tên đăng nhập đã tồn tại, vui lòng chọn tên khác.");
@@ -484,12 +551,15 @@ namespace QLBTS_DAL
             if (EmailTonTai_koTK(tk.Email, tk.MaTK))
                 throw new Exception("Email đã tồn tại, vui lòng chọn email khác.");
 
+            if (tk.LevelID != 2 && tk.LevelID != 3)
+                throw new Exception("LevelID không hợp lệ. Chỉ được phép là 2 hoặc 3.");
+
             try
             {
                 using (var conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-                    string sql = @"UPDATE TaiKhoan 
+                    string sql = @"UPDATE `TaiKhoan` 
                         SET TenDangNhap = @TenDangNhap,
                             HoTen = @HoTen,
                             Email = @Email,
@@ -641,6 +711,60 @@ namespace QLBTS_DAL
             {
                 // Ném ra Exception để BLL có thể bắt và xử lý lỗi kết nối/SQL
                 throw new Exception($"Lỗi DAL - LayEmailTheoTenDangNhap: {ex.Message}", ex);
+            }
+        }
+
+        public string LaySDTTheoMaTK(int maTK)
+        {
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT SDT FROM TaiKhoan WHERE MaTK = @MaTK";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaTK", maTK);
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                            return result.ToString();
+                        else
+                            return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - LaySDTTheoMaTK: {ex.Message}", ex);
+            }
+        }
+
+        public string LayDiaChiTheoMaTK(int maTK)
+        {
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT DiaChi FROM TaiKhoan WHERE MaTK = @MaTK";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaTK", maTK);
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                            return result.ToString();
+                        else
+                            return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - LayDiaChiTheoMaTK: {ex.Message}", ex);
             }
         }
     }

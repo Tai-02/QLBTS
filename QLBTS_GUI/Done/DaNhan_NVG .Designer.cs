@@ -25,6 +25,8 @@ namespace QLBTS_GUI
             NgayDat = new DataGridViewTextBoxColumn();
             TongTien = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
+            SDT = new DataGridViewTextBoxColumn();
+            DiaChi = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
             SuspendLayout();
             // 
@@ -47,7 +49,7 @@ namespace QLBTS_GUI
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvOrders.ColumnHeadersHeight = 40;
-            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai });
+            dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai, SDT, DiaChi });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -58,14 +60,14 @@ namespace QLBTS_GUI
             dgvOrders.DefaultCellStyle = dataGridViewCellStyle3;
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.Gray;
-            dgvOrders.Location = new Point(60, 29);
+            dgvOrders.Location = new Point(12, 12);
             dgvOrders.Name = "dgvOrders";
             dgvOrders.ReadOnly = true;
             dgvOrders.RowHeadersVisible = false;
             dgvOrders.RowHeadersWidth = 51;
             dgvOrders.RowTemplate.Height = 45;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrders.Size = new Size(780, 471);
+            dgvOrders.Size = new Size(924, 488);
             dgvOrders.TabIndex = 1;
             dgvOrders.CellContentClick += dgvOrders_CellContentClick;
             // 
@@ -101,16 +103,30 @@ namespace QLBTS_GUI
             TrangThai.Name = "TrangThai";
             TrangThai.ReadOnly = true;
             // 
-            // ChoXacNhan_NVG
+            // SDT
+            // 
+            SDT.HeaderText = "Số điện thoại";
+            SDT.MinimumWidth = 6;
+            SDT.Name = "SDT";
+            SDT.ReadOnly = true;
+            // 
+            // DiaChi
+            // 
+            DiaChi.HeaderText = "Địa chỉ";
+            DiaChi.MinimumWidth = 6;
+            DiaChi.Name = "DiaChi";
+            DiaChi.ReadOnly = true;
+            // 
+            // DaNhan_NVG
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(900, 550);
+            ClientSize = new Size(948, 513);
             Controls.Add(dgvOrders);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "ChoXacNhan_NVG";
+            Name = "DaNhan_NVG";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chờ xác nhận";
             Load += QLDonHangForm_Load;
@@ -122,5 +138,7 @@ namespace QLBTS_GUI
         private DataGridViewTextBoxColumn NgayDat;
         private DataGridViewTextBoxColumn TongTien;
         private DataGridViewTextBoxColumn TrangThai;
+        private DataGridViewTextBoxColumn SDT;
+        private DataGridViewTextBoxColumn DiaChi;
     }
 }

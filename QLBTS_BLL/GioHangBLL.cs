@@ -7,6 +7,8 @@ namespace QLBTS_BLL
 {
     public class GioHangBLL
     {
+        TaiKhoanDAL tkDAL = new TaiKhoanDAL();
+
         // 🔹 1️⃣ Lấy giỏ hàng theo mã tài khoản
         public List<SanPhamDTO> LayGioHangTheoMaTK(int maTK)
         {
@@ -52,8 +54,19 @@ namespace QLBTS_BLL
         public int DatHangKH(int maKhach, List<SanPhamDTO> listSP)
         {
             if (listSP == null || listSP.Count == 0)
+            {
                 throw new Exception("Không có sản phẩm nào để đặt hàng!");
+            }
 
+            TaiKhoanDTO tk = tkDAL.LayThongTinTaiKhoanTheoMaTK(maKhach);
+            if(tk.DiaChi == null)
+            {
+                throw new Exception("Vui lòng cập nhật địa chỉ nhận hàng");
+            }
+            if(tk.SDT == null)
+            {
+                throw new Exception("Vui lòng cập nhật số điện thoại");
+            }
             return GioHangDAL.DatHangKH(maKhach, listSP);
         }
 

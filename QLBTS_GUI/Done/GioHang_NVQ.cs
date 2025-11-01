@@ -242,7 +242,7 @@ namespace QLBTS_GUI
             // Tiến hành tạo đơn hàng
             int maDH = gioHangBLL.BanHangNVQ(gioHangBLL.LayGioHangTheoMaTK(maTK));
             LichSuHoatDongBBL ls = new LichSuHoatDongBBL();
-            ls.ThemLichSu(maTK, maDH, "Bạn đã chọn món cho khách tại quầy", Convert.ToInt32(donHangBLL.TinhTongTienDonHang(maDH)), "Bán hàng");
+            ls.ThemLichSu(maTK, maDH, "Bạn đã chọn món cho khách tại quầy", Convert.ToInt32(donHangBLL.TinhTongTienDonHang(maDH)[0]), "Banhang");
 
             try
             {

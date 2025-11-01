@@ -58,6 +58,19 @@ namespace QLBTS_GUI
                 dgvOrders.Columns["Gia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             }
 
+            TaiKhoanBLL tkBLL = new TaiKhoanBLL();
+            foreach (DataGridViewRow row in dgvOrders.Rows)
+            {
+                if (row.DataBoundItem is DonHangDTO dh)
+                {
+                    string sdt = tkBLL.LaySDT(dh.MaKhach);
+                    string diachi = tkBLL.LayDiaChi(dh.MaKhach);
+
+                    row.Cells["SDT"].Value = sdt;
+                    row.Cells["DiaChi"].Value = diachi;
+                }
+            }
+
             dgvOrders.Refresh();
         }
 
