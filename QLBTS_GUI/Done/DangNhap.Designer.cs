@@ -77,8 +77,8 @@
             // 
             Dn_pn_right.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             Dn_pn_right.BackColor = SystemColors.Control;
-            Dn_pn_right.BackgroundImageLayout = ImageLayout.Stretch;
             Dn_pn_right.BackgroundImage = Properties.Resources.AnhDangNhap;
+            Dn_pn_right.BackgroundImageLayout = ImageLayout.Stretch;
             Dn_pn_right.Controls.Add(Dn_txt_tendangnhap);
             Dn_pn_right.Controls.Add(Dn_btn_Dangkingay);
             Dn_pn_right.Controls.Add(Dn_lb_neubanchua);
@@ -141,7 +141,7 @@
             Dn_lb_neubanchua.BackColor = Color.Transparent;
             Dn_lb_neubanchua.Location = new Point(66, 397);
             Dn_lb_neubanchua.Name = "Dn_lb_neubanchua";
-            Dn_lb_neubanchua.Size = new Size(166, 19);
+            Dn_lb_neubanchua.Size = new Size(187, 22);
             Dn_lb_neubanchua.TabIndex = 5;
             Dn_lb_neubanchua.Text = "Nếu bạn chưa có tài khoản?";
             // 
@@ -207,10 +207,12 @@
             Controls.Add(Dn_pn_left);
             Controls.Add(Dn_pn_right);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "DangNhap";
             Text = "Form1";
+            KeyDown += DangNhap_KeyDown;
             Dn_pn_right.ResumeLayout(false);
             Dn_pn_right.PerformLayout();
             ResumeLayout(false);
