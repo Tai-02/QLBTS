@@ -26,7 +26,7 @@ namespace QLBTS_BLL
             if (dal.EmailTonTai(tk.Email))
                 throw new Exception("Email đã tồn tại!");
             Random rd = new Random();
-            tk.Otp = rd.Next(0, 1000).ToString();
+            tk.Otp = rd.Next(0, 999999).ToString();
             tk.VaiTro = "KhachHang";
             tk.Active = false;
             tk.NgayTao = DateTime.Now;

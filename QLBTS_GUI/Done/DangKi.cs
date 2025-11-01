@@ -40,11 +40,13 @@ namespace QLBTS_GUI
                 if (password != Dk_txt_remk.Text.Trim())
                 {
                     MessageBox.Show("Mật khẩu nhập lại không khớp", "Thông báo");
+                    return;
                 }
 
                 if (!email.Contains("@"))
                 {
                     MessageBox.Show("Vui lòng nhập email hợp lệ", "Thông báo");
+                    return;
                 }
 
                 TaiKhoanDTO tk = new TaiKhoanDTO

@@ -190,6 +190,8 @@ namespace QLBTS_DAL
         }
 
 
+        // TaiKhoanDAL.cs - SỬA LẠI HÀM InsertTaiKhoan
+
         public bool InsertTaiKhoan(TaiKhoanDTO tk)
         {
             try
@@ -198,15 +200,16 @@ namespace QLBTS_DAL
                 {
                     conn.Open();
                     string sql = @"INSERT INTO TaiKhoan 
-                                   (TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID)
-                                   VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID)";
+                            (TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID)
+                            VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID)";
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap);
+
                         if (tk.MatKhau == null)
                             throw new ArgumentNullException(nameof(tk.MatKhau));
+                        cmd.Parameters.AddWithValue("@MatKhau", HashMatKhau(tk.MatKhau));
 
-                        cmd.Parameters.AddWithValue("@p", HashMatKhau(tk.MatKhau));
                         cmd.Parameters.AddWithValue("@Email", tk.Email);
                         cmd.Parameters.AddWithValue("@Otp", tk.Otp);
                         cmd.Parameters.AddWithValue("@VaiTro", tk.VaiTro);
@@ -218,8 +221,9 @@ namespace QLBTS_DAL
                     }
                 }
             }
-            catch
+            catch (Exception ex) 
             {
+                Console.WriteLine("Lỗi InsertTaiKhoan: " + ex.Message);
                 return false;
             }
         }
