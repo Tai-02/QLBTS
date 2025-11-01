@@ -6,6 +6,7 @@ namespace QLBTS_BBL
 {
     public class LichSuHoatDongBBL
     {
+
         public List<LichSuHoatDongDTO> LayLichSu(int maTK)
         {
             // Xu ly nghiep vu truoc khi goi DAL
@@ -20,6 +21,20 @@ namespace QLBTS_BBL
                 list = new List<LichSuHoatDongDTO>();
 
             return list;
+        }
+
+        public bool ThemLichSu(int maTK, int maDH, string moTa, int tongTien, string loaiLichSu)
+        {
+            try
+            {
+                // Gọi hàm ở tầng DAL
+                return LichSuHoatDongDAL.ThemLichSu(maTK, maDH, moTa, tongTien, loaiLichSu);
+            }
+            catch (Exception ex)
+            {
+                // Có thể log hoặc xử lý lỗi thêm ở đây
+                throw new Exception("Lỗi BLL - ThemLichSu: " + ex.Message, ex);
+            }
         }
     }
 }

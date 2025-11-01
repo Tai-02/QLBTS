@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QLBTS_BBL;
 using QLBTS_BLL;
 using QLBTS_DTO;
 
@@ -117,7 +118,7 @@ namespace QLBTS_GUI
                 {
                     CancelOrder(order.MaDH);
                 }
-                if (order.TrangThai == "Đang giao")
+                if (order.TrangThai == "Đã giao")
                 {
                     ConfirmOrderReceived(order.MaDH);
                 }
@@ -334,7 +335,8 @@ namespace QLBTS_GUI
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Information
                         );
-
+                        LichSuHoatDongBBL ls = new LichSuHoatDongBBL();
+                        ls.ThemLichSu(Khung.MaTK_temp, maDH, donHangBLL.getNVG(maDH).ToString(), Convert.ToInt32(donHangBLL.TinhTongTienDonHang(maDH)), "Giao hàng");
                         LoadOrders(); // Reload lại danh sách
                     }
                     else

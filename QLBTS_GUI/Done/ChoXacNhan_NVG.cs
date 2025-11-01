@@ -170,6 +170,7 @@ namespace QLBTS_GUI
                 if (result == DialogResult.Yes)
                 {
                     ok = bll.DoiTrangThai(maDH, "Đang giao");
+                    bll.setmanv(maDH, 0, Khung.MaTK_temp);
                 }
             }
             // BỎ CÁC ĐOẠN ELSE IF CỦA btnHuy, btnChuyen

@@ -1,4 +1,5 @@
-﻿using QLBTS_BLL;
+﻿using QLBTS_BBL;
+using QLBTS_BLL;
 using QLBTS_DTO;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,16 @@ namespace QLBTS_GUI
         private List<SanPhamDTO> danhSachSP = new();
         private GioHangBLL gioHangBLL;
         private TinhToanBLL tinhToanBLL;
-
+        private LichSuHoatDongBBL lshdBLL;
+        private DonHangBLL dhBLL;
         public GioHang_KH()
         {
             InitializeComponent();
             maTK = Khung.MaTK_temp;
             gioHangBLL = new GioHangBLL(); 
             tinhToanBLL = new TinhToanBLL();
+            lshdBLL = new LichSuHoatDongBBL();
+            dhBLL = new DonHangBLL();
         }
 
         private void GioHang_NVQ_Load(object sender, EventArgs e)
@@ -217,7 +221,9 @@ namespace QLBTS_GUI
                 return;
             }
 
-            gioHangBLL.DatHangKH(maTK, gioHangBLL.LayGioHangTheoMaTK(maTK));
+            int maDon = gioHangBLL.DatHangKH(maTK, gioHangBLL.LayGioHangTheoMaTK(maTK));
+
+            lshdBLL.ThemLichSu(maTK, maDon, "Bạn đã đặt hàng", Convert.ToInt32(dhBLL.TinhTongTienDonHang(maDon)), "Mua hàng");
             
             // Xóa toàn bộ giỏ hàng
             gioHangBLL.XoaToanBoGio(maTK);

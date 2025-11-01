@@ -70,5 +70,29 @@ namespace QLBTS_BLL
                 throw new Exception("Lỗi BLL - LayDSDonHangTheoTrangThai: " + ex.Message, ex);
             }
         }
+
+        public int? getNVG(int maDH)
+        {
+            try
+            {
+                return dal.LayMaNVG(maDH);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BLL :" + ex.Message, ex);
+            }
+        }
+
+        public void setmanv(int maDh,int maNVQ,int maNVG)
+        {
+            try
+            {
+                dal.SetMaNV(maDh, maNVG, maNVQ);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BLL :" + ex.Message, ex);
+            }
+        }
     }
 }

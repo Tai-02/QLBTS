@@ -273,6 +273,87 @@ namespace QLBTS_DAL
 
             return danhSach;
         }
+        public int? LayMaNVG(int maDH)
+        {
+            string query = @"
+                SELECT MaNVGiao
+                FROM DonHang
+                WHERE MaDH = @MaDH;
+            ";
 
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaDH", maDH);
+
+                        object result = cmd.ExecuteScalar();
+
+                        // Trả về NULL nếu giá trị DB là DBNull.Value, ngược lại trả về giá trị int
+                        if (result == null || result == DBNull.Value)
+                        {
+                            return null;
+                        }
+                        return Convert.ToInt32(result);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - LayMaNVG: {ex.Message}", ex);
+            }
+        }
+
+        public bool SetMaNV(int maDH, int? maNVG, int? maNVQ)
+        {
+            string query = @"
+        UPDATE DonHang
+        SET MaNVG = @MaNVG,
+            MaNVQ = @MaNVQ
+        WHERE MaDH = @MaDH;
+    ";
+
+            try
+            {
+                using (var conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MaDH", maDH);
+                        if (maNVG.HasValue && maNVG.Value != 0)
+                        {
+                            // Nếu có giá trị và giá trị khác 0, gán giá trị đó
+                            cmd.Parameters.AddWithValue("@MaNVG", maNVG.Value);
+                        }
+                        else
+                        {
+                            // Nếu là NULL hoặc bằng 0, gán DBNull.Value
+                            cmd.Parameters.AddWithValue("@MaNVG", DBNull.Value);
+                        }
+                        if (maNVQ.HasValue && maNVQ.Value != 0)
+                        {
+                            // Nếu có giá trị và giá trị khác 0, gán giá trị đó
+                            cmd.Parameters.AddWithValue("@MaNVQ", maNVQ.Value);
+                        }
+                        else
+                        {
+                            // Nếu là NULL hoặc bằng 0, gán DBNull.Value
+                            cmd.Parameters.AddWithValue("@MaNVQ", DBNull.Value);
+                        }
+
+                        int row = cmd.ExecuteNonQuery();
+                        return row > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi DAL - SetMaNV: {ex.Message}", ex);
+            }
+        }
     }
 }

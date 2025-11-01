@@ -56,5 +56,46 @@ namespace QLBTS_DAL
 
             return list;
         }
+
+        public static bool ThemLichSu(int maTK, int maDH, string moTa, int tongTien, string loaiLichSu)
+        {
+            // Thời gian hoạt động là thời gian hiện tại
+            DateTime thoiGian = DateTime.Now;
+
+            string query = @"
+            INSERT INTO LichSuHoatDong (MaTK, MaDH, TongTien, MoTa, ThoiGian, LoaiLichSu)
+            VALUES (@MaTK, @MaDH, @TongTien, @MoTa, @ThoiGian, @LoaiLichSu)";
+
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        // Thêm tham số
+                        cmd.Parameters.AddWithValue("@MaTK", maTK);
+                        cmd.Parameters.AddWithValue("@MaDH", maDH);
+                        cmd.Parameters.AddWithValue("@TongTien", tongTien);
+                        cmd.Parameters.AddWithValue("@MoTa", moTa);
+                        cmd.Parameters.AddWithValue("@ThoiGian", thoiGian);
+
+                        // ✅ THAM SỐ MỚI
+                        cmd.Parameters.AddWithValue("@LoaiLichSu", loaiLichSu);
+
+                        // Thực thi lệnh
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi DAL - ThemLichSu: " + ex.Message, ex);
+            }
+        }
     }
+    
 }

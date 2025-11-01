@@ -1,4 +1,5 @@
-﻿using QLBTS_BLL;
+﻿using QLBTS_BBL;
+using QLBTS_BLL;
 using QLBTS_DTO;
 using QuestPDF.Fluent;
 using System;
@@ -160,6 +161,8 @@ namespace QLBTS_GUI
             bool ok = false;
             DialogResult result = DialogResult.None;
             string actionText = "";
+            string mota = "";
+
 
             if (col == "btnNhan")
             {
@@ -239,6 +242,7 @@ namespace QLBTS_GUI
                     if (col == "btnNhan")
                     {
                         ok = bll.DoiTrangThai(maDH, "Đã nhận");
+                        bll.setmanv(maDH, Khung.MaTK_temp, 0);
                     }
                     else if (col == "btnHuy")
                     {

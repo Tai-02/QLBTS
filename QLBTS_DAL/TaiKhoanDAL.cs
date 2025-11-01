@@ -369,7 +369,7 @@ namespace QLBTS_DAL
             // Trong QLBTS_BLL/TaiKhoanBLL.LayDanhSachNhanVien()
             string query = @"
                 SELECT 
-                HoTen, TenDangNhap, SDT, DiaChi, Email, VaiTro, Active, LevelID, TrangThai  
+                MaTK, HoTen, TenDangNhap, SDT, DiaChi, Email, VaiTro, Active, LevelID, TrangThai  
                 FROM 
                 TaiKhoan
                 WHERE 
@@ -391,6 +391,7 @@ namespace QLBTS_DAL
                                 danhSach.Add(new TaiKhoanDTO
                                 {
                                     // Chỉ lấy các trường bạn yêu cầu:
+                                    MaTK = Convert.ToInt32(reader["MaTK"]),
                                     HoTen = reader["HoTen"] != DBNull.Value ? reader["HoTen"].ToString() : null,
                                     TenDangNhap = reader["TenDangNhap"].ToString(),
                                     SDT = reader["SDT"] != DBNull.Value ? reader["SDT"].ToString() : null,

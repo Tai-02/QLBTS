@@ -77,7 +77,7 @@
             dgvOrders.Columns.AddRange(new DataGridViewColumn[] { MaDH, NgayDat, TongTien, TrangThai, colThongTin, colChiTiet });
             dgvOrders.EnableHeadersVisualStyles = false;
             dgvOrders.GridColor = Color.FromArgb(224, 224, 224);
-            dgvOrders.Location = new Point(40, 140);
+            dgvOrders.Location = new Point(12, 96);
             dgvOrders.MultiSelect = false;
             dgvOrders.Name = "dgvOrders";
             dgvOrders.ReadOnly = true;
@@ -85,12 +85,12 @@
             dgvOrders.RowHeadersWidth = 51;
             dgvOrders.RowTemplate.Height = 50;
             dgvOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrders.Size = new Size(920, 400);
+            dgvOrders.Size = new Size(987, 472);
             dgvOrders.TabIndex = 2;
             // 
             // MaDH
             // 
-            MaDH.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            MaDH.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             MaDH.DataPropertyName = "MaDH";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -104,14 +104,17 @@
             // 
             // NgayDat
             // 
+            NgayDat.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             NgayDat.DataPropertyName = "NgayDat";
             NgayDat.HeaderText = "Ngày đặt đơn";
             NgayDat.MinimumWidth = 6;
             NgayDat.Name = "NgayDat";
             NgayDat.ReadOnly = true;
+            NgayDat.Width = 161;
             // 
             // TongTien
             // 
+            TongTien.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             TongTien.DataPropertyName = "TongTien";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
@@ -121,9 +124,11 @@
             TongTien.MinimumWidth = 6;
             TongTien.Name = "TongTien";
             TongTien.ReadOnly = true;
+            TongTien.Width = 68;
             // 
             // TrangThai
             // 
+            TrangThai.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             TrangThai.DataPropertyName = "TrangThai";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -132,20 +137,25 @@
             TrangThai.MinimumWidth = 6;
             TrangThai.Name = "TrangThai";
             TrangThai.ReadOnly = true;
+            TrangThai.Width = 129;
             // 
             // colThongTin
             // 
+            colThongTin.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             colThongTin.HeaderText = "Thông tin đơn";
             colThongTin.MinimumWidth = 6;
             colThongTin.Name = "colThongTin";
             colThongTin.ReadOnly = true;
+            colThongTin.Width = 167;
             // 
             // colChiTiet
             // 
+            colChiTiet.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             colChiTiet.HeaderText = "Chi tiết";
             colChiTiet.MinimumWidth = 6;
             colChiTiet.Name = "colChiTiet";
             colChiTiet.ReadOnly = true;
+            colChiTiet.Width = 101;
             // 
             // TrangThaiDonHang_KH
             // 
