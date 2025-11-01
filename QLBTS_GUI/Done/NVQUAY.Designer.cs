@@ -30,10 +30,10 @@ namespace QLBTS_GUI
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             NVQ_pn_tab = new Panel();
-            KH_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
+            NVQ_pn_menu = new Guna.UI2.WinForms.Guna2Panel();
             pictureBox1 = new PictureBox();
             NVQ_lb_ls = new Label();
             NVQ_lb_qldh = new Label();
@@ -41,7 +41,7 @@ namespace QLBTS_GUI
             NVQ_lb_gh = new Label();
             NVQ_lb_sp = new Label();
             pictureBox2 = new PictureBox();
-            KH_pn_menu.SuspendLayout();
+            NVQ_pn_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -54,23 +54,23 @@ namespace QLBTS_GUI
             NVQ_pn_tab.Size = new Size(980, 508);
             NVQ_pn_tab.TabIndex = 2;
             // 
-            // KH_pn_menu
+            // NVQ_pn_menu
             // 
-            KH_pn_menu.BackColor = Color.Transparent;
-            KH_pn_menu.BorderRadius = 30;
-            KH_pn_menu.Controls.Add(pictureBox1);
-            KH_pn_menu.Controls.Add(NVQ_lb_ls);
-            KH_pn_menu.Controls.Add(NVQ_lb_qldh);
-            KH_pn_menu.Controls.Add(NVQ_lb_qlsp);
-            KH_pn_menu.Controls.Add(NVQ_lb_gh);
-            KH_pn_menu.Controls.Add(NVQ_lb_sp);
-            KH_pn_menu.CustomizableEdges = customizableEdges1;
-            KH_pn_menu.FillColor = Color.Black;
-            KH_pn_menu.Location = new Point(13, 31);
-            KH_pn_menu.Name = "KH_pn_menu";
-            KH_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            KH_pn_menu.Size = new Size(942, 68);
-            KH_pn_menu.TabIndex = 3;
+            NVQ_pn_menu.BackColor = Color.Transparent;
+            NVQ_pn_menu.BorderRadius = 30;
+            NVQ_pn_menu.Controls.Add(pictureBox1);
+            NVQ_pn_menu.Controls.Add(NVQ_lb_ls);
+            NVQ_pn_menu.Controls.Add(NVQ_lb_qldh);
+            NVQ_pn_menu.Controls.Add(NVQ_lb_qlsp);
+            NVQ_pn_menu.Controls.Add(NVQ_lb_gh);
+            NVQ_pn_menu.Controls.Add(NVQ_lb_sp);
+            NVQ_pn_menu.CustomizableEdges = customizableEdges3;
+            NVQ_pn_menu.FillColor = Color.Black;
+            NVQ_pn_menu.Location = new Point(13, 31);
+            NVQ_pn_menu.Name = "NVQ_pn_menu";
+            NVQ_pn_menu.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            NVQ_pn_menu.Size = new Size(942, 68);
+            NVQ_pn_menu.TabIndex = 3;
             // 
             // pictureBox1
             // 
@@ -165,12 +165,12 @@ namespace QLBTS_GUI
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(982, 653);
             Controls.Add(NVQ_pn_tab);
-            Controls.Add(KH_pn_menu);
+            Controls.Add(NVQ_pn_menu);
             Controls.Add(pictureBox2);
             Name = "NVQUAY";
             Load += NVQUAY_Load;
-            KH_pn_menu.ResumeLayout(false);
-            KH_pn_menu.PerformLayout();
+            NVQ_pn_menu.ResumeLayout(false);
+            NVQ_pn_menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
@@ -178,7 +178,7 @@ namespace QLBTS_GUI
 
         #endregion
         private PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2Panel KH_pn_menu;
+        private Guna.UI2.WinForms.Guna2Panel NVQ_pn_menu;
         private Label NVQ_lb_ls;
         private Label NVQ_lb_qldh;
         private Label NVQ_lb_qlsp;

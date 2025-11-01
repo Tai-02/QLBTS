@@ -55,6 +55,12 @@ namespace QLBTS_GUI
                     MatKhau = password,
                     Email = email,
                 };
+                Random rd = new Random();
+                tk.Otp = rd.Next(0, 999999).ToString();
+                tk.VaiTro = "KhachHang";
+                tk.Active = false;
+                tk.NgayTao = DateTime.Now;
+                tk.LevelID = 0;
 
                 if (bll.DangKy(tk))
                 {
