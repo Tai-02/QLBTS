@@ -1,3 +1,6 @@
+﻿using System.Security.Cryptography;
+using System.Text;
+
 namespace QLBTS_GUI
 {
     internal static class Program
@@ -11,7 +14,8 @@ namespace QLBTS_GUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Form form = new Khung();
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+            Form form = new Khung(-1);
             form.ShowDialog();
         }
     }

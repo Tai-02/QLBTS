@@ -1,7 +1,9 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="C:/Users/Tài/Downloads/qlbts_mysql.sql" />
-  </Folder>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
   <Project Path="QLBTS_BLL/QLBTS_BLL.csproj" />
   <Project Path="QLBTS_DAL/QLBTS_DAL.csproj" />
   <Project Path="QLBTS_DTO/QLBTS_DTO.csproj" Id="3af2bdea-9966-4d5f-a9b3-860c12b681bb" />

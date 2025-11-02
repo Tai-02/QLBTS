@@ -1,0 +1,346 @@
+﻿using MySql.Data.MySqlClient;
+using QLBTS_BLL;
+using QLBTS_DAL;
+using QLBTS_DTO;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace QLBTS_GUI
+{
+    public partial class DanhMucSanPham : Form
+    {
+        UI_Form ui = new UI_Form();
+        SanPhamBLL SanPhamBLL = new SanPhamBLL();
+        private DanhMucSanPhamBLL bll = new DanhMucSanPhamBLL();
+        List<SanPhamDTO> list = new List<SanPhamDTO>();
+        private QuanLiSanPhamBLL qlspBLL = new QuanLiSanPhamBLL();
+
+        public DanhMucSanPham()
+        {
+            InitializeComponent();
+        }
+
+
+        private Image ByteArrayToImage(byte[] byteArray)
+        {
+            if (byteArray == null || byteArray.Length == 0) return null;
+            using (MemoryStream ms = new MemoryStream(byteArray))
+            {
+                Image image = Image.FromStream(ms);
+                return image;
+            }
+        }
+
+        private byte[] ImageToByteArray(Image image)
+        {
+            if (image == null) return null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                image.Save(ms, image.RawFormat);
+                return ms.ToArray();
+            }
+        }
+
+        private void chkBestseller_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBestseller.Checked)
+            {
+                chkMonmoi.Checked = false;
+                chkTrasua.Checked = false;
+                chkTopping.Checked = false;
+                cbb_loai.SelectedIndex = -1;
+
+                list.Clear();
+                list = bll.LayDanhSachSanPham("BestSeller");
+                LoadSanPhamList(list);
+            }
+        }
+
+        private void chkMonmoi_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMonmoi.Checked)
+            {
+                chkBestseller.Checked = false;
+                chkTrasua.Checked = false;
+                chkTopping.Checked = false;
+                cbb_loai.SelectedIndex = -1;
+
+                list.Clear();
+                list = bll.LayDanhSachSanPham("MonMoi");
+                LoadSanPhamList(list);
+            }
+        }
+
+        private void chkTraSua_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTrasua.Checked)
+            {
+                chkMonmoi.Checked = false;
+                chkBestseller.Checked = false;
+                chkTopping.Checked = false;
+                cbb_loai.SelectedIndex = -1;
+
+                list.Clear();
+                list = bll.LayDanhSachSanPham("TraSua");
+                LoadSanPhamList(list);
+            }
+        }
+
+        private void chkTopping_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTopping.Checked)
+            {
+                chkMonmoi.Checked = false;
+                chkBestseller.Checked = false;
+                chkTrasua.Checked = false;
+                cbb_loai.SelectedIndex = -1;
+
+                list.Clear();
+                list = bll.LayDanhSachSanPham("Topping");
+                LoadSanPhamList(list);
+            }
+        }
+
+        private void cbb_loai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbb_loai.SelectedIndex != -1)
+            {
+                chkBestseller.Checked = false;
+                chkMonmoi.Checked = false;
+                chkTrasua.Checked = false;
+                chkTopping.Checked = false;
+
+                list.Clear();
+                list = bll.LayDanhSachSanPham(cbb_loai.Text.ToString());
+                LoadSanPhamList(list);
+            }
+        }
+
+        private void DanhMucSanPham_Load(object sender, EventArgs e)
+        {
+            chkBestseller.Checked = true;
+            Loadcbb();
+        }
+
+        private void Loadcbb()
+        {
+            cbb_loai.Items.Clear();
+
+            var loaiSPList = qlspBLL.GetDistinctLoaiSP();
+            foreach (var loai in loaiSPList)
+            {
+                cbb_loai.Items.Add(loai);
+            }
+        }
+
+        private Panel TaoPanelSanPham(SanPhamDTO sp)
+        {
+            Image hinhAnh = sp.HinhAnh != null && sp.HinhAnh.Length > 0
+                ? ByteArrayToImage(sp.HinhAnh)
+                : Properties.Resources.icons8_camera_100;
+
+            Panel productPanel = new Panel
+            {
+                Size = new Size(220, 220),
+                BackColor = Color.White,
+                Margin = new Padding(10),
+                Cursor = Cursors.Hand,
+                Tag = sp.MaSP + sp.Size
+            };
+
+            PictureBox picImage = new PictureBox
+            {
+                Image = hinhAnh,
+                Size = new Size(150, 120),
+                Location = new Point(30, 10),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+
+            PictureBox picBestSeller = new PictureBox
+            {
+                Size = new Size(38, 38),
+                Location = new Point(productPanel.Width - 48, 10),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent,
+                Visible = sp.KhuyenMaiM > 0
+            };
+
+            Label lblName = new Label
+            {
+                Text = sp.TenSP + (sp.Size == "M" ? " (M)" : sp.Size == "L" ? " (L)" : ""),
+                Font = new Font("Arial", 10, FontStyle.Bold),
+                Location = new Point(20, 140),
+                Size = new Size(160, 40),
+                TextAlign = ContentAlignment.TopCenter
+            };
+
+            TinhToanBLL ttBLL = new TinhToanBLL();
+            decimal giaSauKhuyenMai =  ttBLL.RoundToThousand(sp.GiaHienTai- (sp.GiaHienTai * sp.KhuyenMaiHienTai / 100));
+            giaSauKhuyenMai = (int)giaSauKhuyenMai;
+
+            int baseY = 185;
+
+            if (giaSauKhuyenMai > 0 && giaSauKhuyenMai < sp.GiaHienTai)
+            {
+                // Giá gốc (bị gạch ngang)
+                Label lblGiaGoc = new Label
+                {
+                    Text = $"{sp.GiaHienTai:N0}đ",
+                    Font = new Font("Arial", 9, FontStyle.Strikeout),
+                    ForeColor = Color.Gray,
+                    Location = new Point(35, baseY),
+                    AutoSize = true
+                };
+
+                // Giá sau khuyến mãi (màu đỏ) đặt lệch sang phải 5px
+                Label lblGiaKM = new Label
+                {
+                    Text = $"{giaSauKhuyenMai:N0}đ",
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    ForeColor = Color.Red,
+                    Location = new Point(lblGiaGoc.Location.X + lblGiaGoc.PreferredWidth + 5, baseY - 2),
+                    AutoSize = true
+                };
+
+                productPanel.Controls.Add(lblGiaGoc);
+                productPanel.Controls.Add(lblGiaKM);
+                lblGiaGoc.Click += ProductPanel_Click;
+                lblGiaKM.Click += ProductPanel_Click;
+            }
+            else
+            {
+                // Chỉ có giá hiện tại
+                Label lblPrice = new Label
+                {
+                    Text = $"{sp.GiaHienTai:N0}đ",
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    ForeColor = Color.Black,
+                    Location = new Point(70, baseY),
+                    AutoSize = true
+                };
+
+                productPanel.Controls.Add(lblPrice);
+                lblPrice.Click += ProductPanel_Click;
+            }
+
+
+            productPanel.Controls.Add(picImage);
+            productPanel.Controls.Add(lblName);
+            productPanel.Controls.Add(picBestSeller);
+            picBestSeller.BringToFront();
+
+            // Gắn sự kiện click cho tất cả control
+            productPanel.Click += ProductPanel_Click;
+            picImage.Click += ProductPanel_Click;
+            picBestSeller.Click += ProductPanel_Click;
+            lblName.Click += ProductPanel_Click;
+
+            return productPanel;
+        }
+
+        private void LoadSanPhamList(List<SanPhamDTO> danhSachSanPham)
+        {
+            flpSanPham.Controls.Clear();
+            flpSanPham.SuspendLayout();
+
+            if (danhSachSanPham == null || danhSachSanPham.Count == 0)
+            {
+                Label lblNotFound = new Label
+                {
+                    Text = "Không tìm thấy sản phẩm",
+                    Font = new Font("Arial", 16, FontStyle.Italic),
+                    ForeColor = Color.Gray,
+                    Size = new Size(flpSanPham.ClientSize.Width - 20, 50),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Margin = new Padding(50), 
+                };
+                flpSanPham.Controls.Add(lblNotFound);
+            }
+            else
+            {
+                foreach (var sp in danhSachSanPham)
+                {
+                    Panel panel = TaoPanelSanPham(sp);
+                    flpSanPham.Controls.Add(panel);
+                }
+            }
+
+            flpSanPham.ResumeLayout(true);
+        }
+
+
+        // Hàm xử lý sự kiện Click (để highlight)
+        private void ProductPanel_Click(object sender, EventArgs e)
+        {
+            Control clickedControl = sender as Control;
+            Panel selectedPanel = clickedControl as Panel ?? clickedControl.Parent as Panel;
+            if (selectedPanel == null) return;
+
+            // 🔹 Lấy Tag và tách MaSP và Size
+            string tag = selectedPanel.Tag?.ToString();
+            if (string.IsNullOrEmpty(tag) || tag.Length < 2)
+            {
+                MessageBox.Show("Tag sản phẩm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Lấy size là ký tự cuối, MaSP là phần còn lại
+            string size = tag.Substring(tag.Length - 1, 1);
+            if (size != "M" && size != "L")
+                size = "M"; // mặc định M nếu không hợp lệ
+
+            if (!int.TryParse(tag.Substring(0, tag.Length - 1), out int maSP))
+            {
+                MessageBox.Show("Mã sản phẩm không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 🔹 Lấy sản phẩm theo MaSP và Size
+            SanPhamDTO sp = SanPhamBLL.LaySanPham(maSP, size);
+            if (sp == null)
+            {
+                MessageBox.Show("Không tìm thấy thông tin sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            sp.Size = size;
+            if (Khung.lvID_temp == 0)
+            {
+                ui.OpenChildForm(new ChiTietSanPham(sp), Khachhang.KH_pn_tab);
+            }
+            else
+            {
+                ui.OpenChildForm(new ChiTietSanPham(sp), NVQUAY.NVQ_pn_tab);
+            }
+        }
+
+
+        private void btnTimkiem_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTimkiem.Text))
+            {
+                return;
+            }
+            else
+            {
+                chkBestseller.Checked = false;
+                chkMonmoi.Checked = false;
+                chkTrasua.Checked = false;
+                chkTopping.Checked = false;
+                cbb_loai.SelectedIndex = -1;
+                list = bll.TimKiemSanPham(txtTimkiem.Text.Trim().ToString());
+                LoadSanPhamList(list);
+            }
+        }
+    }
+}

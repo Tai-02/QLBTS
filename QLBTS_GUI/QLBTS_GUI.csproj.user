@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>D:\QLBTS\QLBTS_GUI\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="DoanhThu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\ChiTietSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\DangKi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\DangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\ThongTinCaNhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\KhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\Khung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\NhapOTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\LichSu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\NVGIAO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\NVQUAY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\DanhMucSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\QuanLiDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\TrangThaiDonHang_KH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\QuanLiSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\GioHang_NVQ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\ChiTietDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\TrangChu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\QuanLiTaiKhoanNV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

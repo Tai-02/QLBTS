@@ -12,6 +12,7 @@ namespace QLBTS_DTO
         public int MaCT { get; set; }
         public int MaDH { get; set; }
         public int MaSP { get; set; }
+        public string? Size { get; set; }   // "M" hoặc "L"
         public int SoLuong { get; set; }
         public int DonGia { get; set; }
 
