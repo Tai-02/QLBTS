@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Khung));
             Khung_pn = new Panel();
             timer1 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
@@ -51,17 +52,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(964, 664);
             Controls.Add(Khung_pn);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Khung";
-            Text = "Khung";
+            Text = "Chào mừng đến với MOMOCHA!";
             Load += Khung_Load;
             ResumeLayout(false);
         }
 
         #endregion
-
-        public static Panel Khung_pn;
         private System.Windows.Forms.Timer timer1;
+        public static Panel Khung_pn;
     }
 }

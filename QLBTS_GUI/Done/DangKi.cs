@@ -48,7 +48,7 @@ namespace QLBTS_GUI
                     MessageBox.Show("Vui lòng nhập email hợp lệ", "Thông báo");
                     return;
                 }
-                
+
 
                 TaiKhoanDTO tk = new TaiKhoanDTO
                 {

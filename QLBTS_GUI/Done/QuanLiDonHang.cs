@@ -40,7 +40,13 @@ namespace QLBTS_GUI
 
             dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Chờ xác nhận"));
             dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Đã nhận"));
-            dgvOrders.DataSource = dsDonHang.OrderByDescending(d => d.NgayDat).ToList();
+
+            dsDonHang = dsDonHang
+        .Where(d => d.MaNVQuay == 0 || d.MaNVQuay == Khung.MaTK_temp)
+        .OrderByDescending(d => d.NgayDat)
+        .ToList();
+
+            dgvOrders.DataSource = dsDonHang;
 
             dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
             dgvOrders.RowsDefaultCellStyle.BackColor = Color.White;
