@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace QLBTS_GUI
 {
@@ -38,7 +39,12 @@ namespace QLBTS_GUI
             List<DonHangDTO> dsDonHang = new List<DonHangDTO>();
 
             dsDonHang.AddRange(bll.LayDSDonHangTheoTrangThai("Đang giao"));
-            dgvOrders.DataSource = dsDonHang.OrderByDescending(d => d.NgayDat).ToList();
+
+            var dsLoc = dsDonHang
+        .Where(d => d.MaNVGiao == Khung.MaTK_temp)
+        .OrderByDescending(d => d.NgayDat)
+        .ToList();
+            dgvOrders.DataSource = dsLoc;
 
             dgvOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
             dgvOrders.RowsDefaultCellStyle.BackColor = Color.White;

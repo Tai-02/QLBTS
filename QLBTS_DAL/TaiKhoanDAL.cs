@@ -47,15 +47,12 @@ namespace QLBTS_DAL
             if (EmailTonTai_koTK(tk.Email, tk.MaTK))
                 throw new Exception("Email đã tồn tại, vui lòng chọn email khác.");
 
-            if(string.IsNullOrWhiteSpace(tk.TenDangNhap) || tk.TenDangNhap.Length < 6)
-                throw new Exception("Tên đăng nhập phải có ít nhất 6 ký tự.");
-
-            if (!Regex.IsMatch(tk.TenDangNhap, @"^[a-zA-Z0-9_]+$"))
-                throw new Exception("Tên đăng nhập chỉ được chứa chữ cái, số hoặc dấu gạch dưới (_).");
+            if(string.IsNullOrWhiteSpace(tk.HoTen))
+                throw new Exception("Họ tên không được để trống.");
 
             // 3️⃣ Email: có chứa '@' và ít nhất 10 ký tự
             if (string.IsNullOrWhiteSpace(tk.Email) || tk.Email.Length < 10 || !tk.Email.Contains("@"))
-                throw new Exception("Email không hợp lệ. Phải chứa '@' và có ít nhất 10 ký tự.");
+                throw new Exception("Email không hợp lệ.");
 
             try
             {
@@ -253,11 +250,8 @@ namespace QLBTS_DAL
 
             // 3️⃣ Email: có chứa '@' và ít nhất 10 ký tự
             if (string.IsNullOrWhiteSpace(tk.Email) || tk.Email.Length < 10 || !tk.Email.Contains("@"))
-                throw new Exception("Email không hợp lệ. Phải chứa '@' và có ít nhất 10 ký tự.");
+                throw new Exception("Email không hợp lệ.");
 
-            // 4️⃣ LevelID: chỉ được phép là 2 hoặc 3
-            if (tk.LevelID != 2 && tk.LevelID != 3)
-                throw new Exception("LevelID không hợp lệ. Chỉ được phép là 2 hoặc 3.");
 
             try
             {
@@ -265,8 +259,9 @@ namespace QLBTS_DAL
                 {
                     conn.Open();
                     string sql = @"INSERT INTO TaiKhoan 
-                    (TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID)
-                    VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID)";
+(TenDangNhap, MatKhau, Email, Otp, VaiTro, Active, NgayTao, LevelID, SDT, DiaChi, HoTen)
+VALUES (@TenDangNhap, @MatKhau, @Email, @Otp, @VaiTro, @Active, @NgayTao, @LevelID, @SDT, @DiaChi, @HoTen)";
+
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@TenDangNhap", tk.TenDangNhap);
@@ -281,6 +276,9 @@ namespace QLBTS_DAL
                         cmd.Parameters.AddWithValue("@Active", tk.Active);
                         cmd.Parameters.AddWithValue("@NgayTao", tk.NgayTao);
                         cmd.Parameters.AddWithValue("@LevelID", tk.LevelID);
+                        cmd.Parameters.AddWithValue("@SDT", tk.SDT);
+                        cmd.Parameters.AddWithValue("@DiaChi", tk.DiaChi);
+                        cmd.Parameters.AddWithValue("@HoTen", tk.HoTen);
 
                         return cmd.ExecuteNonQuery() > 0;
                     }
