@@ -285,7 +285,7 @@ Tài liệu chi tiết của dự án được lưu trong thư mục [`docs/`](d
 <a href="https://github.com/Tai-02">GitHub</a>
 </td>
 <td align="center" width="20%">
-<img src="https://github.com/identicons/user2.png" width="100px" alt="Trần Quốc Tài"/><br/>
+<img src="https://avatars.githubusercontent.com/u/169421205?v=4" width="100px" alt="Trần Quốc Tài"/><br/>
 <b>Nguyễn Minh Đại</b><br/>
 <sub> Backend Developer, UX Designer </sub><br/>
 <a href="https://github.com/nmdai679">GitHub</a>
