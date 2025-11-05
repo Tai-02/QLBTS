@@ -280,33 +280,33 @@ Tài liệu chi tiết của dự án được lưu trong thư mục [`docs/`](d
 <tr>
 <td align="center" width="20%">
 <img src="https://github.com/identicons/user1.png" width="100px" alt="Nguyễn Minh Đại"/><br/>
-<b>Nguyễn Minh Đại</b><br/>
-<sub>Team Leader</sub><br/>
-<a href="https://github.com/[username]">GitHub</a>
+<b>Trần Quốc Tài</b><br/>
+<sub>Team Leader, Database Designer</sub><br/>
+<a href="https://github.com/Tai-02">GitHub</a>
 </td>
 <td align="center" width="20%">
 <img src="https://github.com/identicons/user2.png" width="100px" alt="Trần Quốc Tài"/><br/>
-<b>Trần Quốc Tài</b><br/>
-<sub>Backend Developer</sub><br/>
-<a href="https://github.com/Tai-02">GitHub</a>
+<b>Nguyễn Minh Đại</b><br/>
+<sub> Backend Developer, UX Designer </sub><br/>
+<a href="https://github.com/nmdai679">GitHub</a>
 </td>
 <td align="center" width="20%">
 <img src="https://github.com/identicons/user3.png" width="100px" alt="Hồ Thị Hoàng Yến"/><br/>
 <b>Hồ Thị Hoàng Yến</b><br/>
-<sub>UI/UX Designer</sub><br/>
-<a href="https://github.com/[username]">GitHub</a>
+<sub> Backend Developer, UX Designer </sub><br/>
+<a href="https://github.com/hoangyennewit">GitHub</a>
 </td>
 <td align="center" width="20%">
 <img src="https://github.com/identicons/user4.png" width="100px" alt="Đinh Văn Quốc Tuấn"/><br/>
 <b>Đinh Văn Quốc Tuấn</b><br/>
-<sub>Database Designer</sub><br/>
-<a href="https://github.com/[username]">GitHub</a>
+<sub> Backend Developer, UX Designer </sub><br/>
+<a href="https://github.com/qtuan26">GitHub</a>
 </td>
 <td align="center" width="20%">
 <img src="https://github.com/identicons/user5.png" width="100px" alt="Nguyễn Huy Đông"/><br/>
 <b>Nguyễn Huy Đông</b><br/>
-<sub>Tester & Documentation</sub><br/>
-<a href="https://github.com/[username]">GitHub</a>
+<sub> Backend Developer, UX Designer </sub><br/>
+<a href="https://github.com/huydong0911">GitHub</a>
 </td>
 </tr>
 </table>
