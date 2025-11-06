@@ -5,7 +5,7 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![C#](https://img.shields.io/badge/C%23-12.0-239120?logo=c-sharp)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 [![Windows Forms](https://img.shields.io/badge/Windows-Forms-0078D6?logo=windows)](https://docs.microsoft.com/en-us/dotnet/desktop/winforms/)
-[![SQL Server](https://img.shields.io/badge/SQL-Server-CC2927?logo=microsoft-sql-server)](https://www.microsoft.com/sql-server)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Ứng dụng desktop quản lý toàn diện cho cửa hàng trà sữa**
@@ -101,8 +101,8 @@ Hỗ trợ bán hàng (POS) • Quản lý nhân viên • Quản lý kho • Th
 |-----------|-----------|----------|
 | ![C#](https://img.shields.io/badge/C%23-12.0-239120?style=flat-square&logo=c-sharp) | .NET 8 | Ngôn ngữ lập trình |
 | ![Windows Forms](https://img.shields.io/badge/WinForms-UI-0078D6?style=flat-square&logo=windows) | .NET 8 | Giao diện người dùng |
-| ![SQL Server](https://img.shields.io/badge/SQL_Server-Database-CC2927?style=flat-square&logo=microsoft-sql-server) | 2019+ | Cơ sở dữ liệu |
-| ![Entity Framework](https://img.shields.io/badge/EF_Core-ORM-512BD4?style=flat-square&logo=.net) | 8.0 | Object-Relational Mapping |
+| ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=flat-square&logo=mysql&logoColor=white) | 8.0+ | Cơ sở dữ liệu |
+| ![MySql.Data](https://img.shields.io/badge/MySql.Data-9.1.0-00758F?style=flat-square&logo=nuget) | 9.1.0 | MySQL Connector |
 | ![Visual Studio](https://img.shields.io/badge/Visual_Studio-IDE-5C2D91?style=flat-square&logo=visual-studio) | 2022/2025 | Môi trường phát triển |
 
 </div>
@@ -125,7 +125,7 @@ Hỗ trợ bán hàng (POS) • Quản lý nhân viên • Quản lý kho • Th
 ### Phần mềm
 - **Hệ điều hành**: Windows 10/11 (64-bit)
 - **.NET Runtime**: 8.0 trở lên
-- **Database**: SQL Server 2019+ hoặc MySQL 8.0+
+- **Database**: MySQL 8.0+
 - **IDE** (cho development): Visual Studio 2022/2025 Insiders
 
 ## 📥 Hướng dẫn cài đặt
@@ -138,7 +138,6 @@ Hỗ trợ bán hàng (POS) • Quản lý nhân viên • Quản lý kho • Th
 1. Tải Visual Studio 2022 từ [visualstudio.microsoft.com](https://visualstudio.microsoft.com/)
 2. Chạy file cài đặt và chọn các workload:
    - ✅ **.NET desktop development**
-   - ✅ **Data storage and processing** (nếu cần SQL Server)
 
 </details>
 
@@ -150,6 +149,18 @@ Hỗ trợ bán hàng (POS) • Quản lý nhân viên • Quản lý kho • Th
 3. Chọn tab **Individual components**
 4. Tìm và tích chọn: **.NET 8.0 Runtime**
 5. Click **Modify** để cài đặt
+
+</details>
+
+<details>
+<summary><b>1.3. Cài đặt MySQL Server</b></summary>
+
+1. Tải MySQL Installer từ [dev.mysql.com/downloads/installer](https://dev.mysql.com/downloads/installer/)
+2. Chọn **Developer Default** setup type
+3. Cấu hình MySQL Server:
+   - **Port**: `3306` (mặc định)
+   - **Root Password**: `matkhaucuaban`
+   - **Character Set**: `utf8mb4`
 
 </details>
 
@@ -188,32 +199,38 @@ cd QLBTS
 ### 🗄️ Bước 4: Cấu hình Database
 
 <details>
-<summary><b>4.1. Cấu hình SQL Server (khuyến nghị)</b></summary>
+<summary><b>4.1. Tạo Database bằng MySQL Workbench</b></summary>
 
-1. Cài đặt SQL Server 2019+ và SQL Server Management Studio (SSMS)
-2. Mở file `appsettings.json` trong project `QLBTS_GUI`
-3. Cập nhật connection string:
-```json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=localhost;Database=QLBTS_DB;Trusted_Connection=True;TrustServerCertificate=True;"
-     }
-   }
-```
-4. Chạy migration để tạo database:
+1. Mở MySQL Workbench và kết nối đến server
+2. Chọn **Server** → **Data Import**
+3. Chọn **Import from Self-Contained File**
+4. Browse đến file `database/QLBTS.sql`
+5. **Default Target Schema**: Tạo mới `QLBTS`
+6. Click **Start Import**
+
+</details>
+
+<details>
+<summary><b>4.2. Hoặc import bằng Command Line</b></summary>
 ```bash
-   dotnet ef database update
+# Tạo database
+mysql -u root -p -e "CREATE DATABASE QLBTS CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Import dữ liệu
+mysql -u root -p QLBTS < database/QLBTS.sql
 ```
 
 </details>
 
 <details>
-<summary><b>4.2. Hoặc import database từ script</b></summary>
+<summary><b>4.3. Cập nhật Connection String</b></summary>
 
-1. Mở SSMS và kết nối đến SQL Server
-2. Chọn **File** → **Open** → **File**
-3. Chọn file `Database/QLBTS_Script.sql`
-4. Click **Execute** để tạo database và tables
+Mở các file DAL (`CartDAL.cs`, `OrderDAL.cs`, `ProductDAL.cs`...) và cập nhật:
+```csharp
+private string connectionString = "Server=localhost;Database=QLBTS;Uid=root;Pwd=matkhaucuaban;CharSet=utf8mb4;";
+```
+
+Thay đổi `Uid` và `Pwd` theo cấu hình MySQL của bạn.
 
 </details>
 
@@ -227,37 +244,33 @@ Nhấn F5 hoặc click nút Start (▶️) trong Visual Studio
   - Username: `admin`
   - Password: `0866582512`
 
-
 ## 📁 Cấu trúc dự án
 ```
 QLBTS/
 │
 ├── 📂 QLBTS_GUI/              # Presentation Layer
 │   ├── Forms/                 # Windows Forms
-│   ├── Resources/             # Images, icons
-│   └── appsettings.json       # Cấu hình ứng dụng
+│   └── Resources/             # Images, icons
 │
 ├── 📂 QLBTS_BLL/              # Business Logic Layer
-│   ├── Services/              # Business services
-│   └── Validators/            # Data validation
+│   └── Services/              # Business services
 │
 ├── 📂 QLBTS_DAL/              # Data Access Layer
-│   ├── Repositories/          # Data repositories
-│   ├── Entities/              # Entity models
-│   └── DbContext/             # EF Core context
+│   └── Repositories/          # Data repositories
 │
 ├── 📂 QLBTS_DTO/              # Data Transfer Objects
 │   └── Models/                # DTO classes
 │
+├── 📂 database/               # Database scripts
+│   └── QLBTS.sql              # MySQL script
+│
 ├── 📂 docs/                   # Tài liệu dự án
 │   ├── SRS.md                 # Software Requirements Specification
-│   ├── USER_GUIDE.md          # Hướng dẫn sử dụng
+│   └── USER_GUIDE.md          # Hướng dẫn sử dụng
 │
-├── 📄 DATABASE.md             # script database
-├── 📄 QLBTS.slnx               # file sln
+├── 📄 QLBTS.sln               # Visual Studio Solution
 ├── 📄 README.md               # File này
-├── 📄 LICENSE                 # MIT License
-└── 📄 .gitignore              # Git ignore rules
+└── 📄 LICENSE                 # MIT License
 ```
 
 ## 📚 Tài liệu
@@ -268,7 +281,6 @@ Tài liệu chi tiết của dự án được lưu trong thư mục [`docs/`](d
 |----------|-------|------|
 | 📋 **SRS** | Đặc tả yêu cầu phần mềm (Software Requirements Specification) | [Xem tài liệu](docs/SRS.md) |
 | 👤 **User Guide** | Hướng dẫn sử dụng cho người dùng cuối | [Xem tài liệu](docs/USER_GUIDE.md) |
-
 
 ## 👥 Tác giả
 
@@ -321,7 +333,6 @@ Tài liệu chi tiết của dự án được lưu trong thư mục [`docs/`](d
 
 Dự án này được phân phối dưới giấy phép **MIT License** - xem file [LICENSE](LICENSE.txt) để biết thêm chi tiết.
 
-
 ## 🤝 Đóng góp
 
 Chúng tôi rất hoan nghênh mọi đóng góp cho dự án! 
@@ -346,7 +357,7 @@ Nếu phát hiện lỗi, vui lòng tạo **Issue** với thông tin:
 - Mô tả lỗi chi tiết
 - Các bước tái hiện lỗi
 - Screenshots (nếu có)
-- Môi trường (OS, .NET version, SQL Server version)
+- Môi trường (OS, .NET version, MySQL version)
 
 ## 🙏 Lời cảm ơn
 
@@ -367,4 +378,3 @@ Nếu phát hiện lỗi, vui lòng tạo **Issue** với thông tin:
 Made with ❤️ by QLBTS Team
 
 </div>
-```
