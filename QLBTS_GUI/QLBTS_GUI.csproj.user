@@ -4,7 +4,7 @@
     <_LastSelectedProfileId>D:\QLBTS\QLBTS_GUI\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="DoanhThu.cs">
+    <Compile Update="Done\DoanhThu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\ChiTietSanPham.cs">
@@ -59,6 +59,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Done\QuanLiTaiKhoanNV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Done\HieuSuat.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

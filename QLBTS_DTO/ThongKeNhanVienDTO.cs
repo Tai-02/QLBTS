@@ -8,9 +8,10 @@ namespace QLBTS_DTO
 {
     public class ThongKeNhanVienDTO
     {
-        public int MaTKDTNV { get; set; }
         public int MaNV { get; set; }
-        public DateTime Ngay { get; set; }
-        public int DoanhThu { get; set; }
+        public string HoTen { get; set; }
+        public int SoNgayLam { get; set; }
+        public double TongDoanhThu { get; set; }
+        public double HieuSuat { get; set; }
     }
 }

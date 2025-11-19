@@ -48,6 +48,7 @@ namespace QLBTS_GUI
 
         private void ADMIN_lb_hieusuat_Click(object sender, EventArgs e)
         {
+            ui.OpenChildForm(new HieuSuat(), ADMIN_pn_tab);
             doimaulb(ADMIN_lb_hieusuat);
         }
 
