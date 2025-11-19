@@ -28,7 +28,7 @@
     <Compile Update="Done\GioHang_KH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Admin.cs">
+    <Compile Update="Done\Admin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
