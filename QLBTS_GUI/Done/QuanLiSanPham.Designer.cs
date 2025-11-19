@@ -149,9 +149,9 @@
             label9.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(4, 418);
             label9.Name = "label9";
-            label9.Size = new Size(129, 20);
+            label9.Size = new Size(124, 20);
             label9.TabIndex = 26;
-            label9.Text = "Khuyến mãi(M):";
+            label9.Text = "Khuyến mãi(L):";
             // 
             // QLSP_cbb_loai
             // 
@@ -297,6 +297,7 @@
             QLSP_txt_soluong.ShadowDecoration.CustomizableEdges = customizableEdges16;
             QLSP_txt_soluong.Size = new Size(286, 32);
             QLSP_txt_soluong.TabIndex = 18;
+            QLSP_txt_soluong.KeyPress += QLSP_txt_soluong_KeyPress;
             // 
             // QLSP_txt_giaL
             // 

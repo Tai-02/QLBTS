@@ -338,11 +338,11 @@ namespace QLBTS_GUI
             }
         }
 
-        private void QLSP_txt_giaL_KeyPress(object sender, KeyPressEventArgs e)
+        private void QLSP_txt_khuyenmaiM_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true;
+                e.Handled = true; // Chan ky tu khong hop le
             }
         }
 
@@ -350,15 +350,23 @@ namespace QLBTS_GUI
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true;
+                e.Handled = true; // Chan ky tu khong hop le
             }
         }
 
-        private void QLSP_txt_khuyenmaiM_KeyPress(object sender, KeyPressEventArgs e)
+        private void QLSP_txt_soluong_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true;
+                e.Handled = true; // Chan ky tu khong hop le
+            }
+        }
+
+        private void QLSP_txt_giaL_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Chan ky tu khong hop le
             }
         }
     }

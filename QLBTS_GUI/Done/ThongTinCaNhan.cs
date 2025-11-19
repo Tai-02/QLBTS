@@ -32,7 +32,7 @@ namespace QLBTS_GUI
         {
             TaiKhoanDTO tk = taikhoanBLL.LayThongTinTaiKhoanTheoMaTK(Khung.MaTK_temp);
 
-            TTCN_txt_Tenuser.Text = tk.TenDangNhap;
+            TTCN_txt_Tenuser.Text = tk.HoTen;
             TTCN_txt_DiaChi.Text = tk.DiaChi;
             TTCN_txt_Email.Text = tk.Email;
             TTCN_txt_Sodienthoai.Text = tk.SDT;

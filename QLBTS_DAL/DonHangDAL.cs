@@ -234,11 +234,12 @@ namespace QLBTS_DAL
             List<DonHangDTO> danhSach = new List<DonHangDTO>();
 
             string query = @"
-                SELECT MaDH, MaKhach, NgayDat, TongTien, TrangThai
-                FROM DonHang
-                WHERE TrangThai = @TrangThai
-                ORDER BY NgayDat DESC;
-            ";
+    SELECT MaDH, MaKhach, NgayDat, TongTien, TrangThai, MaNVQuay, MaNVGiao
+    FROM DonHang
+    WHERE TrangThai = @TrangThai
+    ORDER BY NgayDat DESC;
+";
+
 
             try
             {
@@ -259,10 +260,13 @@ namespace QLBTS_DAL
                                     MaKhach = reader.GetInt32("MaKhach"),
                                     NgayDat = reader.GetDateTime("NgayDat"),
                                     TongTien = reader.GetInt32("TongTien"),
-                                    TrangThai = reader.GetString("TrangThai")
+                                    TrangThai = reader.GetString("TrangThai"),
+                                    MaNVQuay = reader.IsDBNull(reader.GetOrdinal("MaNVQuay")) ? 0 : reader.GetInt32("MaNVQuay"),
+                                    MaNVGiao = reader.IsDBNull(reader.GetOrdinal("MaNVGiao")) ? 0 : reader.GetInt32("MaNVGiao")
                                 };
                                 danhSach.Add(dh);
                             }
+
                         }
                     }
                 }
